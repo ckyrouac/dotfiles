@@ -145,8 +145,18 @@ highlight SpellBad     ctermbg=0   ctermfg=1
 " vim-airline
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let g:bufferline_echo = 0
-let g:airline_theme = 'jellybeans'
+let g:airline_theme = 'serene'
 
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" tmuxline
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let g:tmuxline_powerline_separators = 0
+"let g:tmuxline_separators = {
+    "\ 'left' : '',
+    "\ 'left_alt': '>',
+    "\ 'right' : '',
+    "\ 'right_alt' : '<',
+    "\ 'space' : ' '}
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " my stuff
