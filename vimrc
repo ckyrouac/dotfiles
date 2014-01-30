@@ -145,12 +145,12 @@ highlight SpellBad     ctermbg=0   ctermfg=1
 " vim-airline
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let g:bufferline_echo = 0
-let g:airline_theme = 'serene'
-
+let g:airline_theme = 'molokai'
+let g:airline_powerline_fonts = 1
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " tmuxline
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-let g:tmuxline_powerline_separators = 0
+"let g:tmuxline_powerline_separators = 0
 "let g:tmuxline_separators = {
     "\ 'left' : '',
     "\ 'left_alt': '>',
