@@ -34,3 +34,9 @@
 [submodule "bundle/YouCompleteMe"]
 	path = bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe
+[submodule "bundle/ag"]
+	path = bundle/ag
+	url = https://github.com/rking/ag.vim
+[submodule "bundle/vim-surround"]
+	path = bundle/vim-surround
+	url = http://github.com/tpope/vim-surround
