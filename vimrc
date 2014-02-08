@@ -42,21 +42,21 @@ let g:pymode_lint_ignore = "E501, W"
 "let g:pymode_lint_cwindow = 1
 "let g:pymode_lint_signs = 1
 "" Rope
-"let g:pymode_rope = 1
-"let g:pymode_rope_lookup_project = 1
-"let g:pymode_rope_show_doc_bind = '<C-c>d'
-"let g:pymode_rope_regenerate_on_write = 1
-"let g:pymode_rope_completion = 1
-"let g:pymode_rope_complete_on_dot = 1
-"let g:pymode_rope_completion_bind = '<C-Space>'
-"let g:pymode_rope_autoimport = 1
-"let g:pymode_rope_autoimport_after_complete = 0
-"let g:pymode_rope_goto_definition_bind = '<C-c>g'
+let g:pymode_rope = 1
+let g:pymode_rope_lookup_project = 0
+let g:pymode_rope_show_doc_bind = '<C-c>d'
+let g:pymode_rope_regenerate_on_write = 1
+let g:pymode_rope_completion = 1
+let g:pymode_rope_complete_on_dot = 1
+let g:pymode_rope_completion_bind = '<C-Space>'
+let g:pymode_rope_autoimport = 1
+let g:pymode_rope_autoimport_after_complete = 0
+let g:pymode_rope_goto_definition_bind = '<C-c>g'
 let g:pymode_rope_goto_definition_cmd = 'e'
 "" Syntax
-"let g:pymode_syntax = 1
-"let g:pymode_syntax_slow_sync = 1
-"let g:pymode_syntax_all = 1
+let g:pymode_syntax = 1
+let g:pymode_syntax_slow_sync = 1
+let g:pymode_syntax_all = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " NERDTREE
@@ -108,6 +108,8 @@ set laststatus=2                  " always show status bar
 set clipboard=unnamedplus         " use the system clipboard
 set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
+set ts=2                          " set indent to 2 spaces
+set shiftwidth=2
 
 " set dark background and color scheme
 set background=dark
@@ -145,7 +147,7 @@ highlight SpellBad     ctermbg=0   ctermfg=1
 " vim-airline
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let g:bufferline_echo = 0
-let g:airline_theme = 'molokai'
+let g:airline_theme = 'base16'
 let g:airline_powerline_fonts = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -160,11 +162,14 @@ let g:airline_powerline_fonts = 1
     "\ 'space' : ' '}
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" vim-rails
+" YouCompleteMe
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+let g:EclimCompletionMethod = 'omnifunc'
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Gundo
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+nnoremap <leader>u :GundoToggle<CR>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " my stuff
@@ -186,3 +191,13 @@ nnoremap <leader>q :bp<cr>:bd #<cr>
 
 " fix background colors
 :set t_ut=
+
+set splitbelow
+set splitright
+
+" navigate buffers
+"map <A-}> :bn
+"map <A-{> :bp
+map { :bp
+map } :bn
+nnoremap w :bp<cr>:bd #<cr>
