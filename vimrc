@@ -62,10 +62,11 @@ let g:pymode_syntax_all = 1
 " NERDTREE
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 autocmd vimenter * if !argc() | NERDTree | endif
-map <leader>n :NERDTreeToggle<CR>
-map <leader>nf :NERDTreeFind<CR> 
+nnoremap f  :NERDTreeFind<cr> 
+nnoremap 1 :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 :set hidden
+let NERDTreeShowHidden = 1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " bufkill
@@ -146,9 +147,16 @@ highlight SpellBad     ctermbg=0   ctermfg=1
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " vim-airline
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-let g:bufferline_echo = 0
+"let g:bufferline_echo = 0
 let g:airline_theme = 'base16'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#bufferline#enabled = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#buffer_min_count = 2
+let g:airline#extensions#tabline#tab_min_count = 2
+let g:airline#extensions#tmuxline#enabled = 0
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " tmuxline
@@ -170,6 +178,25 @@ let g:EclimCompletionMethod = 'omnifunc'
 " Gundo
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 nnoremap <leader>u :GundoToggle<CR>
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Fugitive
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+nnoremap <leader>s :Gstatus<cr>
+nnoremap <leader>m :Gsplit<cr>
+nnoremap <leader>d :Gvdiff<cr>
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" CommandT
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+"let g:CommandTMaxCachedDirectories = 0
+"let g:CommandTInputDebounce = 200
+"let g:CommandTMaxHeight = 15
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" CtrlP
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let g:ctrlp_map = '<leader>t'
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " my stuff
@@ -200,4 +227,14 @@ set splitright
 "map <A-{> :bp
 map { :bp
 map } :bn
-nnoremap w :bp<cr>:bd #<cr>
+nnoremap w :Bdelete<cr>
+nnoremap W :bufdo :Bdelete<cr>
+":nnoremap <Leader>q :Bdelete<CR>
+
+set clipboard^=unnamed
+
+" mark task complete macro
+let @d="Vx/DONEjp^xi**:noh"
+
+" JS Lint
+let lint_default = 0
