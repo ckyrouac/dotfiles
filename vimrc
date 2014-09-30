@@ -66,7 +66,8 @@ nnoremap f  :NERDTreeFind<cr>
 nnoremap 1 :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 :set hidden
-let NERDTreeShowHidden = 1
+let NERDTreeShowHidden = 0
+let NERDTreeShowLineNumbers=1
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " bufkill
@@ -199,6 +200,11 @@ nnoremap <leader>d :Gvdiff<cr>
 let g:ctrlp_map = '<leader>t'
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" NEOComplete
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let g:neocomplete#enable_at_startup = 1
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " my stuff
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -231,10 +237,14 @@ nnoremap w :Bdelete<cr>
 nnoremap W :bufdo :Bdelete<cr>
 ":nnoremap <Leader>q :Bdelete<CR>
 
-set clipboard^=unnamed
+"set clipboard^=unnamed
+nnoremap <leader>y "hgyy
 
 " mark task complete macro
 let @d="Vx/DONEjp^xi**:noh"
 
 " JS Lint
 let lint_default = 0
+
+" Format JSON
+nmap =j :%!python -m json.tool<CR>
