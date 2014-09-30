@@ -77,6 +77,11 @@ zle -N zle-keymap-select
 
 
 
+alias mkdir='mkdir -p'
+alias rm='trash'
+alias vim='gvim -v'
+alias pydebug='python -S /home/chris/Downloads/Komodo-PythonRemoteDebugging-8.5.3-83298-linux-x86_64/pydbgp -d localhost:9000'
+export EDITOR='vim'
 
 
 # export MANPATH="/usr/local/man:$MANPATH"
