@@ -40,3 +40,9 @@
 [submodule "bundle/neocomplete"]
 	path = bundle/neocomplete
 	url = https://github.com/Shougo/neocomplete.vim
+[submodule "bundle/jshint2"]
+	path = bundle/jshint2
+	url = https://github.com/Shutnik/jshint2.vim
+[submodule "bundle/vim-javascript"]
+	path = bundle/vim-javascript
+	url = https://github.com/pangloss/vim-javascript
