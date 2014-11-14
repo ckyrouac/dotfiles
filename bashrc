@@ -20,5 +20,6 @@ export PS1="\[$(tput setaf 245)\]\n\u@\h\[$(tput setaf 7)\]:\[$(tput setaf 67)\]
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 export EDITOR='vim'
+export TERMINAL='gnome-terminal'
 
 source ~/bin/tmuxinator.bash
