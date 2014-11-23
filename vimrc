@@ -63,7 +63,9 @@ let g:pymode_syntax_all = 1
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 autocmd vimenter * if !argc() | NERDTree | endif
 nnoremap f  :NERDTreeFind<cr> 
+nnoremap <A-f>  :NERDTreeFind<cr> 
 nnoremap 1 :NERDTreeToggle<cr>
+nnoremap <A-1> :NERDTreeToggle<cr>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 :set hidden
 let NERDTreeShowHidden = 0
@@ -217,7 +219,7 @@ let g:used_javascript_libs = 'underscore,angularjs,angularui'
 command W w !sudo tee % >/dev/null
 
 " Quit window in vim with NERDTree active
-nnoremap <leader>q :bp<cr>:bd #<cr>
+nnoremap <leader>q :qa<cr>
 
 " clear the command line and search highlighting
 "noremap <C-l> :nohlsearch<CR>
@@ -253,3 +255,9 @@ let lint_default = 0
 
 " Format JSON
 nmap =j :%!python -m json.tool<CR>
+
+" Gvim hide stuff
+:set guioptions-=m  "remove menu bar
+:set guioptions-=T  "remove toolbar
+:set guioptions-=r  "remove right-hand scroll bar
+:set guioptions-=L  "remove left-hand scroll bar

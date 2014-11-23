@@ -23,3 +23,4 @@ export EDITOR='vim'
 export TERMINAL='gnome-terminal'
 
 source ~/bin/tmuxinator.bash
+export CF_BUMP_API_KEY=0a6e201eb79334aaa2fbd76cf4c1da24f0d34057
