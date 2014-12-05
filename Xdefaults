@@ -2,8 +2,9 @@ URxvt.termName: xterm-256color
 URxvt.foreground: white
 URxvt.background: #2E3436
 !URxvt.font: xft:Terminus:pixelsize=14:antialias=true:hinting=true,xft:Meslo\ LG\ S\ for\ Powerline:pixelsize=14
-URxvt.font: xft:Meslo\ LG\ S\ for\ Powerline:pixelsize=14
-!URxvt.font: xft:Ubuntu\ Mono\ derivative\ Powerline:pixelsize=16
+!URxvt.font: xft:Meslo\ LG\ S\ DZ\ Regular\ for\ Powerline:pixelsize=14
+!URxvt.letterSpace: -2
+URxvt.font: xft:Ubuntu\ Mono\ derivative\ Powerline:pixelsize=18
 !URxvt.font: xft:PowerlineSymbols:size=13
 URxvt.scrollBar: false
 URxvt.cursorColor: yellow

@@ -55,3 +55,6 @@
 [submodule "bundle/javascript-libraries-syntax"]
 	path = bundle/javascript-libraries-syntax
 	url = https://github.com/othree/javascript-libraries-syntax.vim
+[submodule "bundle/vim-gdscript"]
+	path = bundle/vim-gdscript
+	url = https://github.com/quabug/vim-gdscript
