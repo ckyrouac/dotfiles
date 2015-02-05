@@ -202,6 +202,24 @@ nnoremap <leader>d :Gvdiff<cr>
 let g:ctrlp_map = '<leader>t'
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" Silver Search (ag)
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+" bind K to grep word under cursor
+nnoremap K :grep! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " NEOComplete
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let g:neocomplete#enable_at_startup = 1
@@ -216,6 +234,13 @@ let g:used_javascript_libs = 'underscore,angularjs,angularui'
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 au BufRead,BufNewFile *.as set syntax=cpp 
 au BufRead,BufNewFile *.angelscript set syntax=cpp 
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" gdscript
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+au BufRead,BufNewFile *.gd set syntax=gdscript filetype=gdscript
+au BufRead,BufNewFile *.godot set syntax=gdscript filetype=gdscript
+au BufRead,BufNewFile *.gdscript set syntax=gdscript filetype=gdscript
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " my stuff
@@ -257,7 +282,7 @@ nnoremap <leader>y "hgyy
 let @d="Vx/DONEjp^xi**:noh"
 
 " JS Lint
-let lint_default = 0
+let lint_default = 1
 
 " Format JSON
 nmap =j :%!python -m json.tool<CR>
@@ -267,3 +292,8 @@ nmap =j :%!python -m json.tool<CR>
 :set guioptions-=T  "remove toolbar
 :set guioptions-=r  "remove right-hand scroll bar
 :set guioptions-=L  "remove left-hand scroll bar
+
+" Clear highlighting
+nnoremap <leader>e :noh<cr>
+
+
