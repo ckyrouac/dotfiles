@@ -1,1 +1,3 @@
 *.swp
+eclim
+plugin/eclim.vim
