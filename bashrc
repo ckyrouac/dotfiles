@@ -15,7 +15,7 @@ alias mkdir='mkdir -p'
 alias rm='trash'
 alias vim='gvim -v'
 alias pydebug='python -S /home/chris/Downloads/Komodo-PythonRemoteDebugging-8.5.3-83298-linux-x86_64/pydbgp -d localhost:9000'
-export PS1="\[$(tput setaf 245)\]\n\u@\h\[$(tput setaf 7)\]:\[$(tput setaf 67)\]\w\n\[$(tput setaf 7)\]\T\$ \[\e[0;0m\e[m\]"
+export PS1="\[$(tput setaf 245)\]\n\u@\h\[$(tput setaf 10)\]:\[$(tput setaf 67)\]\w\n\[$(tput setaf 7)\]\T\$ \[\e[0;0m\e[m\]"
 
 export EDITOR='vim'
 export TERMINAL='urxvt256c-ml'

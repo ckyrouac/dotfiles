@@ -5,6 +5,7 @@ URxvt.background: #2E3436
 URxvt.font: xft:Ubuntu\ Mono\ derivative\ Powerline:pixelsize=18:antialias=true:hinting=true
 URxvt.scrollBar: false
 URxvt.cursorColor: yellow
+URxvt.cursorColor2: black
 URxvt.cursorBlink: true
 URxvt.perl-ext-common: default,matcher,font-size
 URxvt.keysym.C-S-+:     perl:font-size:increase
@@ -14,6 +15,8 @@ URxvt.keysym.C-S--:   perl:font-size:decrease
 URxvt.url-launcher: /usr/bin/google-chrome
 URxvt.matcher.button: 1
 URxvt.iconFile: /usr/share/icons/gnome/32x32/apps/gnome-terminal.png
+URxvt*keysym.Home: \033[1~
+URxvt*keysym.End: \033[4~
 !Terminal colors
 *color0:  #2E3436
 *color1:  #a40000
