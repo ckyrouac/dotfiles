@@ -239,6 +239,8 @@ let g:neocomplete#enable_at_startup = 1
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let g:used_javascript_libs = 'underscore,angularjs,angularui'
 
+au BufRead,BufNewFile *.as set syntax=cpp "angelscript
+au BufRead,BufNewFile *.angelscript set syntax=cpp "angelscript
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " angelscript
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
