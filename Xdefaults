@@ -17,6 +17,7 @@ URxvt.matcher.button: 1
 URxvt.iconFile: /usr/share/icons/gnome/32x32/apps/gnome-terminal.png
 URxvt*keysym.Home: \033[1~
 URxvt*keysym.End: \033[4~
+URxvt.iso14755: False
 !Terminal colors
 *color0:  #2E3436
 *color1:  #a40000
