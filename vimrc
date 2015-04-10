@@ -308,4 +308,8 @@ nmap =j :%!python -m json.tool<CR>
 " Clear highlighting
 nnoremap <leader>e :noh<cr>
 
+" Search and replace starting at cursor
+nnoremap <leader>r :.,$s//gc<Left><Left><Left>
 
+" Disable escape+f open nerdtree
+nnoremap f 
