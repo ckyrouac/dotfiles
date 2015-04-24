@@ -1,5 +1,4 @@
 *.swp
-bundle
 eclim
 plugin/eclim.vim
 spell
