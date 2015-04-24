@@ -2,7 +2,7 @@ URxvt.termName: xterm-256color
 URxvt.foreground: white
 URxvt.background: #2E3436
 !URxvt.font: xft:Terminus:pixelsize=14:antialias=true:hinting=true,xft:Meslo\ LG\ S\ for\ Powerline:pixelsize=14
-URxvt.font: xft:Ubuntu\ Mono\ derivative\ Powerline:pixelsize=18:antialias=true:hinting=true
+URxvt.font: xft:Ubuntu\ Mono\ derivative\ Powerline Plus\ Nerd File\ Types\ Mono:pixelsize=18:antialias=true:hinting=true
 URxvt.scrollBar: false
 URxvt.cursorColor: yellow
 URxvt.cursorColor2: black
