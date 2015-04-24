@@ -66,7 +66,7 @@ setlocal spell spelllang=en_us
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " NERDTREE
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-autocmd vimenter * if !argc() | NERDTree | endif
+"autocmd vimenter * if !argc() | NERDTree | endif
 nnoremap f  :NERDTreeFind<cr> 
 nnoremap <A-f>  :NERDTreeFind<cr> 
 nnoremap 1 :NERDTreeToggle<cr>
