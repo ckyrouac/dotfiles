@@ -61,7 +61,18 @@ let g:pymode_syntax_all = 1
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Spellcheck
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-setlocal spell spelllang=en_us
+nnoremap <leader>z :setlocal spell! spelllang=en_us<CR>
+"setlocal spell spelllang=en_us
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" indent colors
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+set ts=2 sw=2 et
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=241
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=235
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " NERDTREE
@@ -204,14 +215,11 @@ let g:airline#extensions#tmuxline#enabled = 0
     "\ 'space' : ' '}
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-" YouCompleteMe
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-let g:EclimCompletionMethod = 'omnifunc'
-
-" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " eclim java
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let g:EclimCompletionMethod = 'omnifunc'
 nnoremap <leader>i :JavaImport<CR>
+let g:EclimJavascriptValidate = 0
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Gundo
@@ -281,12 +289,27 @@ au BufRead,BufNewFile *.godot set syntax=gdscript filetype=gdscript
 au BufRead,BufNewFile *.gdscript set syntax=gdscript filetype=gdscript
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" vim-go
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " webdevicons
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 let g:webdevicons_enable = 1
 let g:webdevicons_enable_nerdtree = 1
 let g:webdevicons_enable_airline_tabline = 0
 let g:webdevicons_enable_airline_statusline = 0
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" vim-region-expand
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " snippets ultisnips
@@ -298,12 +321,16 @@ let g:UltiSnipsJumpForwardTrigger="<c-n>"
 let g:UltiSnipsJumpBackwardTrigger="<c-p>"
 
 " If you want :UltiSnipsEdit to split your window.
-let g:UltiSnipsEditSplit="vertical"
+let g:UltiSnipsEditSplit="normal"
+
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" syntax for file extensions
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+au BufRead,BufNewFile *.tmpl set filetype=spec
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " my stuff
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 " Save as root
 command W w !sudo tee % >/dev/null
 
@@ -362,3 +389,19 @@ nnoremap f 
 
 " Jade: reformat element's attributes to multi-line from single line
 nnoremap <leader>j f,a
+
+nnoremap  <leader>a :call AgWord()<CR>
+nnoremap  <leader>aa :call AgLine()<CR>
+
+function! AgWord()
+  execute ":Ag '" . expand("<cword>") . "'"
+endfunction
+
+function! AgLine()
+  execute ":Ag '" . getline(".") . "'"
+endfunction
+
+" Search and replace with /<string> cs n.n.n.
+vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
+    \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
+omap s :normal vs<CR>
