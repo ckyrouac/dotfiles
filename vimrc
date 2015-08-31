@@ -78,6 +78,7 @@ autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=235
 " NERDTREE
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 "autocmd vimenter * if !argc() | NERDTree | endif
+nnoremap <leader>f  :NERDTreeFind<cr> 
 nnoremap f  :NERDTreeFind<cr> 
 nnoremap <A-f>  :NERDTreeFind<cr> 
 nnoremap 1 :NERDTreeToggle<cr>
@@ -139,6 +140,7 @@ map <leader>q :BD<CR>
 set expandtab                     " use spaces, not tab characters
 set nocompatible                  " don't need to be compatible with old vim
 set relativenumber                " show relative line numbers
+set nofoldenable
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
 set hlsearch                      " highlight all search matches
@@ -156,6 +158,7 @@ set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
 set ts=2                          " set indent to 2 spaces
 set shiftwidth=2
+set regexpengine=2
 
 " set dark background and color scheme
 set background=dark
@@ -202,6 +205,7 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_min_count = 2
 let g:airline#extensions#tmuxline#enabled = 0
+let g:airline_detect_whitespace=0
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " tmuxline
@@ -334,6 +338,7 @@ au BufRead,BufNewFile *.tmpl set filetype=spec
 " Save as root
 command W w !sudo tee % >/dev/null
 
+
 " Quit window in vim with NERDTree active
 nnoremap <leader>q :qa<cr>
 
@@ -405,3 +410,39 @@ endfunction
 vnoremap <silent> s //e<C-r>=&selection=='exclusive'?'+1':''<CR><CR>
     \:<C-u>call histdel('search',-1)<Bar>let @/=histget('search',-1)<CR>gv
 omap s :normal vs<CR>
+
+" Cursor color
+"if &term =~ "xterm\\|urxvt"
+  "" use an orange cursor in insert mode
+  "let &t_SI = "\<Esc>]12;orange\x7"
+  "" use a red cursor otherwise
+  "let &t_EI = "\<Esc>]12;red\x7"
+  "silent !echo -ne "\033]12;red\007"
+  "" reset cursor when vim exits
+  "autocmd VimLeave * silent !echo -ne "\033]112\007"
+  "" use \003]12;gray\007 for gnome-terminal
+"endif
+"highlight Cursor guifg=white guibg=black
+"highlight iCursor guifg=white guibg=steelblue
+"set guicursor=n-v-c:block-Cursor
+"set guicursor+=i:ver100-iCursor
+"set guicursor+=n-v-c:blinkon0
+"set guicursor+=i:blinkwait50
+" Enable CursorLine
+" Default Colors for CursorLine
+"highlight  CursorLine ctermbg=Yellow ctermfg=None
+
+let &t_SI = "\<Esc>]12;orange\x7"
+" Change Color when entering Insert Mode
+"autocmd InsertEnter * highlight  CursorLine ctermbg=252 ctermfg=235 
+"autocmd InsertEnter * highlight Cursor guibg=red
+
+"" Revert Color to default when leaving Insert Mode
+"autocmd InsertLeave * highlight  CursorLine ctermbg=236 ctermfg=None
+"autocmd InsertLeave * highlight Cursor guibg=252
+"highlight CursorLineNr ctermbg=236 ctermfg=240
+"highlight CursorLine   ctermbg=236
+if &term == 'xterm-256color' || &term == 'screen-256color'
+    let &t_SI = "\<Esc>[5 q"
+    let &t_EI = "\<Esc>[1 q"
+endif

@@ -14,11 +14,14 @@ alias mkdir='mkdir -p'
 alias rm='trash'
 alias ls='ls -alh --color=auto'
 alias nmcli='nmcli -p'
+alias v='vim'
 
 export EDITOR='vim'
 export TERMINAL='urxvt256c-ml'
 export GOPATH=~/go
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/home/chris/dev/ide/SqlWorkbenchJ
+export PATH=$PATH:/usr/pgsql-9.3/bin
 
 #vi mode esc timeout
 export KEYTIMEOUT=1
@@ -37,3 +40,15 @@ source ~/.local.rc
 #source ~/bin/tmuxinator.bash
 
 #alias vim='gvim -v'
+
+export HISTTIMEFORMAT="%T"
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# execute `ls` when no command entered
+precmd() { 
+  CUR_HIST=`history -t "%T" -1`
+  if [[ $PRE_HIST == $CUR_HIST ]]; then
+    ls
+  fi
+  PRE_HIST=$CUR_HIST
+}

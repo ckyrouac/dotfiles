@@ -79,3 +79,9 @@
 [submodule "bundle/vim-go"]
 	path = bundle/vim-go
 	url = https://github.com/fatih/vim-go
+[submodule "bundle/vim-sql-workbench"]
+	path = bundle/vim-sql-workbench
+	url = https://github.com/cosminadrianpopescu/vim-sql-workbench
+[submodule "bundle/vim-dispatch"]
+	path = bundle/vim-dispatch
+	url = https://github.com/tpope/vim-dispatch
