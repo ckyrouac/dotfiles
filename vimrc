@@ -1,7 +1,7 @@
 filetype off
 
 call pathogen#infect()
-call pathogen#helptags()
+silent! call pathogen#helptags()
 
 filetype plugin indent on
 syntax on
@@ -217,6 +217,12 @@ let g:airline_detect_whitespace=0
     "\ 'right' : '',
     "\ 'right_alt' : '<',
     "\ 'space' : ' '}
+    "
+    
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+" ruby
+" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+autocmd FileType ruby,eruby NeoCompleteLock
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " eclim java
