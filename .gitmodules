@@ -114,3 +114,6 @@
 	path = bundle/vim-dispatch
 	url = https://github.com/tpope/vim-dispatch
   ignore = untracked
+[submodule "bundle/YouCompleteMe"]
+	path = bundle/YouCompleteMe
+	url = https://github.com/Valloric/YouCompleteMe
