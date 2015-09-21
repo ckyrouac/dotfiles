@@ -8,8 +8,10 @@ sudo yum install -y vim python-devel cmake gcc-c++ zsh
 #symlinks
 mv ~/.vimrc ~/.vimrc.orig
 mv ~/.bashrc ~/.bashrc.orig
+mv ~/.zshrc ~/.zshrc.orig
 ln -s ~/.vim/vimrc ~/.vimrc
 ln -s ~/.vim/bashrc ~/.bashrc
+ln -s ~/.vim/zshrc ~/.zshrc
 touch ~/.local.rc
 
 #vim submodules
