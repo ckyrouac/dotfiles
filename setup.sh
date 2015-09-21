@@ -3,6 +3,7 @@
 #symlinks
 ln -s ~/.vim/vimrc ~/.vimrc
 ln -s ~/.vim/bashrc ~/.bashrc
+touch ~/.local.rc
 
 #vim submodules
 git submodule init
