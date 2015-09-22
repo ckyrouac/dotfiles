@@ -84,7 +84,9 @@ function setup-git () {
 
 function install-deps () {
   DEPS_INSTALLED=false
-  if [ ! $DEPS_INSTALLED ]; then
+  echo "deps: $DEPS_INSTALLED"
+  if ([ $DEPS_INSTALLED = false ]); then
+    echo "Installing main dependencies..."
     sudo yum install -y python-devel cmake gcc-c++ autoconf make automake
   fi
   DEPS_INSTALLED=true
@@ -128,7 +130,7 @@ while getopts u:e:agvzrhs flag; do
   esac
 done
 
-if ($SETUP_GIT || $SETUP_ALL) && ([ -z "$USERNAME" ] || [ -z "$EMAIL" ]); then
+if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]) && ([ -z "$USERNAME" ] || [ -z "$EMAIL" ]); then
   echo -en "\n"
   echo -en "Must provide -u 'username' and -e 'email' when setting up git!\n"
   echo -en "\n"
@@ -136,22 +138,22 @@ if ($SETUP_GIT || $SETUP_ALL) && ([ -z "$USERNAME" ] || [ -z "$EMAIL" ]); then
   exit 1;
 fi
 
-if [ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ]; then
+if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ]); then
   SETUP_ALL=true
 fi
 
-if [ $SETUP_VIM ] || [ $SETUP_ALL ]; then
+if ([ "$SETUP_VIM" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up vim..."
-  setup-vim
+  #setup-vim
 fi
 
-if [ $SETUP_GIT ] || [ $SETUP_ALL ]; then
+if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up git..."
-  setup-git
+  #setup-git
 fi
 
-if [ $SETUP_ZSH ] || [ $SETUP_ALL ]; then
+if ([ "$SETUP_ZSH" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up zsh..."
-  setup-zsh
+  #setup-zsh
 fi
 
