@@ -56,7 +56,7 @@ function setup-zsh () {
     rm -rf ~/zsh-code
     cd ~/.vim
   else
-    yum install zsh 
+    yum install -y zsh 
   fi
 
   ~/.vim/setup.zsh
@@ -84,7 +84,7 @@ function setup-git () {
 
 function install-deps () {
   DEPS_INSTALLED=false
-  if !DEPS_INSTALLED; then
+  if [ ! $DEPS_INSTALLED ]; then
     sudo yum install -y python-devel cmake gcc-c++ autoconf make automake
   fi
   DEPS_INSTALLED=true
