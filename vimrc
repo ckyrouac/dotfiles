@@ -346,6 +346,8 @@ au BufRead,BufNewFile *.tmpl set filetype=spec
 " Save as root
 command W w !sudo tee % >/dev/null
 
+:set number
+
 
 " Quit window in vim with NERDTree active
 nnoremap <leader>q :qa<cr>
