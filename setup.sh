@@ -82,9 +82,16 @@ function setup-git () {
   git config --global color.status auto
 }
 
+function setup-ruby () {
+  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+  curl -sSL https://get.rvm.io | bash -s stable
+  source ~/.rvm/rvm.sh
+  rvm install 2.1.1
+  rvm use 2.1.1 --default
+}
+
 function install-deps () {
   DEPS_INSTALLED=false
-  echo "deps: $DEPS_INSTALLED"
   if ([ $DEPS_INSTALLED = false ]); then
     echo "Installing main dependencies..."
     sudo yum install -y python-devel cmake gcc-c++ autoconf make automake
@@ -157,3 +164,7 @@ if ([ "$SETUP_ZSH" = true ] || [ "$SETUP_ALL" = true ]); then
   setup-zsh
 fi
 
+if ([ "$SETUP_RUBY" = true ] || [ "$SETUP_ALL" = true ]); then
+  echo "Setting up ruby..."
+  setup-ruby
+fi
