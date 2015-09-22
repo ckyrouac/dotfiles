@@ -1,4 +1,6 @@
 #!/bin/bash
+USERNAME=$1
+EMAIL=$2
 
 # this was tested on vanilla rhel6/7 and fedora 21/22
 
@@ -46,3 +48,9 @@ else
 fi
 
 ~/.vim/setup.zsh
+
+#git
+git config --global user.name $USERNAME
+git config --global user.email $EMAIL
+git config --global color.diff auto
+git config --global color.status auto
