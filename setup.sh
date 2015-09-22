@@ -144,16 +144,16 @@ fi
 
 if ([ "$SETUP_VIM" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up vim..."
-  #setup-vim
+  setup-vim
 fi
 
 if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up git..."
-  #setup-git
+  setup-git
 fi
 
 if ([ "$SETUP_ZSH" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up zsh..."
-  #setup-zsh
+  setup-zsh
 fi
 
