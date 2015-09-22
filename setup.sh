@@ -51,15 +51,16 @@ fi
 
 #git
 if [[ $REDHAT_VERSION == "Red Hat Enterprise Linux Server release 6"* ]]; then
-  yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel
+  yum remove -y git
+  yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker
   cd /usr/src
   wget https://git-core.googlecode.com/files/git-1.8.5.3.tar.gz
   tar xzf git-1.8.5.3.tar.gz
   cd git-1.8.5.3
   make prefix=/usr/src/git all
   make prefix=/usr/src/git install
-  echo "export PATH=$PATH:/usr/src/git/bin" >> /etc/bashrc
-  source /etc/bashrc
+  echo "export PATH=$PATH:/usr/src/git/bin" >> ~/.bashrc
+  source ~/.bashrc
 fi
 git config --global user.name $USERNAME
 git config --global user.email $EMAIL
