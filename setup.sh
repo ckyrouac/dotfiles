@@ -31,7 +31,7 @@ make ycm_support_libs
 REDHAT_VERSION=`cat /etc/redhat-release`
 ZSH_VERSION=`zsh --version`
 if [[ $REDHAT_VERSION == "Red Hat Enterprise Linux Server release 6"* ]]; then
-  yum install ncurses-devel
+  yum install -y ncurses-devel
   cd ~/
   git clone git://git.code.sf.net/p/zsh/code zsh-code
   cd zsh-code
