@@ -7,6 +7,7 @@
 
 # Uncomment the following line if you don't like systemctl's auto-paging feature:
 # export SYSTEMD_PAGER=
+set -o vi
 
 alias grep='grep --color=auto'
 alias gse='grunt serve'

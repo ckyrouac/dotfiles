@@ -3,7 +3,7 @@
 # this was tested on vanilla rhel6/7 and fedora 21/22
 
 #install dependencies
-sudo yum install -y vim python-devel cmake gcc-c++ zsh autoconf make automake
+sudo yum install -y vim python-devel cmake gcc-c++ autoconf make automake
 
 #symlinks
 mv ~/.vimrc ~/.vimrc.orig
@@ -38,9 +38,11 @@ if [[ $REDHAT_VERSION == "Red Hat Enterprise Linux Server release 6"* ]]; then
   ./configure
   make
   sudo make install
-  cd ../
-  rm -rf zsh-code
+  ln -s /usr/local/bin/zsh /bin/zsh
+  rm -rf ~/zsh-code
   cd ~/.vim
+else
+  yum install zsh 
 fi
 
 ~/.vim/setup.zsh
