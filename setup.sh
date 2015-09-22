@@ -59,8 +59,8 @@ if [[ $REDHAT_VERSION == "Red Hat Enterprise Linux Server release 6"* ]]; then
   cd git-1.8.5.3
   make prefix=/usr/src/git all
   make prefix=/usr/src/git install
-  echo "export PATH=$PATH:/usr/src/git/bin" >> ~/.bashrc
-  source ~/.bashrc
+  echo "export PATH=$PATH:/usr/src/git/bin" >> ~/.local.rc
+  source ~/.local.rc
 fi
 git config --global user.name $USERNAME
 git config --global user.email $EMAIL
