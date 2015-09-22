@@ -3,7 +3,7 @@
 # this was tested on vanilla rhel6/7 and fedora 21/22
 
 #install dependencies
-sudo yum install -y vim python-devel cmake gcc-c++ zsh
+sudo yum install -y vim python-devel cmake gcc-c++ zsh autoconf make automake
 
 #symlinks
 mv ~/.vimrc ~/.vimrc.orig
@@ -26,4 +26,21 @@ cmake -G "Unix Makefiles" . ~/.vim/bundle/YouCompleteMe/third_party/ycmd/cpp
 make ycm_support_libs
 
 #zsh
+REDHAT_VERSION=`cat /etc/redhat-release`
+ZSH_VERSION=`zsh --version`
+if [[ $REDHAT_VERSION == "Red Hat Enterprise Linux Server release 6"* ]]; then
+  yum install ncurses-devel
+  cd ~/
+  git clone git://git.code.sf.net/p/zsh/code zsh-code
+  cd zsh-code
+  autoheader
+  autoconf
+  ./configure
+  make
+  sudo make install
+  cd ../
+  rm -rf zsh-code
+  cd ~/.vim
+fi
+
 ~/.vim/setup.zsh
