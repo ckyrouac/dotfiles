@@ -456,3 +456,9 @@ if &term == 'xterm-256color' || &term == 'screen-256color'
     let &t_SI = "\<Esc>[5 q"
     let &t_EI = "\<Esc>[1 q"
 endif
+
+" for ruby syntax highlighting
+autocmd Filetype ruby set regexpengine=1
+
+set exrc
+set secure
