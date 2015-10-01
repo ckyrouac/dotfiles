@@ -458,7 +458,11 @@ if &term == 'xterm-256color' || &term == 'screen-256color'
 endif
 
 " for ruby syntax highlighting
-autocmd Filetype ruby set regexpengine=1
+set regexpengine=1
+
+" backspace over anything in insert mode
+:set backspace=indent,eol,start
 
 set exrc
 set secure
+
