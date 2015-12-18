@@ -1,0 +1,37 @@
+snippet efunc "Node export function" b
+exports.$1 = function($2) {
+	$0
+};
+endsnippet
+
+snippet func "Function" b
+function $1($2) {
+	$0
+}
+endsnippet
+
+snippet vfunc "var function" b
+var $1 = function($2) {
+	$0
+};
+endsnippet
+
+snippet then "Promise .then" i
+.then(function $1($2) {
+	$0
+})${3:;}
+endsnippet
+
+snippet catch "Promise .catch" i
+.catch(function $1(${2:error}) {
+	$0
+})${3:;}
+endsnippet
+
+snippet strict "Use strict" b
+'use strict';
+endsnippet
+
+snippet req "Node require" b
+$1 = require('$2')$3
+endsnippet
