@@ -4,6 +4,12 @@ exports.$1 = function($2) {
 };
 endsnippet
 
+snippet sfunc "scope function" b
+$scope.$1 = function($2) {
+	$0
+};
+endsnippet
+
 snippet func "Function" b
 function $1($2) {
 	$0
@@ -34,4 +40,43 @@ endsnippet
 
 snippet req "Node require" b
 $1 = require('$2')$3
+endsnippet
+
+snippet directive "Directive boilerplate" b
+'use strict';
+
+var componentsModule = require('../');
+
+/**
+ * @ngInject
+ */
+function $1Ctrl($scope) {
+$2
+}
+
+function $1() {
+    return {
+        templateUrl: 'js/components/$1/$1.html',
+        restrict: 'E',
+        controller: $1Ctrl
+    };
+}
+
+componentsModule.directive('$1', $1);
+endsnippet
+
+snippet service "Service boilerplate" b
+'use strict';
+
+var servicesModule = require('./');
+
+function $1($2) {
+		//var $1 = {};
+		//$1.functionName = function() {
+		//}
+		$3
+}
+
+
+servicesModule.service('$1', $1);
 endsnippet

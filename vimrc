@@ -240,7 +240,6 @@ nnoremap <leader>u :GundoToggle<CR>
 " Fugitive
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 nnoremap <leader>s :Gstatus<cr>
-nnoremap <leader>m :Gsplit<cr>
 nnoremap <leader>d :Gvdiff<cr>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -256,6 +255,8 @@ nnoremap <leader>d :Gvdiff<cr>
 let g:ctrlp_by_filename = 1
 let g:ctrlp_regexp = 0
 let g:ctrlp_map = '<leader>t'
+nnoremap <leader>m :CtrlPMRU<cr>
+nnoremap <leader>b :CtrlPBuffer<cr>
 
 " ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 " Silver Search (ag)
@@ -352,7 +353,6 @@ let g:localrc_filename = ".local.vimrc"
 command W w !sudo tee % >/dev/null
 
 :set number
-
 
 " Quit window in vim with NERDTree active
 nnoremap <leader>q :qa<cr>

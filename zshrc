@@ -35,3 +35,5 @@ function zle-line-init zle-keymap-select {
 
 zle -N zle-line-init
 zle -N zle-keymap-select
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting

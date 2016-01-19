@@ -120,3 +120,6 @@
 [submodule "bundle/vim-autotag"]
 	path = bundle/vim-autotag
 	url = https://github.com/craigemery/vim-autotag
+[submodule "bundle/bufexplorer"]
+	path = bundle/bufexplorer
+	url = https://github.com/jlanzarotta/bufexplorer
