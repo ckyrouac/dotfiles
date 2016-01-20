@@ -123,3 +123,9 @@
 [submodule "bundle/bufexplorer"]
 	path = bundle/bufexplorer
 	url = https://github.com/jlanzarotta/bufexplorer
+[submodule "bundle/vim-jsbeautify"]
+	path = bundle/vim-jsbeautify
+	url = https://github.com/maksimr/vim-jsbeautify
+[submodule "bundle/vim-localvimrc"]
+	path = bundle/vim-localvimrc
+	url = https://github.com/embear/vim-localvimrc
