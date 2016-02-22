@@ -1,8 +1,7 @@
 URxvt.termName: xterm-256color
 URxvt.foreground: white
 URxvt.background: #2E3436
-!URxvt.font: xft:Terminus:pixelsize=14:antialias=true:hinting=true,xft:Meslo\ LG\ S\ for\ Powerline:pixelsize=14
-URxvt.font: xft:Ubuntu\ Mono\ derivative\ Powerline Plus\ Nerd File\ Types\ Mono:pixelsize=18:antialias=true:hinting=true
+URxvt.font: xft:Ubuntu\ Mono\ derivative\ Powerline\ Plus\ Nerd File\ Types\ Mono:pixelsize=18:antialias=true:hinting=true
 URxvt.scrollBar: false
 URxvt.cursorColor: yellow
 URxvt.cursorColor2: black
@@ -46,4 +45,7 @@ rofi.font: Meslo\ LG\ S\ for\ Powerline 14
 rofi.padding: 3
 rofi.lines: 10
 rofi.borderwidth: 3
-
+!colored man pages
+URxvt.colorIT:      #87af5f
+URxvt.colorBD:      #d7d7d7
+URxvt.colorUL:      #87afd7
