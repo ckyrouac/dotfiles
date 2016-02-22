@@ -24,6 +24,8 @@ function setup-vim () {
   ln -s ~/.vim/vimrc ~/.vimrc
   git submodule init
   git submodule update
+  cd bundle/tern_for_vim
+  npm install
   cd bundle/YouCompleteMe
   git submodule update --init --recursive
   cd ~/
@@ -100,7 +102,7 @@ function install-deps () {
   DEPS_INSTALLED=false
   if ([ $DEPS_INSTALLED = false ]); then
     echo "Installing main dependencies..."
-    sudo yum install -y python-devel cmake gcc-c++ autoconf make automake
+    sudo yum install -y python-devel cmake gcc-c++ autoconf make automake node npm
   fi
   DEPS_INSTALLED=true
 }
