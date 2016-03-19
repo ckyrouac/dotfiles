@@ -79,6 +79,7 @@ function setup-git () {
     echo "export PATH=$PATH:/usr/src/git/bin" >> ~/.local.rc
     source ~/.local.rc
   fi
+  sudo yum -y install tig
   git config --global user.name $USERNAME
   git config --global user.email $EMAIL
   git config --global color.diff auto
@@ -95,8 +96,10 @@ function setup-ruby () {
   curl -sSL https://get.rvm.io | bash -s stable
   source /etc/profile.d/rvm.sh
   rvm reload
+  rvm pkg install zlib
   rvm install 2.2.2 --autolibs=disabled
   rvm use 2.2.2 --default
+  gem install git-up
   ruby --version
 }
 
@@ -139,7 +142,7 @@ function setup-devilspie2 () {
 }
 
 function setup-tmux () {
-  sudo yum install tmux
+  sudo yum install tmux xclip
   ln -s ~/.vim/tmux.conf ~/.tmux.conf
 }
 
