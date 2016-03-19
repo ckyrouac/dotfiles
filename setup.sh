@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################
-# this was tested on vanilla rhel6/7 and fedora 21/22
+# this was tested on vanilla rhel6/7 and fedora 21/22/23
 ###############################################################################
 
 function usage () {
@@ -123,7 +123,27 @@ function setup-terminal () {
   xrdb ~/.Xdefaults
 }
 
-while getopts u:e:agvzrths flag; do
+function setup-devilspie2 () {
+  sudo yum install glib2-devel lua-devel libwnck3-devel gtk3-devel
+  mkdir ~/apps
+  cd ~/apps
+  if [ ! -d "./devilspie2"  ]; then
+    git clone git://git.savannah.nongnu.org/devilspie2.git
+  fi
+  cd devilspie2
+  make
+  sudo make install
+
+  mkdir ~/.config/devilspie2
+  cp ~/.vim/devilspie2/main.lua ~/.config/devilspie2/main.lua
+}
+
+function setup-tmux () {
+  sudo yum install tmux
+  ln -s ~/.vim/tmux.conf ~/.tmux.conf
+}
+
+while getopts u:e:agvzxdrths flag; do
   case $flag in
     a) # setup all the things
       SETUP_ALL=true
@@ -142,6 +162,12 @@ while getopts u:e:agvzrths flag; do
       ;;
     t) # setup rxvt terminal
       SETUP_TERMINAL=true
+      ;;
+    x) # setup tmux
+      SETUP_TMUX=true
+      ;;
+    d) # setup devilspie2
+      SETUP_DEVILSPIE2=true
       ;;
     h) # help
       usage
@@ -172,7 +198,7 @@ if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]) && ([ -z "$USERNAME" ] |
   exit 1;
 fi
 
-if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_RUBY ] && [ -z $SETUP_TERMINAL ]); then
+if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_RUBY ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_DEVILSPIE2 ] && [ -z $SETUP_TMUX ]); then
   SETUP_ALL=true
 fi
 
@@ -199,4 +225,14 @@ fi
 if ([ "$SETUP_TERMINAL" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up rxvt terminal..."
   setup-terminal
+fi
+
+if ([ "$SETUP_DEVILSPIE2" = true ] || [ "$SETUP_ALL" = true ]); then
+  echo "Setting up devilspie2..."
+  setup-devilspie2
+fi
+
+if ([ "$SETUP_TMUX" = true ] || [ "$SETUP_ALL" = true ]); then
+  echo "Setting up tmux..."
+  setup-tmux
 fi
