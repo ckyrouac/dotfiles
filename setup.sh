@@ -12,6 +12,7 @@ function usage () {
   echo -en "-z : setup zsh.\n";
   echo -en "-r : setup ruby.\n";
   echo -en "-g : setup git.\n";
+  echo -en "-t : setup rxvt terminal.\n";
   echo -en "-u 'username' : git config --global user.name 'username'. \n";
   echo -en "-e 'email' : git config --global user.email 'email'. \n";
   echo -en "-h : display this message.\n";
@@ -45,7 +46,7 @@ function setup-zsh () {
   ZSH_VERSION=`zsh --version`
   if [[ $REDHAT_VERSION == "Red Hat Enterprise Linux Server release 6"* ]]; then
     install-deps
-    yum install -y ncurses-devel
+    sudo yum install -y ncurses-devel
     cd ~/
     git clone git://git.code.sf.net/p/zsh/code zsh-code
     cd zsh-code
@@ -58,7 +59,7 @@ function setup-zsh () {
     rm -rf ~/zsh-code
     cd ~/.vim
   else
-    yum install -y zsh 
+    sudo yum install -y zsh 
   fi
 
   ~/.vim/setup.zsh
@@ -67,8 +68,8 @@ function setup-zsh () {
 function setup-git () {
   if [[ $REDHAT_VERSION == "Red Hat Enterprise Linux Server release 6"* ]]; then
     install-deps
-    yum remove -y git
-    yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker
+    sudo yum remove -y git
+    sudo yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker
     cd /usr/src
     wget https://git-core.googlecode.com/files/git-1.8.5.3.tar.gz
     tar xzf git-1.8.5.3.tar.gz
@@ -90,6 +91,7 @@ function setup-ruby () {
     zlib-devel libyaml-devel libffi-devel openssl-devel make \
     bzip2 autoconf automake libtool bison iconv-devel
   gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
+  gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
   curl -sSL https://get.rvm.io | bash -s stable
   source /etc/profile.d/rvm.sh
   rvm reload
@@ -107,7 +109,21 @@ function install-deps () {
   DEPS_INSTALLED=true
 }
 
-while getopts u:e:agvzrhs flag; do
+function setup-terminal () {
+  sudo yum install -y rxvt-unicode-256color-ml.x86_64
+  echo "Installing ubuntu-font-family..."
+  cd /usr/share/fonts
+  sudo wget http://font.ubuntu.com/download/ubuntu-font-family-0.83.zip
+  sudo unzip ubuntu-font-family-0.83.zip
+  sudo rm ubuntu-font-family-0.83.zip
+  sudo mv ~/.vim/fonts/Ubuntu Mono derivative Powerline Plus Nerd File Types Mono.ttf /usr/share/fonts/ubuntu-font-family-0.83
+  sudo fc-cache /usr/share/fonts
+  echo "Done."
+  ln -s ~/.vim/Xdefaults ~/.Xdefaults
+  xrdb ~/.Xdefaults
+}
+
+while getopts u:e:agvzrths flag; do
   case $flag in
     a) # setup all the things
       SETUP_ALL=true
@@ -123,6 +139,9 @@ while getopts u:e:agvzrhs flag; do
       ;;
     r) # setup ruby
       SETUP_RUBY=true
+      ;;
+    t) # setup rxvt terminal
+      SETUP_TERMINAL=true
       ;;
     h) # help
       usage
@@ -153,7 +172,7 @@ if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]) && ([ -z "$USERNAME" ] |
   exit 1;
 fi
 
-if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_RUBY ]); then
+if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_RUBY ] && [ -z $SETUP_TERMINAL ]); then
   SETUP_ALL=true
 fi
 
@@ -175,4 +194,9 @@ fi
 if ([ "$SETUP_RUBY" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up ruby..."
   setup-ruby
+fi
+
+if ([ "$SETUP_TERMINAL" = true ] || [ "$SETUP_ALL" = true ]); then
+  echo "Setting up rxvt terminal..."
+  setup-terminal
 fi
