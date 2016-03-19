@@ -13,6 +13,9 @@ function usage () {
   echo -en "-r : setup ruby.\n";
   echo -en "-g : setup git.\n";
   echo -en "-t : setup rxvt terminal.\n";
+  echo -en "-d : setup devilspie2.\n";
+  echo -en "-x : setup tmux.\n";
+  echo -en "-c : setup google chrome.\n";
   echo -en "-u 'username' : git config --global user.name 'username'. \n";
   echo -en "-e 'email' : git config --global user.email 'email'. \n";
   echo -en "-h : display this message.\n";
@@ -107,7 +110,7 @@ function install-deps () {
   DEPS_INSTALLED=false
   if ([ $DEPS_INSTALLED = false ]); then
     echo "Installing main dependencies..."
-    sudo yum install -y python-devel cmake gcc-c++ autoconf make automake node npm
+    sudo yum install -y python-devel cmake gcc-c++ autoconf make automake node npm htop
   fi
   DEPS_INSTALLED=true
 }
@@ -146,7 +149,15 @@ function setup-tmux () {
   ln -s ~/.vim/tmux.conf ~/.tmux.conf
 }
 
-while getopts u:e:agvzxdrths flag; do
+function setup-chrome () {
+  cd /tmp 
+  wget https://dl.google.com/linux/linux_signing_key.pub
+  sudo rpm --import linux_signing_key.pub
+  sudo cp ~/.vim/repos/google-chrome.repo /etc/yum.repos.d/google-chrome.repo
+  sudo yum install google-chrome-stable
+}
+
+while getopts u:e:agvzxcdrths flag; do
   case $flag in
     a) # setup all the things
       SETUP_ALL=true
@@ -171,6 +182,9 @@ while getopts u:e:agvzxdrths flag; do
       ;;
     d) # setup devilspie2
       SETUP_DEVILSPIE2=true
+      ;;
+    c) # setup google chrome
+      SETUP_CHROME=true
       ;;
     h) # help
       usage
@@ -201,7 +215,7 @@ if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]) && ([ -z "$USERNAME" ] |
   exit 1;
 fi
 
-if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_RUBY ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_DEVILSPIE2 ] && [ -z $SETUP_TMUX ]); then
+if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_RUBY ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_DEVILSPIE2 ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_CHROME ]); then
   SETUP_ALL=true
 fi
 
@@ -238,4 +252,9 @@ fi
 if ([ "$SETUP_TMUX" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up tmux..."
   setup-tmux
+fi
+
+if ([ "$SETUP_CHROME" = true ] || [ "$SETUP_ALL" = true ]); then
+  echo "Setting up google chrome..."
+  setup-chrome
 fi
