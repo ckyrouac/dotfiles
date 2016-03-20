@@ -110,7 +110,7 @@ function install-deps () {
   DEPS_INSTALLED=false
   if ([ $DEPS_INSTALLED = false ]); then
     echo "Installing main dependencies..."
-    sudo yum install -y python-devel cmake gcc-c++ autoconf make automake node npm htop
+    sudo yum install -y python-devel cmake gcc-c++ autoconf make automake node npm htop kernel-devel
   fi
   DEPS_INSTALLED=true
 }
@@ -122,7 +122,7 @@ function setup-terminal () {
   sudo wget http://font.ubuntu.com/download/ubuntu-font-family-0.83.zip
   sudo unzip ubuntu-font-family-0.83.zip
   sudo rm ubuntu-font-family-0.83.zip
-  sudo mv ~/.vim/fonts/Ubuntu Mono derivative Powerline Plus Nerd File Types Mono.ttf /usr/share/fonts/ubuntu-font-family-0.83
+  sudo cp ~/.vim/fonts/Ubuntu\ Mono\ derivative\ Powerline\ Plus\ Nerd\ File\ Types\ Mono.ttf /usr/share/fonts/ubuntu-font-family-0.83
   sudo fc-cache /usr/share/fonts
   echo "Done."
   ln -s ~/.vim/Xdefaults ~/.Xdefaults
@@ -217,6 +217,7 @@ fi
 
 if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_RUBY ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_DEVILSPIE2 ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_CHROME ]); then
   SETUP_ALL=true
+  sudo yum update;
 fi
 
 if ([ "$SETUP_VIM" = true ] || [ "$SETUP_ALL" = true ]); then
