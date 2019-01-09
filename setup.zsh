@@ -8,4 +8,4 @@ rm -f ~/.zshrc
 ln -s ~/.vim/zshrc ~/.zshrc
 rm -f ~/.zpreztorc
 ln -s ~/.vim/zpreztorc ~/.zpreztorc
-chsh -s /bin/zsh
+chsh -s /usr/bin/zsh

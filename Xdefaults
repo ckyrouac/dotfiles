@@ -6,34 +6,50 @@ URxvt.scrollBar: false
 URxvt.cursorColor: yellow
 URxvt.cursorColor2: black
 URxvt.cursorBlink: true
-URxvt.perl-ext-common: default,matcher,font-size
+URxvt.perl-ext-common: default,matcher
 URxvt.keysym.C-S-+:     perl:font-size:increase
 URxvt.keysym.C-S--:   perl:font-size:decrease
-!URxvt.keysym.C-S-Up:   perl:font-size:incglobal
-!URxvt.keysym.C-S-Down: perl:font-size:decglobal
+URxvt.keysym.C-S-Up:   perl:font-size:incglobal
+URxvt.keysym.C-S-Down: perl:font-size:decglobal
 URxvt.url-launcher: /usr/bin/google-chrome
 URxvt.matcher.button: 1
-URxvt.iconFile: /usr/share/icons/gnome/32x32/apps/gnome-terminal.png
+URxvt.iconFile: /home/chris/.vim/icons/gnome-terminal.png
 URxvt*keysym.Home: \033[1~
 URxvt*keysym.End: \033[4~
 URxvt.iso14755: False
 URxvt*loginShell: true
 !Terminal colors
+!gray
 *color0:  #2E3436
+!ruby red
 *color1:  #a40000
+!forrest green
 *color2:  #4E9A06
+!gold
 *color3:  #C4A000
+!blue
 *color4:  #3465A4
+!purple
 *color5:  #75507B
+!orange
 *color6:  #ce5c00
+!light gray
 *color7:  #babdb9
+!gray
 *color8:  #555753
+!red/orange
 *color9:  #EF2929
+!lime green
 *color10: #8AE234
+!yellow
 *color11: #FCE94F
+!light blue
 *color12: #729FCF
+!light purple
 *color13: #AD7FA8
+!light orange
 *color14: #fcaf3e
+!white
 *color15: #EEEEEC
 !Rofi
 rofi.background: #2E3436
@@ -49,3 +65,5 @@ rofi.borderwidth: 3
 URxvt.colorIT:      #87af5f
 URxvt.colorBD:      #d7d7d7
 URxvt.colorUL:      #87afd7
+
+Emacs.font: Ubuntu\ Mono-13
