@@ -186,8 +186,7 @@ function setup-devilspie2 () {
 function setup-tmux () {
   sudo yum install tmux xclip
   ln -s ~/.vim/tmux.conf ~/.tmux.conf
-  sudo pip install tmuxp
-  #ln -s ~/.vim/tmuxp ~/.tmuxp
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins
 }
 
 function setup-chrome () {
