@@ -7,10 +7,11 @@ URxvt.cursorColor: yellow
 URxvt.cursorColor2: black
 URxvt.cursorBlink: true
 URxvt.perl-ext-common: default,matcher
-URxvt.keysym.C-S-+:     perl:font-size:increase
-URxvt.keysym.C-S--:   perl:font-size:decrease
+URxvt.keysym.C-Up:     perl:font-size:increase
+URxvt.keysym.C-Down:   perl:font-size:decrease
 URxvt.keysym.C-S-Up:   perl:font-size:incglobal
 URxvt.keysym.C-S-Down: perl:font-size:decglobal
+URxvt.keysym.C-slash: perl:font-size:show
 URxvt.url-launcher: /usr/bin/google-chrome
 URxvt.matcher.button: 1
 URxvt.iconFile: /home/chris/.vim/icons/gnome-terminal.png

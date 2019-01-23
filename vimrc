@@ -29,13 +29,17 @@ Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'mbbill/undotree'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'yangmillstheory/vim-snipe'
+Plug 'ervandew/supertab'
+Plug 'vim-scripts/AutoComplPop'
+Plug 'vim-scripts/L9'
+"Plug 'neomake/neomake'
 " Plug 'nathanaelkane/vim-indent-guides'
 " Javascript
 Plug 'Shutnik/jshint2.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'maksimr/vim-jsbeautify'
-Plug 'ternjs/tern_for_vim'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'Quramy/vim-js-pretty-template'
 " Java
 Plug 'artur-shaik/vim-javacomplete2'
@@ -143,6 +147,7 @@ highlight Visual       ctermbg=3   ctermfg=0
 highlight Pmenu        ctermbg=240 ctermfg=12
 highlight PmenuSel     ctermbg=0   ctermfg=3
 highlight SpellBad     ctermbg=0   ctermfg=1
+highlight Folded       ctermbg=235
 " Indent colors
 let g:indent_guides_auto_colors = 0
 let g:indent_guides_start_level = 2
@@ -183,6 +188,10 @@ call NERDTreeHighlightFile('css', 'cyan', 'none', 'cyan', '#151515')
 call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', '#151515')
 call NERDTreeHighlightFile('js', 'Red', 'none', '#ffa500', '#151515')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', '#151515')
+
+" Neomake
+"call neomake#configure#automake('nrwi', 50)
+
 
 " vim-airline ------------------------------------------------------------------
 let g:airline_theme = 'base16'
@@ -232,7 +241,8 @@ endif
 
 " vim-illuminate ---------------------------------------------------------------
 let g:Illuminate_ftblacklist = ['nerdtree']
-hi link illuminatedWord Visual
+hi link illuminatedWord MatchParen
+"hi illuminatedWord cterm=underline gui=underline
 let g:Illuminate_ftHighlightGroups = {
       \ 'javascript': ['jsFuncArgs', 'jsObjectKey', 'jsFuncCall', 'jsParenIfElse', 'jsIfElseBlock', 'jsParen', 'PreProc', 'Number', 'String'],
       \ 'python': [''],
@@ -245,6 +255,11 @@ nnoremap <leader>it :echo synIDattr(synIDtrans(synID(line("."), col("."), 1)), "
 set pyxversion=3
 set encoding=utf-8
 let g:deoplete#enable_at_startup = 1
+"set completeopt=longest,menuone
+"let g:SuperTabLongestHighlight = 0
+let g:SuperTabDefaultCompletionType = "<c-n>"
+let g:SuperTabLongestHighlight = 0
+:inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Webdevicons ------------------------------------------------------------------
 let g:webdevicons_enable = 1
@@ -293,15 +308,18 @@ endif
 let g:ale_linters = {
   \  'javascript': ['eslint'],
   \  'yaml': ['swaglint'],
-  \  'python': ['flake8']
+  \  'python': ['flake8'],
+  \  'java': ['javac']
 \}
 let g:ale_fixers = {
   \  'javascript': ['eslint'],
-  \  'python': ['autopep8', 'isort']
+  \  'python': ['autopep8', 'isort'],
+  \  'java': []
 \}
 let g:ale_fix_on_save = 1
-let g:ale_echo_msg_format = '%linter% says %s'
+let g:ale_echo_msg_format = '%severity% - %...code...% - %linter% - %s'
 let g:ale_javascript_eslint_use_global = 1
+let g:ale_lint_delay = 20
 
 " Pymode -----------------------------------------------------------------------
 let g:pymode = 1
@@ -329,12 +347,6 @@ let g:pymode_syntax_all = 1
 
 " Java -------------------------------------------------------------------------
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
-let g:deoplete#omni_patterns = {}
-let g:deoplete#omni_patterns.java = '[^. *\t]\.\w*'
-let g:deoplete#auto_completion_start_length = 2
-let g:deoplete#sources = {}
-let g:deoplete#sources._ = []
-let g:deoplete#file#enable_buffer_path = 1
 nmap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 imap <F4> <Plug>(JavaComplete-Imports-AddSmart)
 nmap <F5> <Plug>(JavaComplete-Imports-Add)
