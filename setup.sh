@@ -141,7 +141,7 @@ function install-deps () {
   if ([ $DEPS_INSTALLED = false ]); then
     if ([ -a /bin/yum ]); then
       echo "Installing dependencies for yum based systems..."
-      sudo yum install -y python-devel cmake gcc-c++ autoconf make automake node npm htop kernel-devel the_silver_searcher libXau-devel.x86_64 libxcb-devel.x86_64 libXaw-devel.x86_64 libXcm-devel.x86_64 libxdo-devel.x86_64 libXres-devel.x86_64 libxnm-devel.x86_64	
+      sudo yum install -y python-devel cmake gcc-c++ autoconf make automake node npm htop kernel-devel the_silver_searcher fd-find libXau-devel.x86_64 libxcb-devel.x86_64 libXaw-devel.x86_64 libXcm-devel.x86_64 libxdo-devel.x86_64 libXres-devel.x86_64 libxnm-devel.x86_64	
     elif ([ -a /bin/apt ]); then
       #TODO find equivelents for:
       #     - kernel-devel
