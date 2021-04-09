@@ -102,7 +102,7 @@ function setup-git () {
   if [[ $REDHAT_VERSION == "Red Hat Enterprise Linux Server release 6"* ]]; then
     install-deps
     sudo yum remove -y git
-    sudo yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker
+    sudo yum install -y curl-devel expat-devel gettext-devel openssl-devel zlib-devel perl-ExtUtils-MakeMaker maim
     cd /usr/src
     wget https://git-core.googlecode.com/files/git-1.8.5.3.tar.gz
     tar xzf git-1.8.5.3.tar.gz
