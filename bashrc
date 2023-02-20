@@ -20,9 +20,17 @@ alias v='vim'
 alias json='python -mjson.tool'
 alias p='pgrep -fa'
 alias viewimage='feh'
+alias kc='kubectl'
+function kcn {
+    kubectl config set-context --current --namespace=$1
+}
+function kubecluster {
+    kubectl config use-context $1
+}
+alias kcp='kubectl get pods'
 
-export EDITOR='vim'
-export VISUAL='vim'
+export EDITOR='nvim'
+export VISUAL='nvim'
 export TERMINAL='urxvt256c-ml'
 export GOPATH=~/dev/projects/active/gopath
 export PATH=$PATH:${GOPATH//://bin:}/bin
@@ -31,18 +39,12 @@ export PATH=$PATH:/usr/pgsql-9.3/bin
 export PATH=$PATH:/home/chris/bin/minishift/minishift-1.34.2-linux-amd64
 export PATH=$PATH:/home/chris/bin/crc
 export PATH=$PATH:/usr/local/kubebuilder/bin
+export PATH=$PATH:/home/chris/bin
+export PATH=$PATH:/home/chris/.rover/bin
 
 #java
 export JAVA_HOME=/home/chris/java-home
 export PATH=$PATH:/home/chris/maven
-
-#python
-export PATH=$PATH:/home/chris/.local/bin
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-    eval "$(pyenv init -)"
-fi
 
 #android
 export PATH=$PATH:/home/chris/Android/Sdk/platform-tools
@@ -61,6 +63,13 @@ alias gnb='git checkout -b'
 
 source ~/.local.rc
 
+#projects
+alias inventory='cd ~/dev/projects/active/insights-host-inventory'
+alias xjoin-operator='cd ~/dev/projects/active/xjoin-operator'
+alias cyndi='cd ~/dev/projects/active/cyndi'
+alias xjoin-search='cd ~/dev/projects/active/xjoin-search'
+alias appsre='cd ~/dev/projects/active/app-interface'
+
 ###############################################################################
 # Unused
 ###############################################################################
@@ -78,6 +87,8 @@ export PATH=$HOME/.node/bin:$PATH
 export NODE_PATH=$HOME/.node/lib/node_modules:$NODE_PATH
 export MANPATH="$HOME/.node/share/man:$MANPATH"  
 
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
 # execute `ls` when no command entered
 #precmd() { 
   #CUR_HIST=`history -t "%T" -1`
@@ -87,8 +98,21 @@ export MANPATH="$HOME/.node/share/man:$MANPATH"
   #PRE_HIST=$CUR_HIST
 #}
 
+#python
+export PATH=$PATH:/home/chris/.local/bin
+ export PYENV_ROOT="$HOME/.pyenv"
+ export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi
+
+#vim
+alias vim='nvim'
+
+
 source <(oc completion zsh)
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/chris/.sdkman"
 [[ -s "/home/chris/.sdkman/bin/sdkman-init.sh" ]] && source "/home/chris/.sdkman/bin/sdkman-init.sh"
+source "/home/chris/.rover/env"

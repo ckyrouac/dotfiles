@@ -18,7 +18,7 @@ Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'terryma/vim-expand-region'
 Plug 'jlanzarotta/bufexplorer'
-Plug 'w0rp/ale'
+"Plug 'w0rp/ale'
 Plug 'Chiel92/vim-autoformat'
 Plug 'terryma/vim-smooth-scroll'
 Plug 'xolox/vim-notes'
@@ -30,6 +30,7 @@ Plug 'roxma/vim-hug-neovim-rpc'
 Plug 'mbbill/undotree'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'yangmillstheory/vim-snipe'
+Plug 'jparise/vim-graphql'
 "Plug 'ervandew/supertab'
 "Plug 'vim-scripts/AutoComplPop'
 Plug 'vim-scripts/L9'
@@ -121,7 +122,8 @@ nnoremap <A-1> :NERDTreeToggle<cr>
 nnoremap <leader>z :setlocal spell! spelllang=en_us<CR>
 " Bufkill
 map <leader>q :BD<CR>
-set <a-s-w>=W
+" TODO
+"set <a-s-w>=W
 nnoremap <a-s-w> :Bufonly
 " Undo
 nnoremap <leader>u :GundoToggle<CR>
@@ -404,7 +406,7 @@ nnoremap <leader>it :echo synIDattr(synIDtrans(synID(line("."), col("."), 1)), "
 " Deoplete ---------------------------------------------------------------------
 set pyxversion=3
 set encoding=utf-8
-let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 0
 call g:deoplete#custom#option('on_insert_enter', v:false)
 "set completeopt=longest,menuone
 "let g:SuperTabLongestHighlight = 0
@@ -459,24 +461,24 @@ if v:version >= 700
 endif
 
 " ale --------------------------------------------------------------------------
-let g:ale_linters = {
-  \  'javascript': ['eslint'],
-  \  'yaml': ['swaglint'],
-  \  'python': ['flake8'],
-  \  'java': ['javac']
-\}
-let g:ale_fixers = {
-  \  'javascript': ['eslint'],
-  \  'python': ['autopep8', 'isort'],
-  \  'java': []
-\}
-let g:ale_fix_on_save = 1
-let g:ale_echo_msg_format = '%severity% - %...code...% - %linter% - %s'
-let g:ale_javascript_eslint_use_global = 1
-let g:ale_lint_delay = 20
+"let g:ale_linters = {
+  "\  'javascript': ['eslint'],
+  "\  'yaml': ['swaglint'],
+  "\  'python': ['flake8'],
+  "\  'java': ['javac']
+"\}
+"let g:ale_fixers = {
+  "\  'javascript': ['eslint'],
+  "\  'python': ['autopep8', 'isort'],
+  "\  'java': []
+"\}
+"let g:ale_fix_on_save = 1
+"let g:ale_echo_msg_format = '%severity% - %...code...% - %linter% - %s'
+"let g:ale_javascript_eslint_use_global = 0
+"let g:ale_lint_delay = 20
 
 " Pymode -----------------------------------------------------------------------
-let g:pymode = 1
+let g:pymode = 0
 let g:pymode_options = 1
 let g:pymode_quickfix_minheight = 3
 let g:pymode_quickfix_maxheight = 6
@@ -523,6 +525,10 @@ autocmd BufRead,BufNewFile /home/chris/dev/projects/active/telemetryapi/*.js set
 autocmd BufRead,BufNewFile /home/chris/dev/projects/active/*.js setlocal ts=4 sw=4 et
 
 " end --------------------------------------------------------------------------
+"
+
+" vim-clutch
+nnoremap <c-f> :startinsert<cr>
 
 packloadall
 silent! helptags ALL
