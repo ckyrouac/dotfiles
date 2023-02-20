@@ -10,12 +10,9 @@ function usage () {
   echo -en "-a : setup everything. Takes precedent over other flags. This is default.\n";
   echo -en "-v : setup vim.\n";
   echo -en "-z : setup zsh.\n";
-  echo -en "-r : setup ruby.\n";
   echo -en "-g : setup git.\n";
   echo -en "-t : setup rxvt terminal.\n";
-  echo -en "-d : setup devilspie2.\n";
   echo -en "-x : setup tmux.\n";
-  echo -en "-c : setup google chrome.\n";
   echo -en "-u 'username' : git config --global user.name 'username'. \n";
   echo -en "-e 'email' : git config --global user.email 'email'. \n";
   echo -en "-h : display this message.\n";
@@ -119,23 +116,6 @@ function setup-git () {
   git config --global color.status auto
 }
 
-# tested on rhel7 only
-function setup-ruby () {
-  sudo yum install -y gcc-c++ patch readline readline-devel zlib \
-    zlib-devel libyaml-devel libffi-devel openssl-devel make \
-    bzip2 autoconf automake libtool bison iconv-devel
-  gpg --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-  gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3
-  curl -sSL https://get.rvm.io | bash -s stable
-  source /etc/profile.d/rvm.sh
-  rvm reload
-  rvm pkg install zlib
-  rvm install 2.2.2 --autolibs=disabled
-  rvm use 2.2.2 --default
-  gem install git-up
-  ruby --version
-}
-
 function install-deps () {
   DEPS_INSTALLED=false
   if ([ $DEPS_INSTALLED = false ]); then
@@ -168,41 +148,11 @@ function setup-terminal () {
   xrdb ~/.Xdefaults
 }
 
-function setup-devilspie2 () {
-  sudo yum install glib2-devel lua-devel libwnck3-devel gtk3-devel
-  mkdir ~/apps
-  cd ~/apps
-  if [ ! -d "./devilspie2"  ]; then
-    git clone git://git.savannah.nongnu.org/devilspie2.git
-  fi
-  cd devilspie2
-  make
-  sudo make install
-
-  mkdir ~/.config/devilspie2
-  cp ~/.vim/devilspie2/main.lua ~/.config/devilspie2/main.lua
-}
-
 function setup-tmux () {
   sudo yum install tmux xclip
   ln -s ~/.vim/tmux.conf ~/.tmux.conf
+  ln -s ~/.vim/powerline ~/.config/powerline
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins
-}
-
-function setup-chrome () {
-  cd /tmp 
-  wget https://dl.google.com/linux/linux_signing_key.pub
-  sudo rpm --import linux_signing_key.pub
-  sudo cp ~/.vim/repos/google-chrome.repo /etc/yum.repos.d/google-chrome.repo
-  sudo yum install google-chrome-stable
-}
-
-function setup-gnome () {
-  sudo yum install xdotool wmctrl gnome-tweak-tool
-  # setup ~/bin
-  # import dconf settings
-  # setup gnome-shortcuts
-  #    ./gnome-settings/create-links.sh
 }
 
 while getopts u:e:agvzxcdrths flag; do
@@ -219,20 +169,11 @@ while getopts u:e:agvzxcdrths flag; do
     z) # setup zsh
       SETUP_ZSH=true
       ;;
-    r) # setup ruby
-      SETUP_RUBY=true
-      ;;
     t) # setup rxvt terminal
       SETUP_TERMINAL=true
       ;;
     x) # setup tmux
       SETUP_TMUX=true
-      ;;
-    d) # setup devilspie2
-      SETUP_DEVILSPIE2=true
-      ;;
-    c) # setup google chrome
-      SETUP_CHROME=true
       ;;
     h) # help
       usage
@@ -263,7 +204,7 @@ if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]) && ([ -z "$USERNAME" ] |
   exit 1;
 fi
 
-if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_RUBY ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_DEVILSPIE2 ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_CHROME ]); then
+if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ]; then
   SETUP_ALL=true
   sudo yum update;
 fi
@@ -283,32 +224,12 @@ if ([ "$SETUP_ZSH" = true ] || [ "$SETUP_ALL" = true ]); then
   setup-zsh
 fi
 
-if ([ "$SETUP_RUBY" = true ] || [ "$SETUP_ALL" = true ]); then
-  echo "Setting up ruby..."
-  setup-ruby
-fi
-
 if ([ "$SETUP_TERMINAL" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up rxvt terminal..."
   setup-terminal
 fi
 
-if ([ "$SETUP_DEVILSPIE2" = true ] || [ "$SETUP_ALL" = true ]); then
-  echo "Setting up devilspie2..."
-  setup-devilspie2
-fi
-
 if ([ "$SETUP_TMUX" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up tmux..."
   setup-tmux
-fi
-
-if ([ "$SETUP_CHROME" = true ] || [ "$SETUP_ALL" = true ]); then
-  echo "Setting up google chrome..."
-  setup-chrome
-fi
-
-if ([ "$SETUP_GNOME" = true ] || [ "$SETUP_ALL" = true ]); then
-  echo "Setting up gnome..."
-  setup-gnome
 fi
