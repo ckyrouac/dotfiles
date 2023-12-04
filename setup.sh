@@ -18,6 +18,13 @@ function usage () {
   echo -en "-h : display this message.\n";
 }
 
+function setup-nvim () {
+  cd ~/.vim
+  mv ~/.vimrc ~/.vimrc.orig
+  ln -s ~/.vim/vimrc ~/.vimrc
+  ln -s ~/.vim/nvim_init.vim ~/.config/nvim/init.vim
+}
+
 function setup-vim () {
   install-deps
 
@@ -48,7 +55,7 @@ function setup-vim () {
 	sudo make install
 
   #setup vim config
-	cd ~/.vim
+  cd ~/.vim
   mv ~/.vimrc ~/.vimrc.orig
   ln -s ~/.vim/vimrc ~/.vimrc
 
@@ -66,6 +73,9 @@ function setup-vim () {
 }
 
 function setup-zsh () {
+  sudo yum install zsh util-linux-user trash-cli dejavu-fonts-all
+  mkdir -p ~/.config/run-or-raise
+  ln -s ~/.vim/shortcuts.conf ~/.config/run-or-raise/shortcuts.conf
   mv ~/.bashrc ~/.bashrc.orig
   ln -s ~/.vim/bashrc ~/.bashrc
   touch ~/.local.rc
@@ -135,7 +145,9 @@ function install-deps () {
 }
 
 function setup-terminal () {
-  sudo yum install -y rxvt-unicode-256color-ml.x86_64
+  mkdir -p ~/.urxvt/ext/
+  ln -s ~/.vim/resize-font ~/.urxvt/ext/resize-font
+  sudo yum install -y rxvt-unicode 
   echo "Installing ubuntu-font-family..."
   cd /usr/share/fonts
   sudo wget http://font.ubuntu.com/download/ubuntu-font-family-0.83.zip
@@ -149,7 +161,7 @@ function setup-terminal () {
 }
 
 function setup-tmux () {
-  sudo yum install tmux xclip
+  sudo yum install tmux xclip powerline powerline-tmux
   ln -s ~/.vim/tmux.conf ~/.tmux.conf
   ln -s ~/.vim/powerline ~/.config/powerline
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins
@@ -204,14 +216,14 @@ if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]) && ([ -z "$USERNAME" ] |
   exit 1;
 fi
 
-if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ]; then
+if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ]); then
   SETUP_ALL=true
   sudo yum update;
 fi
 
 if ([ "$SETUP_VIM" = true ] || [ "$SETUP_ALL" = true ]); then
   echo "Setting up vim..."
-  setup-vim
+  setup-nvim
 fi
 
 if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]); then

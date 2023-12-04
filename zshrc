@@ -46,6 +46,12 @@ export SDKMAN_DIR="/home/chris/.sdkman"
 
 [[ -s "/home/chris/.gvm/scripts/gvm" ]] && source "/home/chris/.gvm/scripts/gvm"
 
-export GOPATH=~/dev/projects/active/gopath
+export GOPATH=~/projects/gopath
 export PATH=$PATH:${GOPATH//://bin:}/bin
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export LIBVA_DRIVER_NAME=iHD
