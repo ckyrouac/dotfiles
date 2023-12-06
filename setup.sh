@@ -26,19 +26,21 @@ function info_msg () {
   echo -en "********************************************************************************\n\n"
 }
 
-DEPS_INSTALLED=false
-function install-deps () {
-  if ([ $DEPS_INSTALLED = false ]); then
-      info_msg "Installing deps"
-      sudo yum install -y python-devel cmake gcc-c++ autoconf make automake node npm htop kernel-devel the_silver_searcher fd-find libXau-devel.x86_64 libxcb-devel.x86_64 libXaw-devel.x86_64 libXcm-devel.x86_64 libxdo-devel.x86_64 libXres-devel.x86_64 libxnm-devel.x86_64	htop zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip
-  fi
-  DEPS_INSTALLED=true
+function error () {
+  usage;
+  echo -en "\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+  echo -en "!!!! ERROR $1\n"
+  echo -en "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n\n"
+  exit 1;
 }
+
+info_msg "Installing deps"
+sudo yum update
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc
 
 function setup-gnome () {
   set +e
-  mv ~/.local/share/applications ~/.vim/applications
-  rm ~/.local/share/applications
+  rm -rf ~/.local/share/applications
   set -e
   ln -s ~/.vim/applications ~/.local/share/applications
 
@@ -52,30 +54,44 @@ function setup-gnome () {
   rm ~/.config/run-or-raise/shortcuts.conf
   set -e
   ln -s ~/.vim/gnome/shortcuts.conf ~/.config/run-or-raise/shortcuts.conf
+
+  cp ~/.vim/bin/* ~/bin
+
+  dconf load -f /org/gnome/ < ~/.vim/gnome/gnome-backup.dconf
   info_msg "Done setting up Gnome"
 }
 
-
-
 function setup-nvim () {
   cd ~/.vim
+  set +e
   mv ~/.vimrc ~/.vimrc.orig
+  set -e
   ln -s ~/.vim/vimrc ~/.vimrc
+
+  mkdir -p ~/.config/nvim
+  set +e
+  rm ~/.config/nvim/init.vim
+  set -e
   ln -s ~/.vim/nvim_init.vim ~/.config/nvim/init.vim
+
+  nvim --headless +PlugInstall +qall
 }
 
 function setup-zsh () {
+  set +e
   mv ~/.bashrc ~/.bashrc.orig
+  set -e
   ln -s ~/.vim/bashrc ~/.bashrc
   touch ~/.local.rc
+  set +e
   mv ~/.zshrc ~/.zshrc.orig
+  set -e
   ln -s ~/.vim/zshrc ~/.zshrc
   ~/.vim/setup.zsh
   chsh -s /usr/bin/zsh
 }
 
 function setup-git () {
-  sudo yum -y install tig
   git config --global user.name $USERNAME
   git config --global user.email $EMAIL
   git config --global color.diff auto
@@ -83,26 +99,35 @@ function setup-git () {
 }
 
 function setup-terminal () {
-  echo "Installing ubuntu-font-family..."
   cd /usr/share/fonts
-  sudo wget http://font.ubuntu.com/download/ubuntu-font-family-0.83.zip
-  sudo unzip ubuntu-font-family-0.83.zip
-  sudo rm ubuntu-font-family-0.83.zip
   sudo cp ~/.vim/fonts/Ubuntu\ Mono\ derivative\ Powerline\ Plus\ Nerd\ File\ Types\ Mono.ttf /usr/share/fonts/ubuntu-font-family-0.83
   sudo fc-cache /usr/share/fonts
-  echo "Done."
 
-  mkdir -p ~/bin/st
-  cd ~/bin/st
+  set +e
+  mkdir -p ~/bin
+  cd ~/bin
   git clone git://git.suckless.org/st
+  set -e
+  cd ~/bin/st
   cp ~/.vim/st/config.h ~/bin/st/config.h
-  sudo yum install make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel
   sudo make clean install
+  cd ~/.vim
 }
 
 function setup-tmux () {
+  set +e
+  rm ~/.tmux.conf
   ln -s ~/.vim/tmux.conf ~/.tmux.conf
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins
+  set -e
+  ~/.tmux/plugins/scripts/install_plugins.sh
+  set +e
+  rm -rf ~/.config/tmux-powerline
+  tmux new-session -d -s terminal-dropdown
+  tmux new-session -d -s terminal-devel
+  set -e
+
+  ln -s ~/.vim/tmux/tmux-powerline ~/.config/tmux-powerline
 }
 
 while getopts u:e:agvzxcdrths flag; do
@@ -149,22 +174,18 @@ while getopts u:e:agvzxcdrths flag; do
   esac
 done
 
-if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]) && ([ -z "$USERNAME" ] || [ -z "$EMAIL" ]); then
-  info_msg -en "\n"
-  info_msg -en "Must provide -u 'username' and -e 'email' when setting up git!\n"
-  info_msg -en "\n"
-  usage;
-  exit 1;
-fi
-
 if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ]); then
   info_msg "Defaulting to setup all"
   SETUP_ALL=true
-  sudo yum update;
 fi
 
+if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]) && ([ -z "$USERNAME" ] || [ -z "$EMAIL" ]); then
+  error "Must provide -u 'username' and -e 'email' when setting up git";
+fi
+
+
 if ([ "$SETUP_VIM" = true ] || [ "$SETUP_ALL" = true ]); then
-  info_msg "Setting up vim"
+  info_msg "Setting up Neovim"
   setup-nvim
 fi
 
@@ -179,7 +200,7 @@ if ([ "$SETUP_ZSH" = true ] || [ "$SETUP_ALL" = true ]); then
 fi
 
 if ([ "$SETUP_TERMINAL" = true ] || [ "$SETUP_ALL" = true ]); then
-  info_msg "Setting up rxvt terminal"
+  info_msg "Setting up st terminal"
   setup-terminal
 fi
 

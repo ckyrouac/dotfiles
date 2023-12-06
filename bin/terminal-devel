@@ -1,0 +1,2 @@
+#!/bin/bash
+`st -t "terminal-devel" -e tmux attach-session -t terminal-devel`
