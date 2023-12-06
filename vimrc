@@ -7,7 +7,6 @@ Plug 'tpope/vim-sensible'
 Plug 'rking/ag.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'scrooloose/nerdtree'
-Plug 'edkolev/tmuxline.vim'
 Plug 'bling/vim-airline'
 Plug 'moll/vim-bbye'
 Plug 'tpope/vim-surround'
@@ -82,10 +81,9 @@ set laststatus=2                  " always show status bar
 set clipboard=unnamedplus         " use the system clipboard
 set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
-set ts=4                          " set indent to 2 spaces
+set ts=2                          " set indent to 2 spaces
 set shiftwidth=2
 set regexpengine=2
-set ts=4 sw=4 et
 let g:notes_directories = ['/home/chris/google-drive/notes'] " vim-notes
 set t_ut= " fix background colors
 set splitbelow
@@ -354,7 +352,6 @@ let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#buffer_min_count = 2
 let g:airline#extensions#tabline#tab_min_count = 2
-let g:airline#extensions#tmuxline#enabled = 0
 
 " CtrlP File Nav ---------------------------------------------------------------
 let g:ctrlp_by_filename = 1

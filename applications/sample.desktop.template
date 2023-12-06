@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Discord
+GenericName=Discord
+Icon=insync
+Exec=~/bin/Discord/Discord
+Terminal=false
