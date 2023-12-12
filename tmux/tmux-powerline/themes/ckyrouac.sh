@@ -27,13 +27,8 @@ TMUX_POWERLINE_DEFAULT_RIGHTSIDE_SEPARATOR=${TMUX_POWERLINE_DEFAULT_RIGHTSIDE_SE
 
 if [ -z $TMUX_POWERLINE_WINDOW_STATUS_CURRENT ]; then
 	TMUX_POWERLINE_WINDOW_STATUS_CURRENT=(
-		"#[$(format inverse)]" \
-		"$TMUX_POWERLINE_DEFAULT_LEFTSIDE_SEPARATOR" \
-		" #I#F " \
-		"$TMUX_POWERLINE_SEPARATOR_RIGHT_THIN" \
-		" #W " \
-		"#[$(format regular)]" \
-		"$TMUX_POWERLINE_DEFAULT_LEFTSIDE_SEPARATOR"
+		"#[bg=#3465A4,fg=#262626]" \
+		" #I #W " \
 	)
 fi
 
@@ -45,10 +40,8 @@ fi
 
 if [ -z $TMUX_POWERLINE_WINDOW_STATUS_FORMAT ]; then
 	TMUX_POWERLINE_WINDOW_STATUS_FORMAT=(
-		"#[$(format regular)]" \
-		"  #I#{?window_flags,#F, } " \
-		"$TMUX_POWERLINE_SEPARATOR_RIGHT_THIN" \
-		" #W "
+		"#[fg=#3465A4,bg=#262626]" \
+		" #I #W " \
 	)
 fi
 
@@ -87,7 +80,7 @@ if [ -z $TMUX_POWERLINE_LEFT_STATUS_SEGMENTS ]; then
 		#"ifstat_sys 30 255" \
 		#"lan_ip 24 255 ${TMUX_POWERLINE_SEPARATOR_RIGHT_THIN}" \
 		#"wan_ip 24 255" \
-		"vcs_branch 29 88" \
+		"vcs_branch #c4a000 234" \
 		#"vcs_compare 60 255" \
 		#"vcs_staged 64 255" \
 		#"vcs_modified 9 255" \
@@ -98,7 +91,7 @@ fi
 if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 	TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS=(
 		#"earthquake 3 0" \
-		"pwd #AD7FA8 234" \
+		"pwd #c4a000 234" \
 		#"macos_notification_count 29 255" \
 		#"mailcount 9 255" \
 		#"now_playing 234 37" \
@@ -109,9 +102,9 @@ if [ -z $TMUX_POWERLINE_RIGHT_STATUS_SEGMENTS ]; then
 		#"weather 37 255" \
 		#"rainbarf 0 ${TMUX_POWERLINE_DEFAULT_FOREGROUND_COLOR}" \
 		#"xkb_layout 125 117" \
-		"date_day #3465A4 234" \
-		"date #3465A4 234 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
-		"time #3465A4 234 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
+		"date_day #3465A4 237" \
+		"date #3465A4 237 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
+		"time #3465A4 237 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
 		#"utc_time 235 136 ${TMUX_POWERLINE_SEPARATOR_LEFT_THIN}" \
 	)
 fi
