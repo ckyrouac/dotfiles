@@ -36,7 +36,7 @@ function error () {
 
 info_msg "Installing deps"
 sudo yum update
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep
 
 function setup-gnome () {
   set +e
@@ -100,7 +100,7 @@ function setup-git () {
 
 function setup-terminal () {
   cd /usr/share/fonts
-  sudo cp ~/.vim/fonts/Ubuntu\ Mono\ derivative\ Powerline\ Plus\ Nerd\ File\ Types\ Mono.ttf /usr/share/fonts/ubuntu-font-family-0.83
+  sudo cp -r ~/.vim/fonts/UbuntuMono /usr/share/fonts
   sudo fc-cache /usr/share/fonts
 
   set +e
