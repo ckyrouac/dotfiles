@@ -12,9 +12,10 @@ function usage () {
   echo -en "-v : setup vim.\n";
   echo -en "-z : setup zsh.\n";
   echo -en "-g : setup git.\n";
-  echo -en "-t : setup rxvt terminal.\n";
+  echo -en "-t : setup st terminal.\n";
   echo -en "-x : setup tmux.\n";
   echo -en "-d : setup gnome\n";
+  echo -en "-p : setup programming languages\n";
   echo -en "-u 'username' : git config --global user.name 'username'. \n";
   echo -en "-e 'email' : git config --global user.email 'email'. \n";
   echo -en "-h : display this message.\n";
@@ -36,7 +37,7 @@ function error () {
 
 info_msg "Installing deps"
 sudo yum update
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison
 
 function setup-gnome () {
   set +e
@@ -125,7 +126,24 @@ function setup-tmux () {
   ln -s ~/.vim/tmux/tmux-powerline ~/.config/tmux-powerline
 }
 
-while getopts u:e:agvzxcdrths flag; do
+function setup-programming-languages () {
+  #go
+  set +e
+  bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+  source /home/chris/.gvm/scripts/gvm
+  set -e
+
+  gvm install go1.4 -B
+  gvm use go1.4
+  export GOROOT_BOOTSTRAP=$GOROOT
+  gvm install go1.17.13
+  gvm use go1.17.13
+  export GOROOT_BOOTSTRAP=$GOROOT
+  gvm install go1.21.5
+  gvm use go1.21.5 --default
+}
+
+while getopts u:e:agvzxcdrthsp flag; do
   case $flag in
     a) # setup all the things
       SETUP_ALL=true
@@ -148,6 +166,9 @@ while getopts u:e:agvzxcdrths flag; do
     d) # setup tmux
       SETUP_GNOME=true
       ;;
+    p) # setup programming languages
+      SETUP_PROGRAMMING_LANGUAGES=true
+      ;;
     h) # help
       usage
       exit 1;
@@ -169,7 +190,7 @@ while getopts u:e:agvzxcdrths flag; do
   esac
 done
 
-if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ]); then
+if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ] && [ -z $SETUP_PROGRAMMING_LANGUAGES ]); then
   info_msg "Defaulting to setup all"
   SETUP_ALL=true
 fi
@@ -207,6 +228,11 @@ fi
 if ([ "$SETUP_GNOME" = true ] || [ "$SETUP_ALL" = true ]); then
   info_msg "Setting up gnome"
   setup-gnome
+fi
+
+if ([ "$SETUP_PROGRAMMING_LANGUAGES" = true ] || [ "$SETUP_ALL" = true ]); then
+  info_msg "Setting up programming languages"
+  setup-programming-languages
 fi
 
 info_msg "Done"
