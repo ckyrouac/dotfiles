@@ -125,7 +125,7 @@ function setup-tmux () {
   tmux new-session -d -s terminal-devel
   set -e
 
-  ln -s ~/.vim/tmux/tmux-powerline ~/.config/tmux-powerline
+  ln -s ~/.vim/tmux/tmux-powerline ~/.config
 }
 
 function setup-programming-languages () {
