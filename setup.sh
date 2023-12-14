@@ -35,10 +35,6 @@ function error () {
   exit 1;
 }
 
-info_msg "Installing deps"
-sudo yum update
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison
-
 function setup-gnome () {
   set +e
   rm -rf ~/.local/share/applications
@@ -105,7 +101,13 @@ function setup-terminal () {
   git clone git://git.suckless.org/st
   set -e
   cd ~/bin/st
-  cp ~/.vim/st/config.h ~/bin/st/config.h
+
+  set +e
+  rm ~/bin/st/config.h
+  set -e
+
+  ln -s ~/.vim/st/config.h ~/bin/st/config.h
+
   sudo make clean install
   cd ~/.vim
 }
@@ -189,6 +191,10 @@ while getopts u:e:agvzxcdrthsp flag; do
       ;;
   esac
 done
+
+info_msg "Installing deps"
+sudo yum update
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison
 
 if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ] && [ -z $SETUP_PROGRAMMING_LANGUAGES ]); then
   info_msg "Defaulting to setup all"

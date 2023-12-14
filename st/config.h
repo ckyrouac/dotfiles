@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Ubuntu Mono derivative Powerline Plus Nerd File Types Mono:pixelsize=18:antialias=true:autohint=true";
+static char *font = "Ubuntu Mono Nerd Font:pixelsize=18:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*
