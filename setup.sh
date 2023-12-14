@@ -63,18 +63,13 @@ function setup-gnome () {
 
 function setup-nvim () {
   cd ~/.vim
-  set +e
-  mv ~/.vimrc ~/.vimrc.orig
-  set -e
-  ln -s ~/.vim/vimrc ~/.vimrc
-
   mkdir -p ~/.config/nvim
   set +e
   rm ~/.config/nvim/init.vim
+  rm ~/.config/nvim/lazy-lock.json
   set -e
   ln -s ~/.vim/nvim_init.vim ~/.config/nvim/init.vim
-
-  nvim --headless +PlugInstall +qall
+  ln -s ~/.vim/nvim-lazy-lock.json ~/.config/nvim/lazy-lock.json
 }
 
 function setup-zsh () {
