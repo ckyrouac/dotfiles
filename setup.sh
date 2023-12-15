@@ -62,11 +62,11 @@ function setup-nvim () {
   cd ~/.vim
   mkdir -p ~/.config/nvim
   set +e
-  rm ~/.config/nvim/init.vim
+  rm ~/.config/nvim/init.lua
   rm ~/.config/nvim/lazy-lock.json
   set -e
-  ln -s ~/.vim/nvim_init.vim ~/.config/nvim/init.vim
-  ln -s ~/.vim/nvim-lazy-lock.json ~/.config/nvim/lazy-lock.json
+  ln -s ~/.vim/nvim/init.lua ~/.config/nvim/init.lua
+  ln -s ~/.vim/nvim/lazy-lock.json ~/.config/nvim/lazy-lock.json
 }
 
 function setup-zsh () {
