@@ -120,9 +120,9 @@ function setup-tmux () {
   set -e
   ~/.tmux/plugins/scripts/install_plugins.sh
   set +e
-  rm -rf ~/.config/tmux-powerline
   tmux new-session -d -s terminal-dropdown
   tmux new-session -d -s terminal-devel
+  rm -rf ~/.config/tmux-powerline
   set -e
 
   ln -s ~/.vim/tmux/tmux-powerline ~/.config
