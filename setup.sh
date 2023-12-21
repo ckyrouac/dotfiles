@@ -143,6 +143,14 @@ function setup-programming-languages () {
   export GOROOT_BOOTSTRAP=$GOROOT
   gvm install go1.21.5
   gvm use go1.21.5 --default
+
+  #rust
+  set +e
+  rm /tmp/rustup.sh
+  set -e
+  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -o /tmp/rustup.sh
+  chmod u+x /tmp/rustup.sh
+  /tmp/rustup.sh -y
 }
 
 while getopts u:e:agvzxcdrthsp flag; do
@@ -194,7 +202,7 @@ done
 
 info_msg "Installing deps"
 sudo yum update
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb
 
 if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ] && [ -z $SETUP_PROGRAMMING_LANGUAGES ]); then
   info_msg "Defaulting to setup all"

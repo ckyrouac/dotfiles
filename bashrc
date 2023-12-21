@@ -129,3 +129,4 @@ export SDKMAN_DIR="/home/chris/.sdkman"
 #source "/home/chris/.rover/env"
 
 [[ -s "/home/chris/.gvm/scripts/gvm" ]] && source "/home/chris/.gvm/scripts/gvm"
+. "$HOME/.cargo/env"

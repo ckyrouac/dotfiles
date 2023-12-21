@@ -52,6 +52,19 @@ require('lazy').setup({
   -- Detect tabstop and shiftwidth automatically
   'tpope/vim-sleuth',
 
+  -- Project specific debugger config
+  "ldelossa/nvim-dap-projects",
+
+  -- Debugger UI
+  "rcarriga/nvim-dap-ui",
+  "theHamsta/nvim-dap-virtual-text",
+
+  {
+      'mrcjkb/rustaceanvim',
+      version = '^3', -- Recommended
+      ft = { 'rust' },
+  },
+
   -- NOTE: This is where your plugins related to LSP can be installed.
   --  The configuration is done below. Search for lspconfig to find it below.
   {
@@ -404,6 +417,38 @@ local function telescope_live_grep_open_files()
   }
 end
 
+-- Debugger keybinds
+vim.keymap.set("n", "<F4>", ":lua require('dapui').toggle()<CR>")
+vim.keymap.set("n", "<F5>", ":lua require('dap').toggle_breakpoint()<CR>")
+vim.keymap.set("n", "<F9>", ":lua require('dap').continue()<CR>")
+
+vim.keymap.set("n", "<F1>", ":lua require('dap').step_over()<CR>")
+vim.keymap.set("n", "<F2>", ":lua require('dap').step_into()<CR>")
+vim.keymap.set("n", "<F3>", ":lua require('dap').step_out()<CR>")
+
+vim.keymap.set("n", "<Leader>dsc", ":lua require('dap').continue()<CR>")
+vim.keymap.set("n", "<Leader>dsv", ":lua require('dap').step_over()<CR>")
+vim.keymap.set("n", "<Leader>dsi", ":lua require('dap').step_into()<CR>")
+vim.keymap.set("n", "<Leader>dso", ":lua require('dap').step_out()<CR>")
+
+vim.keymap.set("n", "<Leader>dhh", ":lua require('dap.ui.variables').hover()<CR>")
+vim.keymap.set("v", "<Leader>dhv", ":lua require('dap.ui.variables').visual_hover()<CR>")
+
+vim.keymap.set("n", "<Leader>duh", ":lua require('dap.ui.widgets').hover()<CR>")
+vim.keymap.set("n", "<Leader>duf", ":lua local widgets=require('dap.ui.widgets');widgets.centered_float(widgets.scopes)<CR>")
+
+vim.keymap.set("n", "<Leader>dro", ":lua require('dap').repl.open()<CR>")
+vim.keymap.set("n", "<Leader>drl", ":lua require('dap').repl.run_last()<CR>")
+
+vim.keymap.set("n", "<Leader>dbc", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>")
+vim.keymap.set("n", "<Leader>dbm", ":lua require('dap').set_breakpoint({ nil, nil, vim.fn.input('Log point message: ') })<CR>")
+vim.keymap.set("n", "<Leader>dbt", ":lua require('dap').toggle_breakpoint()<CR>")
+
+vim.keymap.set("n", "<Leader>dc", ":lua require('dap.ui.variables').scopes()<CR>")
+vim.keymap.set("n", "<Leader>di", ":lua require('dapui').toggle()<CR>")
+
+vim.keymap.set("n", "<leader>q", ":RustLsp hover actions<CR>")
+
 -- Telescope search keybinds
 vim.keymap.set('n', '<leader>t', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
 vim.keymap.set('n', '<A-t>', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
@@ -553,12 +598,15 @@ require('which-key').register({
 
 -- mason-lspconfig requires that these setup functions are called in this order
 -- before setting up the servers.
-require('mason').setup()
+require('mason').setup({
+  ensure_installed = {},
+  automatic_installation = true
+})
 require('mason-lspconfig').setup()
 
 -- Debuggers
 require("mason-nvim-dap").setup({
-  ensure_installed = { "delve" },
+  ensure_installed = { "delve", "codelldb" },
   automatic_installation = true
 })
 
@@ -574,7 +622,7 @@ local servers = {
   -- clangd = {},
   -- gopls = {},
   -- pyright = {},
-  -- rust_analyzer = {},
+  rust_analyzer = {},
   -- tsserver = {},
   -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -589,7 +637,9 @@ local servers = {
 }
 
 -- Setup neovim lua configuration
-require('neodev').setup()
+require('neodev').setup({
+  library = { plugins = { "nvim-dap-ui" }, types = true },
+})
 
 -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -686,6 +736,41 @@ require("bufferline").setup{}
 
 -- Session management
 require("auto-session").setup{}
+
+-- DAP
+require("nvim-dap-projects").search_project_config()
+require("nvim-dap-virtual-text").setup()
+
+local dap = require("dap")
+local dapui = require("dapui")
+dapui.setup()
+
+dap.listeners.after.event_initialized["dapui_config"] = function()
+  dapui.open()
+end
+dap.listeners.before.event_terminated["dapui_config"] = function()
+  dapui.close()
+end
+dap.listeners.before.event_exited["dapui_config"] = function()
+  dapui.close()
+end
+
+
+require('lspconfig').rust_analyzer.setup {
+  capabilities = capabilities,
+  on_attach = on_attach,
+}
+
+vim.g.rustaceanvim = {
+  -- Plugin configuration
+  tools = {
+		hover_actions = {
+			auto_focus = true,
+		}
+  },
+}
+
+-- vim.lsp.set_log_level("debug")
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
