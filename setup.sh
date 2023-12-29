@@ -104,6 +104,7 @@ function setup-terminal () {
 
   set +e
   rm ~/bin/st/config.h
+  git apply ~/.vim/st/st-glyph-wide-support-20220411-ef05519.diff
   set -e
 
   ln -s ~/.vim/st/config.h ~/bin/st/config.h
