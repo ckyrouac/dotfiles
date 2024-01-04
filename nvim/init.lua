@@ -422,9 +422,9 @@ vim.keymap.set("n", "<F4>", ":lua require('dapui').toggle()<CR>")
 vim.keymap.set("n", "<F5>", ":lua require('dap').toggle_breakpoint()<CR>")
 vim.keymap.set("n", "<F9>", ":lua require('dap').continue()<CR>")
 
-vim.keymap.set("n", "<F1>", ":lua require('dap').step_over()<CR>")
-vim.keymap.set("n", "<F2>", ":lua require('dap').step_into()<CR>")
-vim.keymap.set("n", "<F3>", ":lua require('dap').step_out()<CR>")
+vim.keymap.set("n", "<F8>", ":lua require('dap').step_over()<CR>")
+vim.keymap.set("n", "<F7>", ":lua require('dap').step_into()<CR>")
+vim.keymap.set("n", "<F6>", ":lua require('dap').step_out()<CR>")
 
 vim.keymap.set("n", "<Leader>dsc", ":lua require('dap').continue()<CR>")
 vim.keymap.set("n", "<Leader>dsv", ":lua require('dap').step_over()<CR>")
