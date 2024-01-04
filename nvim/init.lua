@@ -183,7 +183,7 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     opts = {
-      style = 'warmer'
+      style = 'dark'
     },
     config = function(_, opts)
       require("onedark").setup(opts)

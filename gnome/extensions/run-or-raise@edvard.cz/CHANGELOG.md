@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 34
+- fix: layered regex shortcut
+- center-mouse-to-focused-window: Don't move pointer if it's already in the window area
+
+## 33
+- Gio instead of misc/util spawnCommandLine #70 (syslog cleaned up)
+
 ## 32
 - raise-or-register with index #61
 

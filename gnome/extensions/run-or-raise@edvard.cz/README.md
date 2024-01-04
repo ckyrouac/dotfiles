@@ -4,8 +4,26 @@ https://extensions.gnome.org/extension/1336/run-or-raise/
 
 # About project
 
-I assume the run-or-raise style as the most efficient way of handling windows. No more searching for your favourite program in a long menu, no more clicking on the icons. If the program already runs it will get the focus, else we launch it. Several years ago, OS creators finally realized that efficiency and let the users run-or-raise programs on the taskbar or dock by <kbd>Super+number</kbd> shortcuts. But what if you use more programs than nine? What if you do not want the unnecessary taskbar to occupy the precious place on the screen?
-With the emergence of Wayland over X.org in Ubuntu 17.10, we can't reliably use good old [`xbindkeys`](https://wiki.archlinux.org/index.php/Xbindkeys) and [`jumpapp`](https://github.com/mkropat/jumpapp) to master shortcuts. Here is a gnome-shell extension that let you migrate your favourite shortcuts to the `shortcuts.conf` file.
+I assume the run-or-raise style as the most efficient way of handling windows. No more searching for your favourite program in a long menu, no more clicking on the icons. If the program already runs it will get the focus, else we launch it.
+
+Several years ago, OS creators finally realized that efficiency and let the users run-or-raise programs on the taskbar or dock by <kbd>Super+number</kbd> shortcuts. But what if you use more programs than nine? What if you do not want the unnecessary taskbar to occupy the precious place on the screen?
+
+With the emergence of Wayland over X.org, we can't reliably use good old [`xbindkeys`](https://wiki.archlinux.org/index.php/Xbindkeys) and [`jumpapp`](https://github.com/mkropat/jumpapp) to master shortcuts. Here is a gnome-shell extension that let you migrate your favourite shortcuts to the `shortcuts.conf` file.
+
+# Contents
+- [Installation](#installation)
+- [Configuration](#configuration)
+  * [How to create a shortcut](#how-to-create-a-shortcut)
+    + [Shortcut](#shortcut)
+    + [Action: `command`, `wm_class` and `title`](#action-command-wm_class-and-title)
+      - [Understanding `title` and `wm_class`](#understanding-title-and-wm_class)
+      - [Comparison of different matching approaches](#comparison-of-different-matching-approaches)
+    + [Modes](#modes)
+  * [Examples](#examples)
+- [Tips](#tips)
+  * [Barebones “GNOME Shell native” alternative](#barebones-gnome-shell-native-alternative)
+  * [Developer guide](#developer-guide)
+    + [Debugging](#debugging)
 
 # Installation
 
@@ -15,7 +33,7 @@ With the emergence of Wayland over X.org in Ubuntu 17.10, we can't reliably use 
 OR
 * clone this repo to `/home/$USER/.local/share/gnome-shell/extensions/run-or-raise@edvard.cz`
 * reload extensions (e.g. log out in wayland - [details here](https://gjs.guide/extensions/development/creating.html#testing-the-extension))
-* enable run-or-raise in `gnome-shell-extension-prefs` panel
+* enable run-or-raise in `gnome-extensions-app` panel
 * in the extension preferences, you may edit `shortcuts.conf` file to use your own shortcuts
 * you may load new shortcuts without restarting, just change the file `shortcuts.conf`, and disable and enable.
 
@@ -36,7 +54,7 @@ When you trigger a shortcut it lets you cycle amongst open instances of the appl
 
 ### Shortcut
 
-Shortcut consists of an arbitrary number of modifiers (angle brackets) and a character, like `<Shift>a`, `<Shift><Super>a` or simple `a`.
+Shortcut consists of an arbitrary number of modifiers (angle brackets) and a character, like `<Shift>a`, `<Shift><Super>a`, simple `a` or `<Super>slash`. Character might be either a keysym (`a`, `acute`) or a keycode in the hex format, ex: letter *a* with the keycode 38 is noted `0x26`.
 
 For custom shortcuts, I recommended using mostly combinations containing the modifier `<Super>` as this normally indicates global shortcuts. In the opposition to `<Shift>` which is semantically reserved for letter case `a/A`, `<Alt>` for underlined letters and `<Ctrl>` for various application-defined actions.
 
@@ -48,7 +66,7 @@ Possible modifiers:
 * mods
   * `<Mod1>`, `<Mod2>`, `<Mod3>`, `<Mod4>`, `<Mod5>`
   * consult `xmodmap` to see the overview of the keys that are mapped to mods
-  * consult `xev` to determine key symbols you have mapped
+  * consult `xev`/`wev` to determine key symbols you have mapped
   * ex: if the key <kbd>Alt Gr</kbd> corresponds with the key symbol `<ISO_Level3_Shift>` that is bound to **mod5**, you would use `<Mod5>` to create its shortcuts
   * ex: imagine you have both `<Super>` and `<Hyper>` on **mod4**. You bind them all by `<Super>i`, `<Hyper>i`, `<Mod4>i` shortcuts. As they are the same on the internal Gnome-level, only the first shortcut grabs the accelerator, the latter defined will not work. For more information, consult [Gnome/Mutter/core/meta-accel-parse.c](https://gitlab.gnome.org/GNOME/mutter/-/blob/main/src/core/meta-accel-parse.c) source code.
 * non-standard locks: Not proper Gnome shortcuts implemented by the extension allow to control the accelerators being listened to depending on the keyboard locks state.
@@ -73,9 +91,23 @@ Layered shortcuts are possible. After the shortcut is hit, you may specify one o
 <Super>e <Super>e e,notify-send Launched "<Super>e e"
 ```
 
-If you need to discover a [keysym](https://wiki.linuxquestions.org/wiki/List_of_keysyms), I recommend the `xev` program again.
+If you need to discover a [keysym](https://wiki.linuxquestions.org/wiki/List_of_keysyms) (or at [xkbcommon.org](https://xkbcommon.org/doc/current/xkbcommon-keysyms_8h.html)), I recommend the `xev`/`wev` program again.
+
 ```
-<Super>grave,notify-send Using backtick in the shortcut: `
+<Super>grave,notify-send "Using backtick in the shortcut: `"
+```
+
+When in trouble, use keycode in hex form instead of a keysym. In this example, we recognize 49 is the keycode of the backtick (31 in hex).
+
+```bash
+$ wev  # type backtick key
+[14:     wl_keyboard] key: serial: 23425; time: 8592750; key: 49; state: 0 (released)     sym: grave        (96), utf8: ''
+```
+
+Hence the hex form is `0x31`:
+
+```
+<Super>0x31,notify-send "Using backtick keycode in the shortcut: `"
 ```
 
 ### Action: `command`, `wm_class` and `title`
@@ -144,7 +176,7 @@ Switch back to the previous window when focused. If a shortcut has no but a sing
 #### `move-window-to-active-workspace`
 Move window to current workspace before focusing. If the window is on a different workspace, moves the window to the workspace you're currently viewing.
 #### `center-mouse-to-focused-window`
-After focus move mouse to window center
+Moves mouse to the center of the newly focused window (unless cursor is not in the window area already).
 #### `always-run`
 Both runs the command and raises a window
 ```
@@ -235,10 +267,25 @@ Another occasion you'd use regulars would be the case when you'd like to have mu
 <Super><Ctrl>KP_4,/opt/netbeans/bin/netbeans,,/(NetBeans IDE|PyCharm)/
 ```
 
+To run a command as a sudo, try simple `pkexec` program that raises the password dialogue. For a repetitive task, familiarise yourself with the system sudoers file.
+```
+<Super>r,bash -c 'notify-send "Root folder" "`pkexec ls /root/`"'
+```
+
 # Tips
 * For the examples, see [shortcuts.default](shortcuts.default) file.
-* You may change the configuration file on the fly. Just disable & enable the extension, shortcuts load again from scratch.
+* You may change the configuration file on the fly. Just disable & enable the extension, shortcuts load again from scratch. Ex: `gnome-extensions disable run-or-raise@edvard.cz && gnome-extensions enable run-or-raise@edvard.cz`
 * In the case of segfault, check no conflicting key binding [is present](https://github.com/CZ-NIC/run-or-raise/pull/1#issuecomment-350951994), then submit an issue.
+
+## Barebones “GNOME Shell native” alternative
+
+Note that GNOME Shell supports a _basic_ run-or-raise workflow out of the box! To enjoy a basic run-or-raise with no extension:
+
+1. Pin your favorite apps to the Dash (`Activities` → `Right click` on open app → `Pin to Dash`).
+2. Don’t let the default <kbd><Super+number></kbd> bindings cause you a left thumb [RSI](https://en.wikipedia.org/wiki/Repetitive_strain_injury)! To re-bind them, set dconf values `org.gnome.shell.keybindings` / `switch-to-application-N` to your desired keyboard shortcut (where N is 1..9), replacing / adding to the default binding.
+3. Never re-order your pinned apps.
+
+Caveats: Limited to 9 apps; no wmclass regex support; limited to static `StartupWMClass` in XDG `.desktop` files; no [modes](#modes).
 
 ## Developer guide
 
@@ -250,7 +297,7 @@ How to implement a new mode?
   * you may need [gjs.guide](https://gjs.guide/extensions), [gnome-shell source](https://gitlab.gnome.org/GNOME/gnome-shell/-/tree/main/js/) or [gjs-docs.gnome.org](https://gjs-docs.gnome.org)
 * document here in the [README.md](README.md)
 * put a description into [CHANGELOG.md](CHANGELOG.md) file
-* raise a version in [metadata.json](metadata.json)
+* ~~raise a version in [metadata.json](metadata.json)~~
 * create a pull request with (preferably) a single commit
 
 ### Debugging
