@@ -16,6 +16,7 @@ function usage () {
   echo -en "-x : setup tmux.\n";
   echo -en "-d : setup gnome\n";
   echo -en "-p : setup programming languages\n";
+  echo -en "-m : setup misc\n";
   echo -en "-u 'username' : git config --global user.name 'username'. \n";
   echo -en "-e 'email' : git config --global user.email 'email'. \n";
   echo -en "-h : display this message.\n";
@@ -116,10 +117,14 @@ function setup-terminal () {
 function setup-tmux () {
   set +e
   rm ~/.tmux.conf
-  ln -s ~/.vim/tmux.conf ~/.tmux.conf
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins
+  rm -rf ~/.tmux/plugins
   set -e
-  ~/.tmux/plugins/scripts/install_plugins.sh
+
+  ln -s ~/.vim/tmux.conf ~/.tmux.conf
+  mkdir -p ~/.tmux/plugins
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+  ~/.tmux/plugins/tpm/scripts/install_plugins.sh
+
   set +e
   tmux new-session -d -s terminal-dropdown
   tmux new-session -d -s terminal-devel
@@ -154,7 +159,15 @@ function setup-programming-languages () {
   /tmp/rustup.sh -y
 }
 
-while getopts u:e:agvzxcdrthsp flag; do
+# place for general setup tasks
+function setup-misc () {
+  set +e
+  rm ~/.tigrc
+  set -e
+  ln -s ~/.vim/.tigrc ~/.tigrc
+}
+
+while getopts u:e:agvzxcdrthspm flag; do
   case $flag in
     a) # setup all the things
       SETUP_ALL=true
@@ -179,6 +192,9 @@ while getopts u:e:agvzxcdrthsp flag; do
       ;;
     p) # setup programming languages
       SETUP_PROGRAMMING_LANGUAGES=true
+      ;;
+    m) # setup misc stuff
+      SETUP_MISC=true
       ;;
     h) # help
       usage
@@ -205,7 +221,7 @@ info_msg "Installing deps"
 sudo yum update
 sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf
 
-if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ] && [ -z $SETUP_PROGRAMMING_LANGUAGES ]); then
+if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ] && [ -z $SETUP_PROGRAMMING_LANGUAGES ] && [ -z $SETUP_MISC ]); then
   info_msg "Defaulting to setup all"
   SETUP_ALL=true
 fi
@@ -248,6 +264,11 @@ fi
 if ([ "$SETUP_PROGRAMMING_LANGUAGES" = true ] || [ "$SETUP_ALL" = true ]); then
   info_msg "Setting up programming languages"
   setup-programming-languages
+fi
+
+if ([ "$SETUP_MISC" = true ] || [ "$SETUP_ALL" = true ]); then
+  info_msg "Setting up misc"
+  setup-misc
 fi
 
 info_msg "Done"
