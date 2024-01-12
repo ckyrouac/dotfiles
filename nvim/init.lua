@@ -180,14 +180,13 @@ require('lazy').setup({
 
   {
     -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    'santos-gabriel-dario/darcula-solid.nvim',
     priority = 1000,
-    opts = {
-      style = 'dark'
+    dependencies = {
+      'rktjmp/lush.nvim'
     },
     config = function(_, opts)
-      require("onedark").setup(opts)
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'darcula-solid'
     end,
   },
 
@@ -198,7 +197,7 @@ require('lazy').setup({
     opts = {
       options = {
         icons_enabled = true,
-        theme = 'onedark',
+        theme = 'auto',
         component_separators = '|',
         section_separators = '',
       },
