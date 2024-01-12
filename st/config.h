@@ -94,67 +94,57 @@ char *termname = "st-256color";
 unsigned int tabspaces = 4;
 
 /* Terminal colors (16 first used in escape sequence) */
-// my colors
-// static const char *colorname[] = {
-// 	/* 8 normal colors */
-// 	"#2E3436", /* gray */
-// 	"#a40000", /* ruby red */
-// 	"#4E9A06", /* forrest green */
-// 	"#C4A000", /* gold */
-// 	"#3465A4", /* blue */
-// 	"#75507B", /* purple */
-// 	"#ce5c00", /* orange */
-// 	"#babdb9", /* light gray */
-//
-// 	/* 8 bright colors */
-// 	"#555753", /* gray */
-// 	"#EF2929", /* red/orange */
-// 	"#8AE234", /* lime green */
-// 	"#FCE94F", /* yellow */
-// 	"#729FCF", /* light blue */
-// 	"#AD7FA8", /* light purple */
-// 	"#fcaf3e", /* light orange */
-// 	"#EEEEEC", /* white */
-//
-// 	[255] = 0,
-//
-// 	/* more colors can be added after 255 to use with DefaultXX */
-// 	"#cccccc",
-// 	"#555555",
-// 	"white", /* default foreground colour */
-// 	"#2E3436", /* default background colour */
-// };
-// unsigned int defaultfg = 258;
-// unsigned int defaultbg = 259;
-// unsigned int defaultcs = 256;
-// static unsigned int defaultrcs = 257;
-
-// onedark colors
+// darcula
 static const char *colorname[] = {
-    /* Normal colors */
-	[0]   = "#171b23",
-	[1]   = "#be5046",
-	[2]   = "#98c379",
-	[3]   = "#d19a66",
-	[4]   = "#61afef",
-	[5]   = "#c678dd",
-	[6]   = "#56b6c2",
-	[7]   = "#828997",
+	"#000000", //black
+	"#db5451", //red
+	"#548c26", //green
+	"#A8C023", //yellow
+	"#3a91cf", //blue
+	"#a575ba", //magenta
+	"#009191", //cyan
+	"#7a7a7a", //white
+	"#4f4f4f", //bright black
+	"#ff5452", //bright red
+	"#61ab11", //bright green
+	"#ffff00", //bright yellow
+	"#1ea0fc", //bright blue
+	"#e55ce5", //bright magenta
+	"#00ffff", //bright cyan
+	"#ffffff", //bright white
 
-    /* Bright colors */
-	[8]   = "#5c6370",
-	[9]   = "#e06c75",
-	[10]  = "#98c379",
-	[11]  = "#e5c07b",
-	[12]  = "#61afef",
-	[13]  = "#c678dd",
-	[14]  = "#56b6c2",
-	[15]  = "#abb2bf",
-
-    /* Foreground and background */
-	[256] = "#abb2bf",
-	[257] = "#282c34",
+	[255] = 0,
+        /* Foreground and background */
+	[256] = "#ececec",
+	[257] = "#262627",
 };
+
+// // onedark colors
+// static const char *colorname[] = {
+//     /* Normal colors */
+// 	[0]   = "#171b23",
+// 	[1]   = "#be5046",
+// 	[2]   = "#98c379",
+// 	[3]   = "#d19a66",
+// 	[4]   = "#61afef",
+// 	[5]   = "#c678dd",
+// 	[6]   = "#56b6c2",
+// 	[7]   = "#828997",
+//
+//     /* Bright colors */
+// 	[8]   = "#5c6370",
+// 	[9]   = "#e06c75",
+// 	[10]  = "#98c379",
+// 	[11]  = "#e5c07b",
+// 	[12]  = "#61afef",
+// 	[13]  = "#c678dd",
+// 	[14]  = "#56b6c2",
+// 	[15]  = "#abb2bf",
+//
+//     /* Foreground and background */
+// 	[256] = "#abb2bf",
+// 	[257] = "#282c34",
+// };
 
 unsigned int defaultfg = 256;
 unsigned int defaultbg = 257;
