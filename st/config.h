@@ -96,28 +96,30 @@ unsigned int tabspaces = 4;
 /* Terminal colors (16 first used in escape sequence) */
 // darcula
 static const char *colorname[] = {
-	"#000000", //black
-	"#e74644", //red
-	"#379c1a", //green
-	"#dcc457", //yellow
-	"#5394ec", //blue
-	"#ae8abe", //magenta
-	"#299999", //cyan
-	"#eeeeee", //white
-	"#4f4f4f", //bright black
-	"#ff4d4b", //bright red
-	"#49cf22", //bright green
-	"#ffe365", //bright yellow
-	"#5aa0ff", //bright blue
-	"#e55ce5", //bright magenta
-	"#33bfbf", //bright cyan
-	"#ffffff", //bright white
+	[0] = "#000000", //black
+	[1] = "#e74644", //red
+	[2] = "#379c1a", //green
+	[3] = "#dcc457", //yellow
+	[4] = "#5394ec", //blue
+	[5] = "#ae8abe", //magenta
+	[6] = "#299999", //cyan
+	[7] = "#eeeeee", //white
+	[8] = "#4f4f4f", //bright black
+	[9] = "#ff4d4b", //bright red
+	[10] = "#49cf22", //bright green
+	[11] = "#ffe365", //bright yellow
+	[12] = "#5aa0ff", //bright blue
+	[13] = "#e55ce5", //bright magenta
+	[14] = "#33bfbf", //bright cyan
+	[15] = "#ffffff", //bright white
+	[208] = "#c96a2d", //orange
 
 
 	[255] = 0,
         /* Foreground and background */
 	[256] = "#ececec",
 	[257] = "#262627",
+	[258] = "#c96a2d", //orange
 };
 
 // // onedark colors
