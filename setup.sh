@@ -78,8 +78,10 @@ function setup-zsh () {
   touch ~/.local.rc
   set +e
   mv ~/.zshrc ~/.zshrc.orig
+  rm ~/.p10k.zsh
   set -e
   ln -s ~/.vim/zshrc ~/.zshrc
+  ln -s ~/.vim/p10k.zsh ~/.p10k.zsh
   ~/.vim/setup.zsh
   chsh -s /usr/bin/zsh
 }
