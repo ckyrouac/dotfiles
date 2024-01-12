@@ -97,21 +97,22 @@ unsigned int tabspaces = 4;
 // darcula
 static const char *colorname[] = {
 	"#000000", //black
-	"#db5451", //red
-	"#548c26", //green
-	"#A8C023", //yellow
-	"#3a91cf", //blue
-	"#a575ba", //magenta
-	"#009191", //cyan
-	"#7a7a7a", //white
+	"#e74644", //red
+	"#379c1a", //green
+	"#dcc457", //yellow
+	"#5394ec", //blue
+	"#ae8abe", //magenta
+	"#299999", //cyan
+	"#eeeeee", //white
 	"#4f4f4f", //bright black
-	"#ff5452", //bright red
-	"#61ab11", //bright green
-	"#ffff00", //bright yellow
-	"#1ea0fc", //bright blue
+	"#ff4d4b", //bright red
+	"#49cf22", //bright green
+	"#ffe365", //bright yellow
+	"#5aa0ff", //bright blue
 	"#e55ce5", //bright magenta
-	"#00ffff", //bright cyan
+	"#33bfbf", //bright cyan
 	"#ffffff", //bright white
+
 
 	[255] = 0,
         /* Foreground and background */
