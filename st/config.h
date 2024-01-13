@@ -98,7 +98,7 @@ unsigned int tabspaces = 4;
 static const char *colorname[] = {
 	[0] = "#000000", //black
 	[1] = "#e74644", //red
-	[2] = "#379c1a", //green
+	[2] = "#8ea767", //green
 	[3] = "#dcc457", //yellow
 	[4] = "#5394ec", //blue
 	[5] = "#ae8abe", //magenta
@@ -112,14 +112,11 @@ static const char *colorname[] = {
 	[13] = "#e55ce5", //bright magenta
 	[14] = "#33bfbf", //bright cyan
 	[15] = "#ffffff", //bright white
-	[208] = "#c96a2d", //orange
-
 
 	[255] = 0,
         /* Foreground and background */
 	[256] = "#ececec",
 	[257] = "#262627",
-	[258] = "#c96a2d", //orange
 };
 
 // // onedark colors
