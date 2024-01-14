@@ -265,16 +265,23 @@ vim.o.hlsearch = true
 vim.cmd('hi CurSearch guifg=#505052 guibg=#a0a0a0')
 vim.cmd('hi Search guifg=#a0a0a0 guibg=#505052')
 
--- Make line numbers default
-vim.wo.number = true
-
--- Enable mouse mode
-vim.o.mouse = 'a'
-
--- Sync clipboard between OS and Neovim.
---  Remove this option if you want your OS clipboard to remain independent.
---  See `:help 'clipboard'`
 vim.o.clipboard = 'unnamedplus'
+
+-- relative line numbers
+vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave","WinEnter"}, {
+  pattern = {"*"},
+  callback = function()
+    vim.o.rnu = true
+  end
+})
+
+vim.api.nvim_create_autocmd({"BufLeave","FocusLost","InsertEnter","WinLeave"}, {
+  pattern = {"*"},
+  callback = function()
+    vim.o.rnu = false
+    vim.o.number = true
+  end
+})
 
 -- Enable break indent
 vim.o.breakindent = true
