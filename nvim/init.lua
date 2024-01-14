@@ -189,7 +189,7 @@ require('lazy').setup({
     dependencies = {
       'rktjmp/lush.nvim'
     },
-    config = function(_, opts)
+    config = function()
       vim.cmd.colorscheme 'darcula-solid'
     end,
   },
