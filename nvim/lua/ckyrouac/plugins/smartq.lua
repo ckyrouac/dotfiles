@@ -1,0 +1,3 @@
+return {
+  'marklcrns/vim-smartq'
+}

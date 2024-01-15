@@ -21,8 +21,9 @@ vim.keymap.set('n', '<c-h>', '<c-w>h')
 -- Buffer navigation keybinds
 vim.keymap.set('n', '{', ':bp<cr>')
 vim.keymap.set('n', '}', ':bn<cr>')
-vim.keymap.set('n', 'w', ':Bdelete this<cr>')
+vim.keymap.set('n', 'w', ':SmartQ<cr>')
 vim.keymap.set('n', 'W', ':Bdelete other<cr>')
+vim.keymap.set('n', '<M-C-W>', ':SmartQCloseSplits<cr>')
 
 -- clear search highlight
 vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = 'Clear search highlight' })
