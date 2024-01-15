@@ -97,7 +97,7 @@ function setup-terminal () {
   set +e
   mkdir -p ~/bin
   cd ~/bin
-  git clone git://git.suckless.org/st
+  git clone git@github.com:ckyrouac/st.git
   set -e
   cd ~/bin/st
 
