@@ -11,10 +11,6 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnos
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 
--- Filetree keybinds
-vim.keymap.set('n', '<leader>f', ':NvimTreeFindFile<cr>')
-vim.keymap.set('n', '<A-1>', ':NvimTreeToggle<cr>')
-
 -- Pane navigation keybinds
 vim.keymap.set('n', '<c-j>', '<c-w>j')
 vim.keymap.set('n', '<c-k>', '<c-w>k')
@@ -31,3 +27,5 @@ vim.keymap.set('n', 'W', ':Bdelete other<cr>')
 -- clear search highlight
 vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = 'Clear search highlight' })
 
+-- quickly quit
+vim.keymap.set('n', '<C-q>', ':q<CR>', { desc = 'Quickly quit via escape :q' })

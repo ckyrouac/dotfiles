@@ -4,7 +4,6 @@ return {
     version = "*",
     dependencies = 'nvim-tree/nvim-web-devicons',
     config = function ()
-      -- Nvim-tree setup
       require("nvim-tree").setup({
           sort = {
           sorter = "case_sensitive",
@@ -19,6 +18,9 @@ return {
           dotfiles = true,
         },
       })
+
+      vim.keymap.set('n', '<leader>f', ':NvimTreeFindFile<cr>')
+      vim.keymap.set('n', '<A-1>', ':NvimTreeToggle<cr>')
     end
   }
 }

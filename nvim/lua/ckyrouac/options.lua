@@ -15,15 +15,25 @@ vim.o.clipboard = 'unnamedplus'
 vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave","WinEnter"}, {
   pattern = {"*"},
   callback = function()
-    vim.o.rnu = true
+    if vim.bo.filetype == "NvimTree" or vim.bo.filetype == "SidebarNvim" then
+      vim.o.rnu = false
+      vim.o.number = false
+    else
+      vim.o.rnu = true
+    end
   end
 })
 
 vim.api.nvim_create_autocmd({"BufLeave","FocusLost","InsertEnter","WinLeave"}, {
   pattern = {"*"},
   callback = function()
-    vim.o.rnu = false
-    vim.o.number = true
+    if vim.bo.filetype == "NvimTree" or vim.bo.filetype == "SidebarNvim" then
+      vim.o.rnu = false
+      vim.o.number = false
+    else
+      vim.o.rnu = false
+      vim.o.number = true
+    end
   end
 })
 

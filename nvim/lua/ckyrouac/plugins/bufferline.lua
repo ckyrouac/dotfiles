@@ -13,6 +13,12 @@ return {
                   text = "File Explorer",
                   highlight = "Directory",
                   separator = true
+              },
+              {
+                  filetype = "SidebarNvim",
+                  text = "Sidebar",
+                  highlight = "Directory",
+                  separator = true
               }
           },
         },
