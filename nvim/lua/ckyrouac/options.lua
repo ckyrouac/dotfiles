@@ -8,8 +8,6 @@ vim.g.maplocalleader = '\\'
 
 -- Set highlight on search
 vim.o.hlsearch = true
-vim.cmd('hi CurSearch guifg=#505052 guibg=#a0a0a0')
-vim.cmd('hi Search guifg=#a0a0a0 guibg=#505052')
 
 vim.o.clipboard = 'unnamedplus'
 
