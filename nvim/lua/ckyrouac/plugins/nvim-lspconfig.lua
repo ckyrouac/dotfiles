@@ -29,7 +29,7 @@ return {
 
       local servers = {
         -- clangd = {},
-        -- gopls = {},
+        gopls = {},
         -- pyright = {},
         rust_analyzer = {},
         -- tsserver = {},
@@ -117,6 +117,8 @@ return {
         capabilities = capabilities,
         on_attach = on_attach,
       }
+
+      vim.diagnostic.config({ virtual_text = false })
     end
   }
 }
