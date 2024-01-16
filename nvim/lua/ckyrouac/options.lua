@@ -11,32 +11,6 @@ vim.o.hlsearch = true
 
 vim.o.clipboard = 'unnamedplus'
 
--- relative line numbers
-vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave","WinEnter"}, {
-  pattern = {"*"},
-  callback = function()
-    if vim.bo.filetype == "NvimTree" or vim.bo.filetype == "SidebarNvim" or vim.bo.filetype == "*GitSigns*" then
-      vim.o.rnu = false
-      vim.o.number = false
-    else
-      vim.o.rnu = true
-    end
-  end
-})
-
-vim.api.nvim_create_autocmd({"BufLeave","FocusLost","InsertEnter","WinLeave"}, {
-  pattern = {"*"},
-  callback = function()
-    if vim.bo.filetype == "NvimTree" or vim.bo.filetype == "SidebarNvim" or vim.bo.filetype == "*GitSigns*" then
-      vim.o.rnu = false
-      vim.o.number = false
-    else
-      vim.o.rnu = false
-      vim.o.number = true
-    end
-  end
-})
-
 -- Enable break indent
 vim.o.breakindent = true
 
