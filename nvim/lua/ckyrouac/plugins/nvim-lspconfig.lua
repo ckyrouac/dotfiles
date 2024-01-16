@@ -16,20 +16,18 @@ return {
       'folke/neodev.nvim',
     },
     config = function ()
-      require('lspconfig').lua_ls.setup {
-        settings = {
-          Lua = {
-            diagnostics = {
-              -- Get the language server to recognize the `vim` global
-              globals = {'vim'},
-            },
-          },
-        },
-      }
+      -- neovim lua configuration
+      require('neodev').setup({
+        library = { plugins = { "nvim-dap-ui" }, types = true },
+      })
 
       local servers = {
         -- clangd = {},
-        gopls = {},
+        gopls = {
+          gopls = {
+            semanticTokens = true,
+          },
+        },
         -- pyright = {},
         rust_analyzer = {},
         -- tsserver = {},
@@ -39,19 +37,16 @@ return {
           Lua = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
-            -- NOTE: toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-            -- diagnostics = { disable = { 'missing-fields' } },
+            diagnostics = {
+              disable = { 'missing-fields' },
+              globals = { 'vim' },
+            },
           },
         },
       }
 
-      -- Setup neovim lua configuration
-      require('neodev').setup({
-        library = { plugins = { "nvim-dap-ui" }, types = true },
-      })
-
       --  This function gets run when an LSP connects to a particular buffer.
-      local on_attach = function(_, bufnr)
+      local on_attach = function(client, bufnr)
         -- A function that lets us more easily define mappings specific
         -- for LSP related items. It sets the mode, buffer and description for us each time.
         local nmap = function(keys, func, desc)
@@ -72,6 +67,8 @@ return {
         nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
         nmap('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, '[W]orkspace [S]ymbols')
 
+        nmap('<M-CR>', vim.lsp.buf.code_action, '[W]orkspace [S]ymbols')
+
         -- See `:help K` for why this keymap
         -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
         -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
@@ -85,9 +82,17 @@ return {
         end, '[W]orkspace [L]ist Folders')
 
         -- Create a command `:Format` local to the LSP buffer
-        vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-          vim.lsp.buf.format()
-        end, { desc = 'Format current buffer with LSP' })
+        -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
+        --   vim.lsp.buf.format()
+        -- end, { desc = 'Format current buffer with LSP' })
+	if client.name == 'gopls' and not client.server_capabilities.semanticTokensProvider then
+	  local semantic = client.config.capabilities.textDocument.semanticTokens
+	  client.server_capabilities.semanticTokensProvider = {
+	    full = true,
+	    legend = {tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes},
+	    range = true,
+	  }
+	end
       end
 
       -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
@@ -108,14 +113,9 @@ return {
             on_attach = on_attach,
             settings = servers[server_name],
             filetypes = (servers[server_name] or {}).filetypes,
+            semanticTokens = true,
           }
         end,
-      }
-
-      -- rust
-      require('lspconfig').rust_analyzer.setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
       }
 
       vim.diagnostic.config({ virtual_text = false })
