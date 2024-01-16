@@ -42,6 +42,9 @@ export PATH=$PATH:/usr/local/kubebuilder/bin
 export PATH=$PATH:/home/chris/bin
 #export PATH=$PATH:/home/chris/.rover/bin
 
+#hack to fix clipboard in neovim
+export WAYLAND_DISPLAY=wayland-0
+
 #java
 export JAVA_HOME=/home/chris/java-home
 export PATH=$PATH:/home/chris/maven
