@@ -9,8 +9,6 @@ vim.g.maplocalleader = '\\'
 -- Set highlight on search
 vim.o.hlsearch = true
 
-vim.o.clipboard = 'unnamedplus'
-
 -- Enable break indent
 vim.o.breakindent = true
 
@@ -35,13 +33,4 @@ vim.o.mousemoveevent = true
 
 vim.o.termguicolors = true
 
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
-})
+vim.o.expandtab = true

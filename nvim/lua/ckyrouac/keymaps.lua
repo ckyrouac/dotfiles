@@ -25,8 +25,6 @@ vim.keymap.set('n', 'w', '<Plug>(smartq_this)')
 vim.keymap.set('n', 'W', ':Bdelete other<cr>')
 vim.keymap.set('n', '<M-C-W>', ':SmartQCloseSplits<cr>')
 
--- clear search highlight
 vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = 'Clear search highlight' })
-
--- quickly quit
 vim.keymap.set('n', '<M-C-Q>', ':wqa!<CR>', { desc = 'Quit and save everything' })
+vim.keymap.set('n', '<C-i>', ':Inspect<CR>', { desc = 'Treesitter inspect under curosr' })
