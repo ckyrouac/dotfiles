@@ -21,7 +21,7 @@ vim.keymap.set('n', '<c-h>', '<c-w>h')
 -- Buffer navigation keybinds
 vim.keymap.set('n', '{', ':bp<cr>')
 vim.keymap.set('n', '}', ':bn<cr>')
-vim.keymap.set('n', 'w', ':SmartQ<cr>')
+vim.keymap.set('n', 'w', '<Plug>(smartq_this)')
 vim.keymap.set('n', 'W', ':Bdelete other<cr>')
 vim.keymap.set('n', '<M-C-W>', ':SmartQCloseSplits<cr>')
 
@@ -29,4 +29,4 @@ vim.keymap.set('n', '<M-C-W>', ':SmartQCloseSplits<cr>')
 vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = 'Clear search highlight' })
 
 -- quickly quit
-vim.keymap.set('n', '<C-q>', ':q<CR>', { desc = 'Quickly quit via escape :q' })
+vim.keymap.set('n', '<M-C-Q>', ':wqa!<CR>', { desc = 'Quit and save everything' })
