@@ -136,6 +136,7 @@ function setup-programming-languages () {
   #go
   set +e
   bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+  sed -i '$ d' /home/chris/.gvm/scripts/gvm-default
   source /home/chris/.gvm/scripts/gvm
   set -e
 

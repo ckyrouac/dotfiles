@@ -61,7 +61,5 @@ export NVM_DIR="$HOME/.nvm"
 
 export LIBVA_DRIVER_NAME=iHD
 
-[[ -s "/home/chris/.gvm/scripts/gvm" ]] && source "/home/chris/.gvm/scripts/gvm"
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

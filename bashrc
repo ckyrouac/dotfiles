@@ -132,5 +132,6 @@ export SDKMAN_DIR="/home/chris/.sdkman"
 [[ -s "/home/chris/.sdkman/bin/sdkman-init.sh" ]] && source "/home/chris/.sdkman/bin/sdkman-init.sh"
 #source "/home/chris/.rover/env"
 
-[[ -s "/home/chris/.gvm/scripts/gvm" ]] && source "/home/chris/.gvm/scripts/gvm"
 . "$HOME/.cargo/env"
+
+[[ -s "/home/chris/.gvm/scripts/gvm" ]] && source "/home/chris/.gvm/scripts/gvm"
