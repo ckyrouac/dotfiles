@@ -14,5 +14,6 @@ vim.opt.rtp:prepend(lazypath)
 -- require('lazy').setup('plugins')
 require("lazy").setup({
   { import = "ckyrouac.plugins" },
-  { import = "ckyrouac.plugins.dap" }
+  { import = "ckyrouac.plugins.dap" },
+  { import = "ckyrouac.plugins.lsp" },
 })

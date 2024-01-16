@@ -3,11 +3,10 @@ return {
     'nvim-lua/plenary.nvim',
     config = function ()
       local List=require('plenary.collections.py_list');
-      local DisableLineNumberWindowList = List {"NvimTree", "SidebarNvim", "*GitSigns*"};
+      local DisableLineNumberWindowList = List {"NvimTree", "SidebarNvim", "GitSigns*", "HoverHint"};
 
       -- relative line numbers
       vim.api.nvim_create_autocmd({"BufEnter","FocusGained","InsertLeave","WinEnter"}, {
-
         pattern = {"*"},
         callback = function()
           if DisableLineNumberWindowList:contains(vim.bo.filetype) then
