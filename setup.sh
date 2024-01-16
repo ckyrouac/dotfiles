@@ -99,15 +99,8 @@ function setup-terminal () {
   cd ~/bin
   git clone git@github.com:ckyrouac/st.git
   set -e
+
   cd ~/bin/st
-
-  set +e
-  rm ~/bin/st/config.h
-  git apply ~/.vim/st/st-glyph-wide-support-20220411-ef05519.diff
-  set -e
-
-  ln -s ~/.vim/st/config.h ~/bin/st/config.h
-
   sudo make clean install
   cd ~/.vim
 }
