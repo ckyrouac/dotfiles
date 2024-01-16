@@ -1,6 +1,6 @@
 return {
   {
-    'santos-gabriel-dario/darcula-solid.nvim',
+    'ckyrouac/darcula-solid.nvim',
     priority = 1000,
     dependencies = {
       'rktjmp/lush.nvim'
