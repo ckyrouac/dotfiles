@@ -6,29 +6,30 @@ vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message' })
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message', silent = true })
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message', silent = true })
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message', silent = true })
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list', silent = true })
 
 -- Pane navigation keybinds
-vim.keymap.set('n', '<c-j>', '<c-w>j')
-vim.keymap.set('n', '<c-k>', '<c-w>k')
-vim.keymap.set('n', '<c-l>', '<c-w>l')
-vim.keymap.set('n', '<c-h>', '<c-w>h')
+vim.keymap.set('n', '<c-j>', '<c-w>j', { silent = true })
+vim.keymap.set('n', '<c-k>', '<c-w>k', { silent = true })
+vim.keymap.set('n', '<c-l>', '<c-w>l', { silent = true })
+vim.keymap.set('n', '<c-h>', '<c-w>h', { silent = true })
 
 
 -- Buffer navigation keybinds
-vim.keymap.set('n', '{', ':bp<cr>')
-vim.keymap.set('n', '}', ':bn<cr>')
-vim.keymap.set('n', 'w', '<Plug>(smartq_this)')
-vim.keymap.set('n', 'W', ':Bdelete other<cr>')
-vim.keymap.set('n', '<M-C-W>', ':SmartQCloseSplits<cr>')
+vim.keymap.set('n', '{', ':bp<cr>', { silent = true })
+vim.keymap.set('n', '}', ':bn<cr>', { silent = true })
+vim.keymap.set('n', 'w', '<Plug>(smartq_this)', { silent = true })
+vim.keymap.set('n', '<M-q>', '<Plug>(smartq_this)', { silent = true })
+vim.keymap.set('n', 'W', ':Bdelete other<cr>', { silent = true })
+vim.keymap.set('n', '<M-C-W>', ':SmartQCloseSplits<cr>', { silent = true })
 
-vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = 'Clear search highlight' })
-vim.keymap.set('n', '<M-C-Q>', ':wqa!<CR>', { desc = 'Quit and save everything' })
-vim.keymap.set('n', '<C-i>', ':Inspect<CR>', { desc = 'Treesitter inspect under curosr' })
+vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = 'Clear search highlight', silent = true })
+vim.keymap.set('n', '<M-C-Q>', ':wqa!<CR>', { desc = 'Quit and save everything', silent = true })
+vim.keymap.set('n', '<leader>i', ':Inspect<CR>', { desc = 'Treesitter inspect under cursor', silent = true })
 
-vim.keymap.set('n', 'd', '"_d')
-vim.keymap.set('v', 'd', '"_d')
-vim.keymap.set('n', 'D', '"_D')
+vim.keymap.set('n', 'd', '"_d', { silent = true })
+vim.keymap.set('v', 'd', '"_d', { silent = true })
+vim.keymap.set('n', 'D', '"_D', { silent = true })

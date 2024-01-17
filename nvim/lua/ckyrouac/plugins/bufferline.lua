@@ -13,14 +13,14 @@ return {
                             text = "🗄File Explorer",
                             text_align = "left",
                             highlight = "NvimTreeNormal",
-                            separator = true,
+                            separator = false,
                         },
                         {
                             filetype = "SidebarNvim",
                             text = "💁 Sidebar",
                             text_align = "left",
                             highlight = "SidebarNvimNormalBG",
-                            separator = true,
+                            separator = false,
                         }
                     },
                 },

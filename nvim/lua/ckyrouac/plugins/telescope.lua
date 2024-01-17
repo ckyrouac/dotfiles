@@ -22,17 +22,25 @@ return {
     config = function()
       local telescope = require('telescope')
       telescope.setup {
-        defaults = {
-          mappings = {
-            i = {
-              ['<C-u>'] = false,
-              ['<C-d>'] = false,
-            },
-          },
-        },
+	extensions = {
+	  ["ui-select"] = {}
+	}
       }
 
+      require('telescope').setup({
+        defaults = {
+            mappings = {
+                i = {
+                  ["<M-t>"] = require('telescope.actions').close,
+                  ["<M-w>"] = require('telescope.actions').close,
+                  ["<M-q>"] = require('telescope.actions').close,
+                },
+            },
+        },
+      })
+
       pcall(telescope.load_extension, 'fzf')
+      telescope.load_extension("ui-select")
 
       -- Telescope live_grep in git root
       -- Function to find the git root directory based on the current buffer's path
