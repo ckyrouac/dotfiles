@@ -2,6 +2,21 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- clipboard
+-- vim.g.clipboard = 'unnamedplus'
+vim.g.clipboard = {
+  name = 'myClipboard',
+  copy = {
+    ['+'] = {'wl-copy', '--type', 'text/plain'},
+    ['*'] = {'wl-copy', '--type', 'text/plain'},
+  },
+  paste = {
+    ['+'] = {'wl-paste', '--type', 'text/plain'},
+    ['*'] = {'wl-paste', '--type', 'text/plain'},
+  }
+}
+vim.cmd[[ set clipboard+=unnamedplus ]]
+
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = '\\'
 vim.g.maplocalleader = '\\'
