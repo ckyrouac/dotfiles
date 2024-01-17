@@ -4,23 +4,24 @@ return {
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',
         config = function ()
-            local bufferline_tab_bg_color='#212121'
+            local bufferline_tab_bg_color='#222326'
+            local bufferline_fill_color='#2b2d30'
             require("bufferline").setup({
                 options = {
                     close_command = "SmartQ %d",
                     offsets = {
                         {
                             filetype = "NvimTree",
-                            text = "",
+                            text = "🗄File Explorer",
                             text_align = "left",
-                            highlight = "NvimTreeNormal",
+                            highlight = "BufferlineTab",
                             separator = true,
                         },
                         {
                             filetype = "SidebarNvim",
-                            text = "",
+                            text = "Sidebar",
                             text_align = "left",
-                            highlight = "Normal",
+                            highlight = "BufferlineTab",
                             separator = true,
                         }
                     },
@@ -181,7 +182,7 @@ return {
                         bg = bufferline_tab_bg_color,
                     },
                     fill = {
-                        bg = '#292929',
+                        bg = bufferline_fill_color,
                     },
                     background = {
                         bg = bufferline_tab_bg_color,
