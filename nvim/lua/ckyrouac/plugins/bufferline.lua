@@ -11,15 +11,17 @@ return {
                     offsets = {
                         {
                             filetype = "NvimTree",
-                            text = "File Explorer",
-                            highlight = "Directory",
-                            separator = true
+                            text = "",
+                            text_align = "left",
+                            highlight = "NvimTreeNormal",
+                            separator = true,
                         },
                         {
                             filetype = "SidebarNvim",
-                            text = "Sidebar",
-                            highlight = "Directory",
-                            separator = true
+                            text = "",
+                            text_align = "left",
+                            highlight = "Normal",
+                            separator = true,
                         }
                     },
                 },
