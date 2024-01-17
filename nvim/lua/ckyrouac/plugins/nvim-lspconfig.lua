@@ -70,8 +70,8 @@ return {
         nmap('<M-CR>', vim.lsp.buf.code_action, '[W]orkspace [S]ymbols')
 
         -- See `:help K` for why this keymap
-        -- nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
-        -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+        nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
+        nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
         -- Lesser used LSP functionality
         nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
@@ -118,7 +118,28 @@ return {
         end,
       }
 
-      vim.diagnostic.config({ virtual_text = false })
+      local signs = { Error = "󰅚", Warn = "󰀪", Hint = "💡", Info = "" }
+      for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      end
+
+      -- configure the built in diagnostics
+      vim.diagnostic.config({
+        signs = true,
+        update_in_insert = false,
+        severity_sort = true,
+        underline = {
+          severity = { max = vim.diagnostic.severity.INFO }
+        },
+        virtual_text = false,
+
+        -- virtual_text = {
+        --   severity = {
+        --     min = vim.diagnostic.severity.ERROR,
+        --   }
+        -- }
+      })
     end
   }
 }
