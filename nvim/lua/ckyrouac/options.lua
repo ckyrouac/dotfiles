@@ -63,7 +63,6 @@ vim.api.nvim_create_autocmd({"BufLeave"}, {
     local savedBufs = vim.w['SavedBufView']
 
     if savedBufs == nil then
-      vim.print('resetting savedbufs')
       savedBufs = {}
     end
     local bufnr = vim.fn.bufnr()
