@@ -36,3 +36,38 @@ vim.o.termguicolors = true
 vim.o.expandtab = true
 
 vim.o.cursorline = true
+
+-- Set SidebarNvim current line highlight when focused
+vim.api.nvim_create_autocmd({"BufEnter"}, {
+  pattern = {"*"},
+  callback = function()
+    local bufnr = tostring(vim.fn.bufnr())
+
+    if vim.w['SavedBufView'] and vim.w['SavedBufView'][bufnr] then
+      local v = vim.fn.winsaveview()
+      local atStartOfFile = v.lnum == 1 and v.col == 0
+      if atStartOfFile and vim.api.nvim_win_get_option(0, "diff") ~= true then
+        vim.fn.winrestview(vim.w['SavedBufView'][bufnr])
+      end
+
+      local savedBufs = vim.w['SavedBufView']
+      savedBufs[bufnr] =  nil
+      vim.w['SavedBufView'] = savedBufs
+    end
+  end
+})
+
+vim.api.nvim_create_autocmd({"BufLeave"}, {
+  pattern = {"*"},
+  callback = function()
+    local savedBufs = vim.w['SavedBufView']
+
+    if savedBufs == nil then
+      vim.print('resetting savedbufs')
+      savedBufs = {}
+    end
+    local bufnr = vim.fn.bufnr()
+    savedBufs[tostring(bufnr)] = vim.fn.winsaveview()
+    vim.w['SavedBufView'] = savedBufs
+  end
+})
