@@ -21,8 +21,8 @@ return {
         hijack_cursor = true
       })
 
-      vim.keymap.set('n', '<leader>f', ':NvimTreeFindFile<cr>')
-      vim.keymap.set('n', '<A-1>', ':NvimTreeToggle<cr>')
+      vim.keymap.set('n', '<leader>f', ':NvimTreeFindFile<cr>', {silent = true})
+      vim.keymap.set('n', '<A-1>', ':NvimTreeToggle<cr>', {silent = true})
 
       -- restore nvimtree on startup if vim exited with nvimtree open
       vim.api.nvim_create_autocmd({ 'BufEnter' }, {

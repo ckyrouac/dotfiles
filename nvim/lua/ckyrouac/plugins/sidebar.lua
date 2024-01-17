@@ -11,7 +11,7 @@ return {
         sections = { "git", "diagnostics", "todos" },
       })
 
-      vim.keymap.set('n', '<A-2>', ':SidebarNvimToggle<cr>')
+      vim.keymap.set('n', '<A-2>', ':SidebarNvimToggle<cr>', {silent=true})
     end
   }
 }

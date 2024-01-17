@@ -1,5 +1,5 @@
-vim.keymap.set("n", "<RightMouse>", "<LeftMouse><LeftRelease><cmd>:popup MainContextMenu<CR>")
-vim.keymap.set("n", "<A-k>", "<cmd>:popup MainContextMenu<CR>")
+vim.keymap.set("n", "<RightMouse>", "<LeftMouse><LeftRelease><cmd>:popup MainContextMenu<CR>", {silent=true})
+vim.keymap.set("n", "<A-k>", "<cmd>:popup MainContextMenu<CR>", {silent=true})
 
 -- Main Menu
 vim.cmd [[:amenu 10.100 MainContextMenu.Definition <cmd>:Telescope lsp_definitions<CR>]]
