@@ -97,9 +97,10 @@ function setup-terminal () {
   set +e
   mkdir -p ~/bin
   cd ~/bin
-  git clone git@github.com:ckyrouac/st.git
+  rm -rf ~/bin/st
   set -e
 
+  git clone git@github.com:ckyrouac/st.git
   cd ~/bin/st
   sudo make clean install
   cd ~/.vim
@@ -128,6 +129,7 @@ function setup-tmux () {
 function setup-programming-languages () {
   #go
   set +e
+  rm -rf ~/.gvm
   bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
   sed -i '$ d' /home/chris/.gvm/scripts/gvm-default
   source /home/chris/.gvm/scripts/gvm
