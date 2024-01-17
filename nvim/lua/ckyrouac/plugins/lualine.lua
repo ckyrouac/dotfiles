@@ -20,7 +20,10 @@ return {
       lualine_theme.command.c.bg = '#2b2d30'
 
       require('lualine').setup {
-        options = { theme  = lualine_theme },
+        options = {
+          theme  = lualine_theme ,
+          disabled_filetypes = { 'NvimTree', 'SidebarNvim' },
+        },
       }
     end
   }
