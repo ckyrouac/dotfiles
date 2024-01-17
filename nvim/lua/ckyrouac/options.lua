@@ -34,3 +34,5 @@ vim.o.mousemoveevent = true
 vim.o.termguicolors = true
 
 vim.o.expandtab = true
+
+vim.o.cursorline = true
