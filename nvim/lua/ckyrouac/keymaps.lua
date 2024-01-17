@@ -28,3 +28,7 @@ vim.keymap.set('n', '<M-C-W>', ':SmartQCloseSplits<cr>')
 vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = 'Clear search highlight' })
 vim.keymap.set('n', '<M-C-Q>', ':wqa!<CR>', { desc = 'Quit and save everything' })
 vim.keymap.set('n', '<C-i>', ':Inspect<CR>', { desc = 'Treesitter inspect under curosr' })
+
+vim.keymap.set('n', 'd', '"_d')
+vim.keymap.set('v', 'd', '"_d')
+vim.keymap.set('n', 'D', '"_D')
