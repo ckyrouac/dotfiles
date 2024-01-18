@@ -22,9 +22,79 @@ return {
     config = function()
       local telescope = require('telescope')
       telescope.setup {
-	extensions = {
-	  ["ui-select"] = {}
-	}
+        defaults = {
+          layout_config = {
+            vertical = {
+              height = 0.33,
+              width = 0.5
+            }
+          }
+        },
+        pickers = {
+          lsp_definitions = {
+            theme = "cursor",
+            previewer = false,
+          },
+          lsp_references = {
+            -- theme = "cursor",
+            -- previewer = false,
+          },
+          lsp_implementations = {
+            theme = "cursor",
+            previewer = false,
+          },
+          find_files = {
+            -- theme = "dropdown",
+            layout_strategy = 'vertical',
+            previewer = false,
+          },
+          live_grep = {
+            theme = "dropdown",
+            layout_config = {
+              width = 0.5
+            }
+          },
+          oldfiles = {
+            layout_strategy = 'vertical',
+            previewer = false,
+          },
+          git_files = {
+            layout_strategy = 'vertical',
+            previewer = false,
+          },
+          help_tags = {
+            theme = "dropdown",
+          },
+          grep_string = {
+            theme = "dropdown",
+          },
+          diagnostics = {
+            theme = "dropdown",
+          },
+          resume = {
+            theme = "dropdown",
+          }
+        },
+        extensions = {
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown {
+              -- even more opts
+            }
+            -- pseudo code / specification for writing custom displays, like the one
+            -- for "codeactions"
+            -- specific_opts = {
+            --   [kind] = {
+            --     make_indexed = function(items) -> indexed_items, width,
+            --     make_displayer = function(widths) -> displayer
+            --     make_display = function(displayer) -> function(e)
+            --     make_ordinal = function(e) -> string
+            --   },
+            --   -- for example to disable the custom builtin "codeactions" display
+            --      do the following
+            --   codeactions = false,
+            -- }
+          }
+        }
       }
 
       require('telescope').setup({
