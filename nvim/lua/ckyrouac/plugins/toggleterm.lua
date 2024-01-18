@@ -6,7 +6,7 @@ return {
         require("toggleterm").setup()
 
 	local lazygit = Terminal:new({
-	  cmd = "gitui",
+	  cmd = "lazygit",
 	  dir = "git_dir",
 	  direction = "float",
 	  float_opts = {
