@@ -9,7 +9,7 @@ return {
 	"rcarriga/nvim-notify",
       },
       config = function ()
-        require("noice").setup({
+	require("noice").setup({
 	  messages = {
 	    enabled = true,
 	    view = false,
@@ -39,6 +39,10 @@ return {
 	    inc_rename = true,
 	    lsp_doc_border = false,
 	  },
+	})
+
+	require("notify").setup({
+	  top_down = false
 	})
       end
     }

@@ -46,3 +46,7 @@ local function toggle_line_numbers()
   end
 end
 vim.keymap.set('n', '<leader>l', toggle_line_numbers, { silent = true, desc = 'Toggle relative [l]ine numbers' })
+
+-- mouse forward/back
+-- vim.keymap.set('n', '<X1Mouse>', '<C-i>', { silent = true, desc = 'Toggle relative [l]ine numbers' })
+-- vim.keymap.set('n', '<X2Mouse>', '<C-o>', { silent = true, desc = 'Toggle relative [l]ine numbers' })

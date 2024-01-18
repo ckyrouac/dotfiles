@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Neovide
+GenericName=Neovide
+Icon=/home/chris/.vim/neovide.png
+Exec=/home/chris/.cargo/bin/neovide
+Terminal=false
