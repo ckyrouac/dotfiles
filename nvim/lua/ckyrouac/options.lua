@@ -7,12 +7,12 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.clipboard = {
   name = 'myClipboard',
   copy = {
-    ['+'] = {'wl-copy', '--type', 'text/plain'},
-    ['*'] = {'wl-copy', '--type', 'text/plain'},
+    ['+'] = {'wl-copy', '--type', 'text/plain', '-n'},
+    ['*'] = {'wl-copy', '--type', 'text/plain', '-n'},
   },
   paste = {
-    ['+'] = {'wl-paste', '--type', 'text/plain'},
-    ['*'] = {'wl-paste', '--type', 'text/plain'},
+    ['+'] = {'wl-paste', '--type', 'text/plain', '-n'},
+    ['*'] = {'wl-paste', '--type', 'text/plain', '-n'},
   }
 }
 vim.cmd[[ set clipboard+=unnamedplus ]]
