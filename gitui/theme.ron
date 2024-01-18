@@ -23,7 +23,7 @@
 
     danger_fg: Some(Rgb(247,84,100)), //#f75464
     push_gauge_bg: Some(Rgb(86,168,245)), //#56a8f5
-    push_gauge_fg: Some(Rgb(195,202,209)), //#c3cad1
+    push_gauge_fg: Some(Rgb(43,45,48)), //#2b2d30
     tag_fg: Some(Rgb(199,125,187)), //#c77dbb
     branch_fg: Some(Rgb(207,142,109)), //#CF8E6D
     // line_break: Some("".to_string()),
