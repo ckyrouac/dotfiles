@@ -6,11 +6,11 @@ return {
         require("toggleterm").setup()
 
 	local lazygit = Terminal:new({
-	  cmd = "lazygit",
+	  cmd = "gitui",
 	  dir = "git_dir",
 	  direction = "float",
 	  float_opts = {
-	    border = "single",
+	    border = "rounded",
 	  },
 	  on_open = function(term)
 	    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<cr>", {silent = true})

@@ -130,10 +130,11 @@ function setup-programming-languages () {
   #go
   set +e
   rm -rf ~/.gvm
+  set -e
+
   bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
   sed -i '$ d' /home/chris/.gvm/scripts/gvm-default
   source /home/chris/.gvm/scripts/gvm
-  set -e
 
   gvm install go1.4 -B
   gvm use go1.4
@@ -159,6 +160,12 @@ function setup-misc () {
   rm ~/.tigrc
   set -e
   ln -s ~/.vim/.tigrc ~/.tigrc
+
+  #gitui
+  set +e
+  rm -rf ~/.config/gitui
+  set -e
+  ln -s ~/.vim/gitui ~/.config
 }
 
 while getopts u:e:agvzxcdrthspm flag; do
@@ -213,7 +220,7 @@ done
 
 info_msg "Installing deps"
 sudo yum update
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui
 
 if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ] && [ -z $SETUP_PROGRAMMING_LANGUAGES ] && [ -z $SETUP_MISC ]); then
   info_msg "Defaulting to setup all"

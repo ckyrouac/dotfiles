@@ -9,6 +9,7 @@ return {
                     close_command = "SmartQ %d",
                     offsets = {
                         {
+                            padding = 1,
                             filetype = "NvimTree",
                             text = "🗄File Explorer",
                             text_align = "left",
@@ -16,6 +17,7 @@ return {
                             separator = false,
                         },
                         {
+                            padding = 1,
                             filetype = "SidebarNvim",
                             text = "💁 Sidebar",
                             text_align = "left",
