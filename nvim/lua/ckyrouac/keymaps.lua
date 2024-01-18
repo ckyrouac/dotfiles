@@ -41,4 +41,4 @@ local function toggle_line_numbers()
     vim.o.rnu = true
   end
 end
-vim.keymap.set('n', '<C-l>', toggle_line_numbers, { silent = true, desc = 'Toggle relative line numbers' })
+vim.keymap.set('n', '<leader>l', toggle_line_numbers, { silent = true, desc = 'Toggle relative [l]ine numbers' })
