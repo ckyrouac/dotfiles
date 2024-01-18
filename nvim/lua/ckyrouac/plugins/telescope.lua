@@ -79,16 +79,12 @@ return {
 
       vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 
-      -- See `:help telescope.builtin`
-      vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files', silent=true})
-      vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers', silent=true })
-      vim.keymap.set('n', '<leader>/', function()
-        -- You can pass additional configuration to telescope to change theme, layout, etc.
+      local function search_current_buffer()
         require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = false,
         })
-      end, { desc = '[/] Fuzzily search in current buffer', silent=true })
+      end
 
       local function telescope_live_grep_open_files()
         require('telescope.builtin').live_grep {
@@ -101,11 +97,14 @@ return {
         require('telescope.builtin').find_files({ cwd = '~/', hidden = true })
       end
 
-      -- Telescope search keybinds
       vim.keymap.set('n', '<leader>t', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles', silent=true })
       vim.keymap.set('n', '<A-t>', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles', silent=true })
       vim.keymap.set('n', '<C-f>', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep', silent=true })
       vim.keymap.set('n', '<M-C-F>', find_in_home_dir, { desc = 'Search entire home directory', silent=true })
+
+      vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files', silent=true})
+      vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers', silent=true })
+      vim.keymap.set('n', '<leader>/', search_current_buffer, { desc = '[/] Fuzzily search in current buffer', silent=true })
 
       vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]earch [/] in Open Files', silent=true })
       vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope', silent=true })
