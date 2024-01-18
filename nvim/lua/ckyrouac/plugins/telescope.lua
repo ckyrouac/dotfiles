@@ -25,8 +25,13 @@ return {
         defaults = {
           layout_config = {
             vertical = {
-              height = 0.33,
-              width = 0.5
+              height = 0.75,
+              width = 0.5,
+              prompt_position = 'top',
+              previewer = true,
+              mirror = true,
+              preview_height = 0.66,
+              preview_cutoff = 25,
             }
           }
         },
@@ -36,8 +41,8 @@ return {
             previewer = false,
           },
           lsp_references = {
-            -- theme = "cursor",
-            -- previewer = false,
+            theme = "cursor",
+            previewer = false,
           },
           lsp_implementations = {
             theme = "cursor",
@@ -46,34 +51,32 @@ return {
           find_files = {
             -- theme = "dropdown",
             layout_strategy = 'vertical',
-            previewer = false,
           },
           live_grep = {
-            theme = "dropdown",
-            layout_config = {
-              width = 0.5
-            }
+            -- theme = "dropdown",
+            layout_strategy = 'vertical',
           },
           oldfiles = {
             layout_strategy = 'vertical',
-            previewer = false,
           },
           git_files = {
             layout_strategy = 'vertical',
-            previewer = false,
           },
           help_tags = {
-            theme = "dropdown",
+            theme = "vertical",
           },
           grep_string = {
-            theme = "dropdown",
+            theme = "vertical",
           },
           diagnostics = {
-            theme = "dropdown",
+            theme = "vertical",
           },
           resume = {
-            theme = "dropdown",
-          }
+            theme = "vertical",
+          },
+          help = {
+            theme = "vertical",
+          },
         },
         extensions = {
           ["ui-select"] = {
@@ -169,7 +172,7 @@ return {
 
       vim.keymap.set('n', '<leader>t', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles', silent=true })
       vim.keymap.set('n', '<A-t>', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles', silent=true })
-      vim.keymap.set('n', '<C-f>', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep', silent=true })
+      vim.keymap.set('n', '<C-f>', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root', silent=true })
       vim.keymap.set('n', '<M-C-F>', find_in_home_dir, { desc = 'Search entire home directory', silent=true })
 
       vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files', silent=true})
