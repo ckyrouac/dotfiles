@@ -41,6 +41,7 @@ return {
 
       pcall(telescope.load_extension, 'fzf')
       telescope.load_extension("ui-select")
+      telescope.load_extension("noice")
 
       -- Telescope live_grep in git root
       -- Function to find the git root directory based on the current buffer's path
