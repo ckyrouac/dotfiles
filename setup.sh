@@ -166,6 +166,12 @@ function setup-misc () {
   rm -rf ~/.config/gitui
   set -e
   ln -s ~/.vim/gitui ~/.config
+
+  #lazygit
+  set +e
+  rm -rf ~/.config/lazygit
+  set -e
+  ln -s ~/.vim/lazygit ~/.config
 }
 
 while getopts u:e:agvzxcdrthspm flag; do
