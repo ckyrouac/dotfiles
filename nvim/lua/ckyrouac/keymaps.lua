@@ -17,7 +17,6 @@ vim.keymap.set('n', '<c-k>', '<c-w>k', { silent = true })
 vim.keymap.set('n', '<c-l>', '<c-w>l', { silent = true })
 vim.keymap.set('n', '<c-h>', '<c-w>h', { silent = true })
 
-
 -- Buffer navigation keybinds
 vim.keymap.set('n', '{', ':bp<cr>', { silent = true })
 vim.keymap.set('n', '}', ':bn<cr>', { silent = true })
@@ -26,10 +25,20 @@ vim.keymap.set('n', '<M-q>', '<Plug>(smartq_this)', { silent = true })
 vim.keymap.set('n', 'W', ':Bdelete other<cr>', { silent = true })
 vim.keymap.set('n', '<M-C-W>', ':SmartQCloseSplits<cr>', { silent = true })
 
-vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = 'Clear search highlight', silent = true })
+vim.keymap.set('n', '<leader>c', ':noh<CR>', { desc = '[C]lear search highlight', silent = true })
 vim.keymap.set('n', '<M-C-Q>', ':wqa!<CR>', { desc = 'Quit and save everything', silent = true })
-vim.keymap.set('n', '<leader>i', ':Inspect<CR>', { desc = 'Treesitter inspect under cursor', silent = true })
+vim.keymap.set('n', '<leader>i', ':Inspect<CR>', { desc = '[I]nspect', silent = true })
 
+-- preserve clipbaord when deleting
 vim.keymap.set('n', 'd', '"_d', { silent = true })
 vim.keymap.set('v', 'd', '"_d', { silent = true })
 vim.keymap.set('n', 'D', '"_D', { silent = true })
+
+local function toggle_line_numbers()
+  if vim.o.rnu then
+    vim.o.rnu = false
+  else
+    vim.o.rnu = true
+  end
+end
+vim.keymap.set('n', '<C-l>', toggle_line_numbers, { silent = true, desc = 'Toggle relative line numbers' })
