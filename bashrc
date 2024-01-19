@@ -125,7 +125,7 @@ fi
 
 #fzf
 export FZF_TMUX=1
-source ~/.vim/fzf-key-bindings.zsh
+source ~/dotfiles/fzf-key-bindings.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/chris/.sdkman"

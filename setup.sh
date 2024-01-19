@@ -6,7 +6,7 @@ set -e
 
 function usage () {
   echo -en "--------------------------------------------------------------------------------\n";
-  echo -en "~/.vim/setup.sh options\n";
+  echo -en "~/dotfiles/setup.sh options\n";
   echo -en "--------------------------------------------------------------------------------\n";
   echo -en "-a : setup everything. Takes precedent over other flags. This is default.\n";
   echo -en "-v : setup vim.\n";
@@ -40,22 +40,22 @@ function setup-gnome () {
   set +e
   rm -rf ~/.local/share/applications
   set -e
-  ln -s ~/.vim/applications ~/.local/share
+  ln -s ~/dotfiles/applications ~/.local/share
 
   set +e
   sudo rm -rf ~/.local/share/gnome-shell/extensions
   set -e
-  sudo ln -s ~/.vim/gnome/extensions ~/.local/share/gnome-shell
+  sudo ln -s ~/dotfiles/gnome/extensions ~/.local/share/gnome-shell
 
   set +e
   mkdir -p ~/.config/run-or-raise
   rm ~/.config/run-or-raise/shortcuts.conf
   set -e
-  ln -s ~/.vim/gnome/shortcuts.conf ~/.config/run-or-raise/shortcuts.conf
+  ln -s ~/dotfiles/gnome/shortcuts.conf ~/.config/run-or-raise/shortcuts.conf
 
-  cp ~/.vim/bin/* ~/bin
+  cp ~/dotfiles/bin/* ~/bin
 
-  dconf load -f /org/gnome/ < ~/.vim/gnome/gnome-backup.dconf
+  dconf load -f /org/gnome/ < ~/dotfiles/gnome/gnome-backup.dconf
   info_msg "Done setting up Gnome"
 }
 
@@ -63,22 +63,22 @@ function setup-nvim () {
   set +e
   rm -r ~/.config/nvim
   set -e
-  ln -s ~/.vim/nvim ~/.config/nvim
+  ln -s ~/dotfiles/nvim ~/.config/nvim
 }
 
 function setup-zsh () {
   set +e
   mv ~/.bashrc ~/.bashrc.orig
   set -e
-  ln -s ~/.vim/bashrc ~/.bashrc
+  ln -s ~/dotfiles/bashrc ~/.bashrc
   touch ~/.local.rc
   set +e
   mv ~/.zshrc ~/.zshrc.orig
   rm ~/.p10k.zsh
   set -e
-  ln -s ~/.vim/zshrc ~/.zshrc
-  ln -s ~/.vim/p10k.zsh ~/.p10k.zsh
-  ~/.vim/setup.zsh
+  ln -s ~/dotfiles/zshrc ~/.zshrc
+  ln -s ~/dotfiles/p10k.zsh ~/.p10k.zsh
+  ~/dotfiles/setup.zsh
   chsh -s /usr/bin/zsh
 }
 
@@ -91,7 +91,7 @@ function setup-git () {
 
 function setup-terminal () {
   cd /usr/share/fonts
-  sudo cp -r ~/.vim/fonts/UbuntuMono /usr/share/fonts
+  sudo cp -r ~/dotfiles/fonts/UbuntuMono /usr/share/fonts
   sudo fc-cache /usr/share/fonts
 
   set +e
@@ -103,7 +103,7 @@ function setup-terminal () {
   git clone git@github.com:ckyrouac/st.git
   cd ~/bin/st
   sudo make clean install
-  cd ~/.vim
+  cd ~/dotfiles
 }
 
 function setup-tmux () {
@@ -112,7 +112,7 @@ function setup-tmux () {
   rm -rf ~/.tmux/plugins
   set -e
 
-  ln -s ~/.vim/tmux.conf ~/.tmux.conf
+  ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
   mkdir -p ~/.tmux/plugins
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
   ~/.tmux/plugins/tpm/scripts/install_plugins.sh
@@ -123,7 +123,7 @@ function setup-tmux () {
   rm -rf ~/.config/tmux-powerline
   set -e
 
-  ln -s ~/.vim/tmux/tmux-powerline ~/.config
+  ln -s ~/dotfiles/tmux/tmux-powerline ~/.config
 }
 
 function setup-programming-languages () {
@@ -162,19 +162,19 @@ function setup-misc () {
   set +e
   rm ~/.tigrc
   set -e
-  ln -s ~/.vim/.tigrc ~/.tigrc
+  ln -s ~/dotfiles/.tigrc ~/.tigrc
 
   #gitui
   set +e
   rm -rf ~/.config/gitui
   set -e
-  ln -s ~/.vim/gitui ~/.config
+  ln -s ~/dotfiles/gitui ~/.config
 
   #lazygit
   set +e
   rm -rf ~/.config/lazygit
   set -e
-  ln -s ~/.vim/lazygit ~/.config
+  ln -s ~/dotfiles/lazygit ~/.config
 }
 
 while getopts u:e:agvzxcdrthspm flag; do

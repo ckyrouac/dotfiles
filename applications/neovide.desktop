@@ -3,6 +3,6 @@ Version=1.0
 Type=Application
 Name=Neovide
 GenericName=Neovide
-Icon=/home/chris/.vim/neovide.png
+Icon=/home/chris/dotfiles/neovide.png
 Exec=/home/chris/.cargo/bin/neovide
 Terminal=false
