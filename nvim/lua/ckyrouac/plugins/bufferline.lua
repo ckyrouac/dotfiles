@@ -9,20 +9,20 @@ return {
                     close_command = "SmartQ %d",
                     offsets = {
                         {
-                            padding = 1,
+                            padding = 0,
                             filetype = "NvimTree",
                             text = "🗄File Explorer",
                             text_align = "left",
                             highlight = "Normal",
-                            separator = false,
+                            separator = true,
                         },
                         {
-                            padding = 1,
+                            padding = 0,
                             filetype = "SidebarNvim",
                             text = "💁 Sidebar",
                             text_align = "left",
                             highlight = "Normal",
-                            separator = false,
+                            separator = true,
                         }
                     },
                 },
