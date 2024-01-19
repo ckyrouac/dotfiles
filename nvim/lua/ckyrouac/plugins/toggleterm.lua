@@ -3,7 +3,14 @@ return {
     'akinsho/toggleterm.nvim',
     config = function ()
 	local Terminal  = require('toggleterm.terminal').Terminal
-        require("toggleterm").setup()
+        require("toggleterm").setup({
+	  autochdir = true,
+	  on_open = function(term)
+	    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<cr>", {silent = true})
+	  end,
+	  on_close = function()
+	  end,
+	})
 
 	local lazygit = Terminal:new({
 	  cmd = "lazygit",
@@ -12,12 +19,6 @@ return {
 	  float_opts = {
 	    border = "rounded",
 	  },
-	  on_open = function(term)
-	    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "q", "<cmd>close<cr>", {silent = true})
-	    vim.api.nvim_buf_set_keymap(term.bufnr, "n", "<A-q>", "<cmd>close<cr>", {silent = true})
-	  end,
-	  on_close = function()
-	  end,
 	})
 
 	function _lazygit_toggle()

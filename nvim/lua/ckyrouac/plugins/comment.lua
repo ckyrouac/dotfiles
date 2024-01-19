@@ -3,10 +3,10 @@ return {
     'numToStr/Comment.nvim',
     opts = {
       toggler = {
-        line = '',
+        line = '<C-/>',
       },
       opleader = {
-        line = '',
+        line = '<C-/>',
       },
     },
   }
