@@ -1,1 +1,0 @@
-bundle/Jenkinsfile-vim-syntax/ftdetect/Jenkinsfile.vim
