@@ -6,6 +6,12 @@ return {
     lazy = false,
     config = function ()
       require("nvim-tree").setup({
+        sync_root_with_cwd = true,
+        actions = {
+          change_dir = {
+            enable = false,
+          },
+        },
         sort = {
           sorter = "case_sensitive",
         },

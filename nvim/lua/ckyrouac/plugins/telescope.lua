@@ -23,6 +23,8 @@ return {
       local telescope = require('telescope')
       telescope.setup {
         defaults = {
+          prompt_prefix = '🔎 ',
+          selection_caret = '  ',
           layout_config = {
             vertical = {
               height = 0.75,
@@ -36,6 +38,9 @@ return {
           }
         },
         pickers = {
+          ['neovim-project'] = {
+            layout_strategy = 'vertical'
+          },
           lsp_definitions = {
             theme = "cursor",
             previewer = false,
@@ -48,12 +53,13 @@ return {
             theme = "cursor",
             previewer = false,
           },
+          current_buffer_fuzzy_find = {
+            layout_strategy = 'vertical',
+          },
           find_files = {
-            -- theme = "dropdown",
             layout_strategy = 'vertical',
           },
           live_grep = {
-            -- theme = "dropdown",
             layout_strategy = 'vertical',
           },
           oldfiles = {
@@ -66,27 +72,19 @@ return {
             layout_strategy = 'vertical',
           },
           help_tags = {
-            -- theme = "vertical",
-            layout_config = {
-              vertical = {
-                -- height = 0.75,
-                -- width = 0.5,
-                -- prompt_position = 'top',
-                -- previewer = true,
-                -- mirror = true,
-                -- preview_height = 0.66,
-                -- preview_cutoff = 25,
-              }
-            }
+            layout_strategy = "vertical",
           },
           grep_string = {
-            theme = "vertical",
+            layout_strategy = "vertical",
           },
           diagnostics = {
-            theme = "vertical",
+            layout_strategy = "vertical",
           },
           resume = {
-            theme = "vertical",
+            layout_strategy = "vertical",
+          },
+          keymaps = {
+            layout_strategy = "vertical",
           },
         },
         extensions = {
@@ -119,6 +117,7 @@ return {
                   ["<M-w>"] = require('telescope.actions').close,
                   ["<M-q>"] = require('telescope.actions').close,
                   ["<C-f>"] = require('telescope.actions').close,
+                  ["<A-o>"] = require('telescope.actions').close,
                 },
             },
         },
@@ -164,13 +163,6 @@ return {
 
       vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 
-      local function search_current_buffer()
-        require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-          winblend = 10,
-          previewer = false,
-        })
-      end
-
       local function telescope_live_grep_open_files()
         require('telescope.builtin').live_grep {
           grep_open_files = true,
@@ -182,13 +174,18 @@ return {
         require('telescope.builtin').find_files({ cwd = '~/', hidden = true })
       end
 
+      -- telescope keymaps
       vim.keymap.set('n', '<leader>t', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles', silent=true })
+
+      vim.keymap.set('n', '<C-f>', require('telescope.builtin').current_buffer_fuzzy_find, { desc = 'Fuzzily search in current buffer', silent=true })
+      vim.keymap.set('n', '<C-S-F>', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root', silent=true })
+
       vim.keymap.set('n', '<A-t>', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles', silent=true })
-      vim.keymap.set('n', '<C-f>', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root', silent=true })
+      vim.keymap.set('n', '<A-o>', ':Telescope neovim-project discover layout_strategy=vertical<cr>', { desc = '[S]earch [p]rojects', silent=true })
 
       vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files', silent=true})
       vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers', silent=true })
-      vim.keymap.set('n', '<leader>/', search_current_buffer, { desc = '[/] Fuzzily search in current buffer', silent=true })
+      vim.keymap.set('n', '<leader>/', require('telescope.builtin').current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer', silent=true })
 
       vim.keymap.set('n', '<leader>s/', telescope_live_grep_open_files, { desc = '[S]earch [/] in Open Files', silent=true })
       vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, { desc = '[S]earch [S]elect Telescope', silent=true })
@@ -201,6 +198,8 @@ return {
       vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume', silent=true })
       vim.keymap.set('n', '<leader>so', require('telescope.builtin').oldfiles, { desc = '[S]earch recently [o]pened files', silent=true})
       vim.keymap.set('n', '<leader>su', find_in_home_dir, { desc = '[S]earch user\'s entire [h]ome directory', silent=true })
+      vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc = '[S]earch [k]eymaps', silent=true })
+      vim.keymap.set('n', '<leader>sp', ':Telescope neovim-project discover layout_strategy=vertical<cr>', { desc = '[S]earch [p]rojects', silent=true })
     end
   }
 }

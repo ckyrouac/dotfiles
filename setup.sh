@@ -152,6 +152,9 @@ function setup-programming-languages () {
   curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -o /tmp/rustup.sh
   chmod u+x /tmp/rustup.sh
   /tmp/rustup.sh -y
+
+  #install neovide here for now since it depends on rust
+  cargo install --git https://github.com/neovide/neovide
 }
 
 # place for general setup tasks
