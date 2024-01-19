@@ -13,7 +13,7 @@ return {
                             filetype = "NvimTree",
                             text = "🗄File Explorer",
                             text_align = "left",
-                            highlight = "NvimTreeNormal",
+                            highlight = "Normal",
                             separator = false,
                         },
                         {
@@ -21,7 +21,7 @@ return {
                             filetype = "SidebarNvim",
                             text = "💁 Sidebar",
                             text_align = "left",
-                            highlight = "SidebarNvimNormalBG",
+                            highlight = "Normal",
                             separator = false,
                         }
                     },

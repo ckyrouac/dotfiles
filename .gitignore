@@ -6,3 +6,5 @@ Session.vim
 plugged
 view
 after/
+
+lazygit/state.yml
