@@ -16,13 +16,18 @@ return {
       'folke/neodev.nvim',
     },
     config = function ()
+      -- :LspInfo border
+      require('lspconfig.ui.windows').default_options = {
+        border = "rounded"
+      }
+
       -- neovim lua configuration
       require('neodev').setup({
         library = { plugins = { "nvim-dap-ui" }, types = true },
       })
 
       local servers = {
-        -- clangd = {},
+        clangd = {},
         gopls = {
           gopls = {
             semanticTokens = true,
@@ -91,14 +96,14 @@ return {
         -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
         --   vim.lsp.buf.format()
         -- end, { desc = 'Format current buffer with LSP' })
-	if client.name == 'gopls' and not client.server_capabilities.semanticTokensProvider then
-	  local semantic = client.config.capabilities.textDocument.semanticTokens
-	  client.server_capabilities.semanticTokensProvider = {
-	    full = true,
-	    legend = {tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes},
-	    range = true,
-	  }
-	end
+        if client.name == 'gopls' and not client.server_capabilities.semanticTokensProvider then
+          local semantic = client.config.capabilities.textDocument.semanticTokens
+          client.server_capabilities.semanticTokensProvider = {
+            full = true,
+            legend = {tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes},
+            range = true,
+          }
+        end
       end
 
       -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
