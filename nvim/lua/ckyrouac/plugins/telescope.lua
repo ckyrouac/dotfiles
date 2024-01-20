@@ -46,8 +46,7 @@ return {
             previewer = false,
           },
           lsp_references = {
-            theme = "cursor",
-            previewer = false,
+            layout_strategy = 'vertical',
           },
           lsp_implementations = {
             theme = "cursor",
@@ -58,6 +57,11 @@ return {
           },
           find_files = {
             layout_strategy = 'vertical',
+            layout_config = {
+              vertical = {
+                preview_height = 0.5
+              }
+            }
           },
           live_grep = {
             layout_strategy = 'vertical',
@@ -118,6 +122,7 @@ return {
                   ["<M-q>"] = require('telescope.actions').close,
                   ["<C-f>"] = require('telescope.actions').close,
                   ["<A-o>"] = require('telescope.actions').close,
+                  ["<M-O>"] = require('telescope.actions').close,
                 },
             },
         },
@@ -181,7 +186,8 @@ return {
       vim.keymap.set('n', '<C-S-F>', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root', silent=true })
 
       vim.keymap.set('n', '<A-t>', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles', silent=true })
-      vim.keymap.set('n', '<A-o>', ':Telescope neovim-project discover layout_strategy=vertical<cr>', { desc = '[S]earch [p]rojects', silent=true })
+      vim.keymap.set('n', '<M-O>', ':Telescope neovim-project discover layout_strategy=vertical<cr>', { desc = '[S]earch [p]rojects [a]ll', silent=true })
+      vim.keymap.set('n', '<A-o>', ':Telescope neovim-project history layout_strategy=vertical<cr>', { desc = '[S]earch [p]rojects [r]ecent', silent=true })
 
       vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files', silent=true})
       vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers', silent=true })
@@ -199,7 +205,8 @@ return {
       vim.keymap.set('n', '<leader>so', require('telescope.builtin').oldfiles, { desc = '[S]earch recently [o]pened files', silent=true})
       vim.keymap.set('n', '<leader>su', find_in_home_dir, { desc = '[S]earch user\'s entire [h]ome directory', silent=true })
       vim.keymap.set('n', '<leader>sk', require('telescope.builtin').keymaps, { desc = '[S]earch [k]eymaps', silent=true })
-      vim.keymap.set('n', '<leader>sp', ':Telescope neovim-project discover layout_strategy=vertical<cr>', { desc = '[S]earch [p]rojects', silent=true })
+      vim.keymap.set('n', '<leader>spp', ':Telescope neovim-project discover layout_strategy=vertical<cr>', { desc = '[S]earch [p]rojects', silent=true })
+      vim.keymap.set('n', '<leader>spr', ':Telescope neovim-project history layout_strategy=vertical<cr>', { desc = '[S]earch [p]rojects [r]ecent', silent=true })
     end
   }
 }

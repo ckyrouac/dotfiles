@@ -5,6 +5,7 @@ return {
       projects = { -- define project roots
         "~/projects/*",
         "~/dotfiles",
+        "~/.local/share/nvim/lazy/*",
       },
     },
     init = function()

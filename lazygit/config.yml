@@ -1,0 +1,10 @@
+gui:
+  showRandomTip: false
+  splitDiff: auto
+disableStartupPopups: true
+keybinding:
+  universal:
+    prevBlock: '<c-k>'
+    nextBlock: '<c-j>'
+os:
+  editPreset: 'nvim-remote'

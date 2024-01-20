@@ -48,6 +48,7 @@ vim.o.expandtab = true
 
 vim.o.cursorline = true
 vim.o.foldcolumn = '1'
+vim.o.splitkeep = 'screen'
 
 -- Set SidebarNvim current line highlight when focused
 vim.api.nvim_create_autocmd({"BufEnter"}, {
