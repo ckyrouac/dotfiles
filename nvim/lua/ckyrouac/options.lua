@@ -45,6 +45,7 @@ vim.o.mousemoveevent = true
 vim.o.termguicolors = true
 
 vim.o.expandtab = true
+vim.o.ts = 2
 
 vim.o.cursorline = true
 vim.o.foldcolumn = '1'

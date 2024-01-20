@@ -28,6 +28,6 @@ vim.keymap.set("n", "<Leader>dbt", ":lua require('dap').toggle_breakpoint()<CR>"
 vim.keymap.set("n", "<Leader>dc", ":lua require('dap.ui.variables').scopes()<CR>", {silent=true})
 vim.keymap.set("n", "<Leader>di", ":lua require('dapui').toggle()<CR>", {silent=true})
 
-vim.keymap.set("n", "<leader>q", ":RustLsp hover actions<CR>", {silent=true})
+-- vim.keymap.set("n", "<leader>q", ":RustLsp hover actions<CR>", {silent=true})
 
 return {}
