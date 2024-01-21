@@ -18,12 +18,12 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_length = 0.1
   vim.g.neovide_scroll_animation_far_lines = 0
 
-  vim.g.neovide_cursor_animation_length = 0.06
+  vim.g.neovide_cursor_animation_length = 0.05
   vim.g.neovide_cursor_trail_size = 0.4
   vim.g.neovide_cursor_animate_in_insert_mode = false
   vim.g.neovide_cursor_animate_command_line = true
-  vim.g.neovide_cursor_vfx_mode = "pixiedust"
-  vim.g.neovide_cursor_vfx_particle_lifetime = 0.6
-  vim.g.neovide_cursor_vfx_particle_density = 4.0
-  vim.g.neovide_cursor_vfx_particle_speed = 5.0
+  vim.g.neovide_cursor_vfx_mode = false
+  vim.g.neovide_cursor_vfx_particle_lifetime = 0.8
+  vim.g.neovide_cursor_vfx_particle_density = 8.0
+  vim.g.neovide_cursor_vfx_particle_speed = 4.0
 end
