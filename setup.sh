@@ -87,6 +87,7 @@ function setup-git () {
   git config --global user.email $EMAIL
   git config --global color.diff auto
   git config --global color.status auto
+  git config --global core.excludesFile '~/dotfiles/gitignore'
 }
 
 function setup-terminal () {
