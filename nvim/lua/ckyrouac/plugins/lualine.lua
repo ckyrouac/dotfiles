@@ -10,13 +10,6 @@ return {
       },
     },
     config = function ()
-      -- lualine theme
-      local lualine_theme = require'lualine.themes.auto'
-      lualine_theme.normal.c.bg = '#2b2d30'
-      lualine_theme.insert.c.bg = '#2b2d30'
-      lualine_theme.visual.c.bg = '#2b2d30'
-      lualine_theme.command.c.bg = '#2b2d30'
-
       -- lualine status for recording macros
       -- https://www.reddit.com/r/neovim/comments/xy0tu1/comment/irfegvd/?utm_source=reddit&utm_medium=web2x&context=3
       local function show_macro_recording()
@@ -30,17 +23,41 @@ return {
 
       local lualine = require('lualine')
       lualine.setup {
+        inactive_sections = {
+          lualine_a = {},
+          lualine_b = {},
+          lualine_c = {'filename'},
+          lualine_x = {},
+          lualine_y = {},
+          lualine_z = {}
+        },
+        tabline = {},
+        winbar = {},
+        inactive_winbar = {},
+        extensions = {},
+
         sections = {
+          lualine_a = {'filename'},
           lualine_b = {
+            'branch',
+            'diff',
+            'diagnostics',
+          },
+          lualine_c = {
             {
               "macro-recording",
               fmt = show_macro_recording,
             },
           },
+          lualine_x = {'location'},
+          lualine_y = {'filetype'},
+          lualine_z = {'mode'},
         },
         options = {
-          theme  = lualine_theme ,
+          theme  = require('darcula-solid.lualine_theme'),
           disabled_filetypes = { 'NvimTree', 'SidebarNvim' },
+          component_separators = { left = '', right = ''},
+          section_separators = { left = '', right = ''},
         },
       }
 
