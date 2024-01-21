@@ -10,13 +10,81 @@ return {
       },
       config = function ()
 	require("noice").setup({
+	  routes = {
+	    {
+	      filter = {
+		event = "msg_show",
+		kind = "",
+		find = "lines yanked",
+	      },
+	      opts = { skip = true },
+	    },
+	    {
+	      filter = {
+		event = "msg_show",
+		kind = "",
+		find = "written",
+	      },
+	      opts = { skip = true },
+	    },
+	    {
+	      filter = {
+		event = "msg_show",
+		kind = "search_count",
+	      },
+	      opts = { skip = true },
+	    },
+	    {
+	      filter = {
+		event = "msg_show",
+		kind = "",
+		find = "fewer lines;",
+	      },
+	      opts = { skip = true },
+	    },
+	    {
+	      filter = {
+		event = "msg_show",
+		kind = "",
+		find = "fewer lines",
+	      },
+	      opts = { skip = true },
+	    },
+	    {
+	      filter = {
+		event = "msg_show",
+		kind = "",
+		find = "more lines",
+	      },
+	      opts = { skip = true },
+	    },
+	    {
+	      filter = {
+		event = "msg_show",
+		kind = "",
+		find = "more line;",
+	      },
+	      opts = { skip = true },
+	    },
+	    {
+	      filter = {
+		event = "msg_show",
+		kind = "",
+		find = "line less;",
+	      },
+	      opts = { skip = true },
+	    },
+	    {
+	      filter = {
+		event = "msg_show",
+		kind = "",
+		find = "change;",
+	      },
+	      opts = { skip = true },
+	    },
+	  },
 	  messages = {
 	    enabled = true,
-	    view = false,
-	    view_error = "notify",
-	    view_warn = "notify",
-	    view_history = "messages",
-	    view_search = false,
 	  },
 	  lsp = {
 	    hover = {

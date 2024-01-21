@@ -51,6 +51,8 @@ vim.o.cursorline = true
 vim.o.foldcolumn = '1'
 vim.o.splitkeep = 'screen'
 
+vim.o.shortmess = 'filnxtToOFs'
+
 -- Set SidebarNvim current line highlight when focused
 vim.api.nvim_create_autocmd({"BufEnter"}, {
   pattern = {"*"},
