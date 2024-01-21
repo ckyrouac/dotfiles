@@ -51,6 +51,7 @@ return {
           },
           lsp_references = {
             layout_strategy = 'vertical',
+            show_line = false,
           },
           lsp_implementations = {
             theme = "cursor",

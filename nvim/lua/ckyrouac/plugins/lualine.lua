@@ -49,8 +49,8 @@ return {
               fmt = show_macro_recording,
             },
           },
-          lualine_x = {'location'},
-          lualine_y = {'filetype'},
+          lualine_x = {'filetype'},
+          lualine_y = {'location'},
           lualine_z = {'mode'},
         },
         options = {
