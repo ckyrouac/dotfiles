@@ -1,6 +1,6 @@
 return {
   {
-    {
+        {
       "folke/noice.nvim",
       event = "VeryLazy",
       opts = {},
@@ -11,6 +11,13 @@ return {
       config = function ()
 	require("noice").setup({
 	  routes = {
+	    {
+	      view = "split",
+	      filter = {
+		event = "msg_show",
+		kind = "echo",
+	      },
+	    },
 	    {
 	      filter = {
 		event = "msg_show",
