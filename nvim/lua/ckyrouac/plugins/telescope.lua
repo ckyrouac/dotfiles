@@ -25,16 +25,20 @@ return {
         defaults = {
           prompt_prefix = '🔎 ',
           selection_caret = '  ',
+          sorting_strategy = 'ascending',
           layout_config = {
             vertical = {
-              height = 0.75,
+              height = 0.9,
               width = 0.5,
               prompt_position = 'top',
               previewer = true,
               mirror = true,
-              preview_height = 0.66,
+              preview_height = 0.5,
               preview_cutoff = 25,
-            }
+            },
+            horizontal = {
+              prompt_position = 'top',
+            },
           }
         },
         pickers = {
@@ -57,11 +61,6 @@ return {
           },
           find_files = {
             layout_strategy = 'vertical',
-            layout_config = {
-              vertical = {
-                preview_height = 0.5
-              }
-            }
           },
           live_grep = {
             layout_strategy = 'vertical',
