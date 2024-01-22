@@ -19,5 +19,5 @@ return {
     },
     lazy = false,
     priority = 100,
-  }
+  },
 }

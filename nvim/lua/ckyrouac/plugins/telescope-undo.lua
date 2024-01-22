@@ -3,28 +3,28 @@ return {
     "debugloop/telescope-undo.nvim",
     dependencies = {
       {
-	"nvim-telescope/telescope.nvim",
-	dependencies = { "nvim-lua/plenary.nvim" },
+        "nvim-telescope/telescope.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
       },
     },
     keys = {
       {
-	"<leader>u",
-	"<cmd>Telescope undo<cr>",
-	desc = "undo history",
+        "<leader>u",
+        "<cmd>Telescope undo<cr>",
+        desc = "undo history",
       },
       {
-	"<A-4>",
-	"<cmd>Telescope undo<cr>",
-	desc = "undo history",
+        "<A-4>",
+        "<cmd>Telescope undo<cr>",
+        desc = "undo history",
       },
     },
     opts = {
       -- don't use `defaults = { }` here, do this in the main telescope spec
       extensions = {
-	undo = {
-	  -- telescope-undo.nvim config, see below
-	},
+        undo = {
+          -- telescope-undo.nvim config, see below
+        },
       },
     },
     config = function(_, opts)

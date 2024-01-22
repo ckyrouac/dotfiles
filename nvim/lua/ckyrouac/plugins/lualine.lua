@@ -1,15 +1,15 @@
 return {
   {
     -- Set lualine as statusline
-    'nvim-lualine/lualine.nvim',
+    "nvim-lualine/lualine.nvim",
     -- See `:help lualine.txt`
     opts = {
       options = {
-        component_separators = '|',
-        section_separators = '',
+        component_separators = "|",
+        section_separators = "",
       },
     },
-    config = function ()
+    config = function()
       -- lualine status for recording macros
       -- https://www.reddit.com/r/neovim/comments/xy0tu1/comment/irfegvd/?utm_source=reddit&utm_medium=web2x&context=3
       local function show_macro_recording()
@@ -21,15 +21,15 @@ return {
         end
       end
 
-      local lualine = require('lualine')
-      lualine.setup {
+      local lualine = require("lualine")
+      lualine.setup({
         inactive_sections = {
           lualine_a = {},
           lualine_b = {},
-          lualine_c = {'filename'},
+          lualine_c = { "filename" },
           lualine_x = {},
           lualine_y = {},
-          lualine_z = {}
+          lualine_z = {},
         },
         tabline = {},
         winbar = {},
@@ -37,11 +37,11 @@ return {
         extensions = {},
 
         sections = {
-          lualine_a = {'filename'},
+          lualine_a = { "filename" },
           lualine_b = {
-            'branch',
-            'diff',
-            'diagnostics',
+            "branch",
+            "diff",
+            "diagnostics",
           },
           lualine_c = {
             {
@@ -49,17 +49,17 @@ return {
               fmt = show_macro_recording,
             },
           },
-          lualine_x = {'filetype'},
-          lualine_y = {'location'},
-          lualine_z = {'mode'},
+          lualine_x = { "filetype" },
+          lualine_y = { "location" },
+          lualine_z = { "mode" },
         },
         options = {
-          theme  = require('darcula-solid.lualine_theme'),
-          disabled_filetypes = { 'NvimTree', 'SidebarNvim' },
-          component_separators = { left = '', right = ''},
-          section_separators = { left = '', right = ''},
+          theme = require("darcula-solid.lualine_theme"),
+          disabled_filetypes = { "NvimTree", "SidebarNvim" },
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
         },
-      }
+      })
 
       -- instantly update lualine when entering recording
       vim.api.nvim_create_autocmd("RecordingEnter", {
@@ -90,7 +90,6 @@ return {
           )
         end,
       })
-
-    end
-  }
+    end,
+  },
 }

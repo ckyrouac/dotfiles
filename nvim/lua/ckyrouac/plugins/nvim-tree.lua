@@ -1,10 +1,10 @@
 return {
   {
-    'nvim-tree/nvim-tree.lua',
+    "nvim-tree/nvim-tree.lua",
     version = "*",
-    dependencies = 'nvim-tree/nvim-web-devicons',
+    dependencies = "nvim-tree/nvim-web-devicons",
     lazy = false,
-    config = function ()
+    config = function()
       require("nvim-tree").setup({
         sync_root_with_cwd = true,
         actions = {
@@ -24,20 +24,20 @@ return {
         filters = {
           dotfiles = false,
         },
-        hijack_cursor = true
+        hijack_cursor = true,
       })
 
-      vim.keymap.set('n', '<leader>f', ':NvimTreeFindFile<cr>', {silent = true})
-      vim.keymap.set('n', '<A-1>', ':NvimTreeToggle<cr>', {silent = true})
+      vim.keymap.set("n", "<leader>f", ":NvimTreeFindFile<cr>", { silent = true })
+      vim.keymap.set("n", "<A-1>", ":NvimTreeToggle<cr>", { silent = true })
 
       -- restore nvimtree on startup if vim exited with nvimtree open
-      vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-        pattern = 'NvimTree*',
+      vim.api.nvim_create_autocmd({ "BufEnter" }, {
+        pattern = "NvimTree*",
         callback = function()
-          local view = require('nvim-tree.view')
+          local view = require("nvim-tree.view")
           local is_visible = view.is_visible()
 
-          local api = require('nvim-tree.api')
+          local api = require("nvim-tree.api")
           if not is_visible then
             api.tree.open()
           end
@@ -59,6 +59,6 @@ return {
       --   end,
       -- })
       --
-    end
-  }
+    end,
+  },
 }

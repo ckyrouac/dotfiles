@@ -1,3 +1,3 @@
 return {
-  'dstein64/vim-menu'
+  "dstein64/vim-menu",
 }

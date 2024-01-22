@@ -1,10 +1,9 @@
 return {
   {
-    'marklcrns/vim-smartq',
-    init = function ()
+    "marklcrns/vim-smartq",
+    init = function()
       vim.g.smartq_default_mappings = 0
     end,
-    config = function ()
-    end
-  }
+    config = function() end,
+  },
 }

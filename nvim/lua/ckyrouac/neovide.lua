@@ -1,7 +1,6 @@
 if vim.g.neovide then
   vim.o.guifont = "UbuntuMono Nerd Font:h15:#e-subpixelantialias:#h-none"
 
-
   vim.g.neovide_floating_blur_amount_x = 10.0
   vim.g.neovide_floating_blur_amount_y = 10.0
 
