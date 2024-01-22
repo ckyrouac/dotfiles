@@ -41,7 +41,7 @@ return {
           vim.api.nvim_buf_set_keymap(
             0,
             "t",
-            "<A-x>",
+            "<A-4>",
             [[<C-\><C-o>:lua _dropdown_toggle()<cr>]],
             { noremap = true, silent = true }
           )
@@ -59,7 +59,7 @@ return {
         dropdown:toggle()
       end
 
-      vim.api.nvim_set_keymap("n", "<A-x>", "<cmd>lua _dropdown_toggle()<CR>", { silent = true })
+      vim.api.nvim_set_keymap("n", "<A-4>", "<cmd>lua _dropdown_toggle()<CR>", { silent = true })
     end,
   },
 }

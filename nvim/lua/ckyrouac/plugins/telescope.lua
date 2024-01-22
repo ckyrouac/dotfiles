@@ -245,7 +245,12 @@ return {
         require("telescope.builtin").diagnostics,
         { desc = "Open diagnostics list", silent = true }
       )
-
+      vim.keymap.set(
+        "n",
+        "<leader>u",
+        "<cmd>Telescope undo<cr>",
+        { desc = "Undo history", silent = true }
+      )
       vim.keymap.set(
         "n",
         "<leader>s/",

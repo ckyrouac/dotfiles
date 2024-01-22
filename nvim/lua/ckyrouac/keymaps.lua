@@ -36,6 +36,9 @@ vim.keymap.set("n", "d", '"_d', { silent = true })
 vim.keymap.set("v", "d", '"_d', { silent = true })
 vim.keymap.set("n", "D", '"_D', { silent = true })
 
+-- paste in insert mode
+vim.keymap.set("i", "<C-S-V>", "<c-r>+", { silent = true })
+
 local function toggle_line_numbers()
   if vim.o.rnu then
     vim.o.rnu = false
