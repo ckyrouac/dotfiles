@@ -12,7 +12,10 @@ return {
         require("noice").setup({
           routes = {
             {
-              view = "split",
+              -- view = "notify",
+              -- view = "popup",
+              -- view = "messages",
+              view = "mini",
               filter = {
                 event = "msg_show",
                 kind = "echo",
