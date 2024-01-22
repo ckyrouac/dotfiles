@@ -164,6 +164,14 @@ function setup-programming-languages () {
     /tmp/rustup.sh -y
   fi
 
+  if which rust-analyzer; then
+    echo "rust-analyzer already installed"
+  else
+    git clone https://github.com/rust-lang/rust-analyzer.git /tmp/rust-analyzer && cd /tmp/rust-analyzer
+    cargo xtask install --server
+    cd ~/dotfiles
+  fi
+
   #install neovide here for now since it depends on rust
   if which neovide; then
     echo "Neovide already installed"

@@ -13,7 +13,6 @@ return {
           "lua-language-server",
           "luacheck",
           "stylua",
-          "rust-analyzer",
         },
         automatic_installation = true,
       })
