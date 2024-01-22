@@ -129,33 +129,78 @@ function setup-tmux () {
 
 function setup-programming-languages () {
   #go
-  set +e
-  rm -rf ~/.gvm
-  set -e
+  if which go; then
+    echo "go already installed"
+  else
+    echo "installing go"
+    set +e
+    rm -rf ~/.gvm
+    set -e
 
-  bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
-  sed -i '$ d' /home/chris/.gvm/scripts/gvm-default
-  source /home/chris/.gvm/scripts/gvm
+    bash < <(curl -s -S -L https://raw.githubusercontent.com/moovweb/gvm/master/binscripts/gvm-installer)
+    sed -i '$ d' /home/chris/.gvm/scripts/gvm-default
+    source /home/chris/.gvm/scripts/gvm
 
-  gvm install go1.4 -B
-  gvm use go1.4
-  export GOROOT_BOOTSTRAP=$GOROOT
-  gvm install go1.17.13
-  gvm use go1.17.13
-  export GOROOT_BOOTSTRAP=$GOROOT
-  gvm install go1.21.5
-  gvm use go1.21.5 --default
+    gvm install go1.4 -B
+    gvm use go1.4
+    export GOROOT_BOOTSTRAP=$GOROOT
+    gvm install go1.17.13
+    gvm use go1.17.13
+    export GOROOT_BOOTSTRAP=$GOROOT
+    gvm install go1.21.5
+    gvm use go1.21.5 --default
+  fi
 
   #rust
-  set +e
-  rm /tmp/rustup.sh
-  set -e
-  curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -o /tmp/rustup.sh
-  chmod u+x /tmp/rustup.sh
-  /tmp/rustup.sh -y
+  if which rustc; then
+    echo "rust already insatlled"
+  else
+    echo "installing rust"
+    set +e
+    rm /tmp/rustup.sh
+    set -e
+    curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf -o /tmp/rustup.sh
+    chmod u+x /tmp/rustup.sh
+    /tmp/rustup.sh -y
+  fi
 
   #install neovide here for now since it depends on rust
-  cargo install --git https://github.com/neovide/neovide
+  if which neovide; then
+    echo "Neovide already installed"
+  else
+    echo "Installing neovide"
+    cargo install --git https://github.com/neovide/neovide
+  fi
+
+  #node
+  if which n; then
+    echo "n already installed"
+  else
+    echo "Installing n (node version manager)"
+    sudo yum install npm -y
+    sudo npm install -g n
+    sudo yum remove npm -y
+    sudo n lts
+  fi
+
+  #python
+  if which pyenv; then
+    echo "pyenv already installed"
+  else
+    echo "installing pyenv and python"
+    curl https://pyenv.run | bash
+    pyenv install 3.12.1
+    pyenv global 3.12.1
+  fi
+
+  #java
+  if ls ~/.sdkman; then
+    echo "sdkman already installed"
+  else
+    curl -s "https://get.sdkman.io" | bash
+    source "/home/chris/.sdkman/bin/sdkman-init.sh"
+    sdk install java 21.0.2-opensdk install java
+  fi
 }
 
 # place for general setup tasks
@@ -230,8 +275,8 @@ done
 
 info_msg "Installing deps"
 sudo yum update
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse
-sudo dnf groupinstall "Development Tools" "Development Libraries"
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel
+sudo dnf groupinstall -y "Development Tools" "Development Libraries"
 
 if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ] && [ -z $SETUP_PROGRAMMING_LANGUAGES ] && [ -z $SETUP_MISC ]); then
   info_msg "Defaulting to setup all"
