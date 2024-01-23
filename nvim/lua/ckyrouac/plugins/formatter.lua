@@ -55,6 +55,8 @@ return {
           },
         },
       })
+
+      vim.keymap.set("n", "<leader>cf", ":Format<CR>", { desc = "[C]ode [f]ormat", silent = true })
     end,
   },
 }

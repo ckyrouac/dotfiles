@@ -27,7 +27,7 @@ vim.keymap.set("n", "<M-q>", "<Plug>(smartq_this)", { silent = true })
 vim.keymap.set("n", "W", ":Bdelete other<cr>", { silent = true })
 vim.keymap.set("n", "<M-C-W>", ":SmartQCloseSplits<cr>", { silent = true })
 
-vim.keymap.set("n", "<leader>c", ":noh<CR>", { desc = "[C]lear search highlight", silent = true })
+vim.keymap.set("n", "<leader>sc", ":noh<CR>", { desc = "[S]earch [c]lear highlights", silent = true })
 vim.keymap.set("n", "<M-C-Q>", ":wqa!<CR>", { desc = "Quit and save everything", silent = true })
 vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "[I]nspect", silent = true })
 
