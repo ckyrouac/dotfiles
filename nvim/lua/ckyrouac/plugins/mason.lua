@@ -6,12 +6,14 @@ return {
       -- before setting up the servers.
       require("mason").setup({
         ensure_installed = {
+          "bash-language-server",
           "clangd",
           "codelldb",
           "delve",
           "gopls",
           "lua-language-server",
           "luacheck",
+          "pyright",
           "stylua",
         },
         automatic_installation = true,

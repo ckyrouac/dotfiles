@@ -6,7 +6,7 @@ set -e
 
 function usage () {
   echo -en "--------------------------------------------------------------------------------\n";
-  echo -en "~/dotfiles/setup.sh options\n";
+  echo -en "$HOME/dotfiles/setup.sh options\n";
   echo -en "--------------------------------------------------------------------------------\n";
   echo -en "-a : setup everything. Takes precedent over other flags. This is default.\n";
   echo -en "-v : setup vim.\n";
@@ -83,11 +83,11 @@ function setup-zsh () {
 }
 
 function setup-git () {
-  git config --global user.name $USERNAME
-  git config --global user.email $EMAIL
+  git config --global user.name "$USERNAME"
+  git config --global user.email "$EMAIL"
   git config --global color.diff auto
   git config --global color.status auto
-  git config --global core.excludesFile '~/dotfiles/gitignore'
+  git config --global core.excludesFile "$HOME/dotfiles/gitignore"
 }
 
 function setup-terminal () {
@@ -270,12 +270,12 @@ while getopts u:e:agvzxcdrthspm flag; do
     e) # git email
       EMAIL=$OPTARG;
       ;;
-    ?)
-      echo "Invalid option: -$flag";
-      exit 1;
-      ;;
     :)
       echo "Option -$OPTARG requires an argument."
+      exit 1;
+      ;;
+    ?)
+      echo "Invalid option: -$flag";
       exit 1;
       ;;
   esac
@@ -283,55 +283,72 @@ done
 
 info_msg "Installing deps"
 sudo yum update
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel shellcheck
 sudo dnf groupinstall -y "Development Tools" "Development Libraries"
 
-if ([ -z $SETUP_VIM ] && [ -z $SETUP_GIT ] && [ -z $SETUP_ZSH ] && [ -z $SETUP_TERMINAL ] && [ -z $SETUP_TMUX ] && [ -z $SETUP_GNOME ] && [ -z $SETUP_PROGRAMMING_LANGUAGES ] && [ -z $SETUP_MISC ]); then
+if [ -z "$SETUP_VIM" ] && \
+   [ -z "$SETUP_GIT" ] && \
+   [ -z "$SETUP_ZSH" ] && \
+   [ -z "$SETUP_TERMINAL" ] && \
+   [ -z "$SETUP_TMUX" ] && \
+   [ -z "$SETUP_GNOME" ] && \
+   [ -z "$SETUP_PROGRAMMING_LANGUAGES" ] && \
+   [ -z "$SETUP_MISC" ]; then
   info_msg "Defaulting to setup all"
   SETUP_ALL=true
 fi
 
-if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]) && ([ -z "$USERNAME" ] || [ -z "$EMAIL" ]); then
-  error "Must provide -u 'username' and -e 'email' when setting up git";
+if { [ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]; } && { [ -z "$USERNAME" ] || [ -z "$EMAIL" ]; }; then
+  if git config --global user.name; then
+    echo "Git user.name already defined"
+  else
+    error "Must provide -u 'username' and -e 'email' when setting up git";
+  fi
+
+  if git config --global user.email; then
+    echo "Git user.email already defined"
+  else
+    error "Must provide -u 'username' and -e 'email' when setting up git";
+  fi
 fi
 
 
-if ([ "$SETUP_VIM" = true ] || [ "$SETUP_ALL" = true ]); then
+if { [ "$SETUP_VIM" = true ] || [ "$SETUP_ALL" = true ]; }; then
   info_msg "Setting up Neovim"
   setup-nvim
 fi
 
-if ([ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]); then
+if { [ "$SETUP_GIT" = true ] || [ "$SETUP_ALL" = true ]; }; then
   info_msg "Setting up git"
   setup-git
 fi
 
-if ([ "$SETUP_ZSH" = true ] || [ "$SETUP_ALL" = true ]); then
+if { [ "$SETUP_ZSH" = true ] || [ "$SETUP_ALL" = true ]; }; then
   info_msg "Setting up zsh"
   setup-zsh
 fi
 
-if ([ "$SETUP_TERMINAL" = true ] || [ "$SETUP_ALL" = true ]); then
+if { [ "$SETUP_TERMINAL" = true ] || [ "$SETUP_ALL" = true ]; }; then
   info_msg "Setting up st terminal"
   setup-terminal
 fi
 
-if ([ "$SETUP_TMUX" = true ] || [ "$SETUP_ALL" = true ]); then
+if { [ "$SETUP_TMUX" = true ] || [ "$SETUP_ALL" = true ]; }; then
   info_msg "Setting up tmux"
   setup-tmux
 fi
 
-if ([ "$SETUP_GNOME" = true ] || [ "$SETUP_ALL" = true ]); then
+if { [ "$SETUP_GNOME" = true ] || [ "$SETUP_ALL" = true ]; }; then
   info_msg "Setting up gnome"
   setup-gnome
 fi
 
-if ([ "$SETUP_PROGRAMMING_LANGUAGES" = true ] || [ "$SETUP_ALL" = true ]); then
+if { [ "$SETUP_PROGRAMMING_LANGUAGES" = true ] || [ "$SETUP_ALL" = true ]; }; then
   info_msg "Setting up programming languages"
   setup-programming-languages
 fi
 
-if ([ "$SETUP_MISC" = true ] || [ "$SETUP_ALL" = true ]); then
+if { [ "$SETUP_MISC" = true ] || [ "$SETUP_ALL" = true ]; }; then
   info_msg "Setting up misc"
   setup-misc
 fi
