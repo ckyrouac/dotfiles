@@ -25,6 +25,9 @@ return {
           dotfiles = false,
         },
         hijack_cursor = true,
+        diagnostics = {
+          enable = true,
+        }
       })
 
       vim.keymap.set("n", "<leader>f", ":NvimTreeFindFile<cr>", { silent = true })

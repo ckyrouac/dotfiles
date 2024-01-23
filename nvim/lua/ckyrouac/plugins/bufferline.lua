@@ -4,7 +4,6 @@ return {
     version = "*",
     dependencies = "nvim-tree/nvim-web-devicons",
     config = function()
-      local colors = require('darcula-solid.colors')
       require("bufferline").setup({
         options = {
           diagnostics = "nvim_lsp",
@@ -41,35 +40,6 @@ return {
               separator = true,
             },
           },
-        },
-        highlights = {
-          background = {
-            bg = colors.bg,
-          },
-          error = {
-            fg = colors.comment,
-            bg = colors.bg,
-          },
-          error_visible = {
-            fg = colors.comment,
-            bg = colors.bg,
-          },
-          error_selected = {
-            fg = colors.fg,
-            bg = colors.bg,
-          },
-          -- warning = {
-          --   fg = colors.fg,
-          --   bg = colors.bg,
-          -- },
-          warning_visible = {
-            fg = colors.comment,
-            bg = colors.bg,
-          },
-          warning_selected = {
-            fg = colors.fg,
-            bg = colors.bg,
-          }
         },
       })
     end,

@@ -17,6 +17,9 @@ require("lazy").setup({
   { import = "ckyrouac.plugins.dap" },
   { import = "ckyrouac.plugins.lsp" },
 }, {
+  ui = {
+    border = 'rounded'
+  },
   change_detection = {
     enabled = false,
     notify = false,

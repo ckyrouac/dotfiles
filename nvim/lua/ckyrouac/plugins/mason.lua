@@ -5,6 +5,9 @@ return {
       -- mason-lspconfig requires that these setup functions are called in this order
       -- before setting up the servers.
       require("mason").setup({
+        ui = {
+          border = 'rounded'
+        },
         ensure_installed = {
           "bash-language-server",
           "clangd",
