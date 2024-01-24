@@ -16,11 +16,13 @@ return {
         float_opts = {
           border = "rounded",
         },
-        on_open = function(term)
+        on_open = function()
           vim.api.nvim_buf_set_keymap(0, "t", "<A-3>", [[q]], { noremap = true, silent = true })
+          vim.api.nvim_buf_set_keymap(0, "t", "<A-w>", [[q]], { noremap = true, silent = true })
         end,
       })
 
+      ---@diagnostic disable-next-line: lowercase-global
       function _lazygit_toggle()
         lazygit.dir = vim.fn.getcwd()
         lazygit:toggle()
@@ -36,8 +38,15 @@ return {
         terminal_mappings = true,
         direction = "horizontal",
         shell = vim.o.shell,
-        on_open = function(term)
+        on_open = function()
           vim.cmd("startinsert!")
+          vim.api.nvim_buf_set_keymap(
+            0,
+            "t",
+            "<A-w>",
+            [[<C-\><C-o>:lua _dropdown_toggle()<cr>]],
+            { noremap = true, silent = true }
+          )
           vim.api.nvim_buf_set_keymap(
             0,
             "t",
@@ -55,6 +64,7 @@ return {
         end,
       })
 
+      ---@diagnostic disable-next-line: lowercase-global
       function _dropdown_toggle()
         dropdown:toggle()
       end
