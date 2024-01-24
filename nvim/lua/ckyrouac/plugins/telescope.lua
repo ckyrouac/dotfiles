@@ -131,6 +131,7 @@ return {
       pcall(telescope.load_extension, "fzf")
       telescope.load_extension("ui-select")
       telescope.load_extension("noice")
+      telescope.load_extension("advanced_git_search")
 
       -- Telescope live_grep in git root
       -- Function to find the git root directory based on the current buffer's path
@@ -245,12 +246,7 @@ return {
         require("telescope.builtin").diagnostics,
         { desc = "Open diagnostics list", silent = true }
       )
-      vim.keymap.set(
-        "n",
-        "<leader>u",
-        "<cmd>Telescope undo<cr>",
-        { desc = "Undo history", silent = true }
-      )
+      vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>", { desc = "Undo history", silent = true })
       vim.keymap.set(
         "n",
         "<leader>s/",
