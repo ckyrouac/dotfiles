@@ -14,22 +14,21 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous dia
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message", silent = true })
 
 -- Pane navigation keybinds
-vim.keymap.set("n", "<c-j>", "<c-w>j", { silent = true })
-vim.keymap.set("n", "<c-k>", "<c-w>k", { silent = true })
-vim.keymap.set("n", "<c-l>", "<c-w>l", { silent = true })
-vim.keymap.set("n", "<c-h>", "<c-w>h", { silent = true })
+vim.keymap.set("n", "<c-j>", "<c-w>j", { silent = true, desc = "Bottom pane" })
+vim.keymap.set("n", "<c-k>", "<c-w>k", { silent = true, desc = "Top pane" })
+vim.keymap.set("n", "<c-l>", "<c-w>l", { silent = true, desc = "Right pane" })
+vim.keymap.set("n", "<c-h>", "<c-w>h", { silent = true, desc = "Left pane" })
 
 -- Buffer navigation keybinds
-vim.keymap.set("n", "{", ":bp<cr>", { silent = true })
-vim.keymap.set("n", "}", ":bn<cr>", { silent = true })
-vim.keymap.set("n", "w", "<Plug>(smartq_this)", { silent = true })
-vim.keymap.set("n", "<M-q>", "<Plug>(smartq_this)", { silent = true })
-vim.keymap.set("n", "W", ":Bdelete other<cr>", { silent = true })
-vim.keymap.set("n", "<M-C-W>", ":SmartQCloseSplits<cr>", { silent = true })
+vim.keymap.set("n", "{", ":bp<cr>", { silent = true, desc = "Left buffer" })
+vim.keymap.set("n", "}", ":bn<cr>", { silent = true, desc = "Right buffer" })
+vim.keymap.set("n", "w", "<Plug>(smartq_this)", { silent = true, "Close current buffer" })
+vim.keymap.set("n", "W", ":Bdelete other<cr>", { silent = true, "Close other buffers" })
+vim.keymap.set("n", "<M-C-W>", ":SmartQCloseSplits<cr>", { silent = true, "Close other splits" })
 
-vim.keymap.set("n", "<leader>sc", ":noh<CR>", { desc = "[S]earch [c]lear highlights", silent = true })
+vim.keymap.set("n", "<leader>sc", ":noh<CR>", { desc = "Clear search highlights", silent = true })
 vim.keymap.set("n", "<M-C-Q>", ":wqa!<CR>", { desc = "Quit and save everything", silent = true })
-vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "[I]nspect", silent = true })
+vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "Inspect", silent = true })
 
 -- preserve clipbaord when deleting
 vim.keymap.set("n", "d", '"_d', { silent = true })
@@ -37,7 +36,7 @@ vim.keymap.set("v", "d", '"_d', { silent = true })
 vim.keymap.set("n", "D", '"_D', { silent = true })
 
 -- paste in insert mode
-vim.keymap.set("i", "<C-S-V>", "<c-r>+", { silent = true })
+vim.keymap.set("i", "<C-S-V>", "<c-r>+", { silent = true, desc = "Paste in insert mode" })
 
 local function toggle_line_numbers()
   if vim.o.rnu then
@@ -46,8 +45,8 @@ local function toggle_line_numbers()
     vim.o.rnu = true
   end
 end
-vim.keymap.set("n", "<leader>l", toggle_line_numbers, { silent = true, desc = "Toggle relative [l]ine numbers" })
+vim.keymap.set("n", "<leader>l", toggle_line_numbers, { silent = true, desc = "Toggle relative line numbers" })
 
 -- mouse forward/back
--- vim.keymap.set('n', '<X1Mouse>', '<C-i>', { silent = true, desc = 'Toggle relative [l]ine numbers' })
--- vim.keymap.set('n', '<X2Mouse>', '<C-o>', { silent = true, desc = 'Toggle relative [l]ine numbers' })
+-- vim.keymap.set('n', '<X1Mouse>', '<C-i>', { silent = true, desc = 'Toggle relative line numbers' })
+-- vim.keymap.set('n', '<X2Mouse>', '<C-o>', { silent = true, desc = 'Toggle relative line numbers' })
