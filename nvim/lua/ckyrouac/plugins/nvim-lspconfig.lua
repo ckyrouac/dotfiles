@@ -87,7 +87,7 @@ return {
         )
 
         nmap("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
-        nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+        -- nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
 
         -- require('telescope.builtin').lsp_code_action
         nmap("<M-CR>", vim.lsp.buf.code_action, "[W]orkspace [S]ymbols")
