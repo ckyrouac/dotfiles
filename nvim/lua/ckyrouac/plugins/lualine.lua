@@ -55,7 +55,16 @@ return {
         },
         options = {
           theme = require("darcula-solid.lualine_theme"),
-          disabled_filetypes = { "NvimTree", "SidebarNvim" },
+          disabled_filetypes = {
+            "NvimTree",
+            "SidebarNvim",
+            "dapui_watches",
+            "dapui_stacks",
+            "dapui_breakpoints",
+            "dapui_scopes",
+            "dapui_console",
+            "dap-repl",
+          },
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
         },
