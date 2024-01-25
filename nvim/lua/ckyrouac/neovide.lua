@@ -11,7 +11,7 @@ if vim.g.neovide then
 
   vim.g.neovide_hide_mouse_when_typing = false
   vim.g.neovide_underline_stroke_scale = 1.0
-  vim.g.neovide_fullscreen = true
+  vim.g.neovide_fullscreen = false
   vim.g.neovide_cursor_antialiasing = true
 
   vim.g.neovide_scroll_animation_length = 0.1
