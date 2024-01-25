@@ -88,6 +88,22 @@ function setup-git () {
   git config --global color.diff auto
   git config --global color.status auto
   git config --global core.excludesFile "$HOME/dotfiles/gitignore"
+
+  #diff-so-fancy
+  git config --global core.pager "diff-so-fancy | less --tabs=4 -RF"
+  git config --global interactive.diffFilter "diff-so-fancy --patch"
+  git config --global color.ui true
+  git config --global color.diff-highlight.oldNormal    "red bold"
+  git config --global color.diff-highlight.oldHighlight "red bold 52"
+  git config --global color.diff-highlight.newNormal    "green bold"
+  git config --global color.diff-highlight.newHighlight "green bold 22"
+  git config --global color.diff.meta       "11"
+  git config --global color.diff.frag       "magenta bold"
+  git config --global color.diff.func       "146 bold"
+  git config --global color.diff.commit     "yellow bold"
+  git config --global color.diff.old        "red bold"
+  git config --global color.diff.new        "green bold"
+  git config --global color.diff.whitespace "red reverse"
 }
 
 function setup-terminal () {
@@ -283,7 +299,7 @@ done
 
 info_msg "Installing deps"
 sudo yum update
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel shellcheck libpq-devel
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel shellcheck libpq-devel diff-so-fancy
 sudo dnf groupinstall -y "Development Tools" "Development Libraries"
 
 if [ -z "$SETUP_VIM" ] && \

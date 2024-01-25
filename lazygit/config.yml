@@ -8,3 +8,7 @@ keybinding:
     nextBlock: '<c-j>'
 os:
   editPreset: 'nvim-remote'
+git:
+  paging:
+    colorArg: always
+    pager: diff-so-fancy
