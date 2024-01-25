@@ -13,7 +13,47 @@ return {
       -- dap.listeners.before.event_exited["dapui_config"] = function()
       --   dapui.close()
       -- end
-      dapui.setup()
+      dapui.setup({
+
+        layouts = {
+          {
+            elements = {
+              {
+                id = "scopes",
+                size = 0.25,
+              },
+              {
+                id = "breakpoints",
+                size = 0.25,
+              },
+              {
+                id = "stacks",
+                size = 0.25,
+              },
+              {
+                id = "watches",
+                size = 0.25,
+              },
+            },
+            position = "left",
+            size = 70,
+          },
+          {
+            elements = {
+              {
+                id = "repl",
+                size = 0.5,
+              },
+              {
+                id = "console",
+                size = 0.5,
+              },
+            },
+            position = "bottom",
+            size = 25,
+          },
+        },
+      })
 
       -- breakpoint colors
       vim.api.nvim_set_hl(0, "DapBreakpoint", { ctermbg = 0, fg = "#993939" })
@@ -34,19 +74,19 @@ return {
         pattern = { "*" },
         callback = function()
           if vim.bo.filetype == "dapui_watches" then
-            vim.opt_local.statusline = 'Watches'
+            vim.opt_local.winbar = "Watches"
           elseif vim.bo.filetype == "dapui_stacks" then
-            vim.opt_local.statusline = 'Stacks'
+            vim.opt_local.winbar = "Stacks"
           elseif vim.bo.filetype == "dapui_breakpoints" then
-            vim.opt_local.statusline = 'Breakpoints'
+            vim.opt_local.winbar = "Breakpoints"
           elseif vim.bo.filetype == "dapui_scopes" then
-            vim.opt_local.statusline = 'Scopes'
+            vim.opt_local.winbar = "Scopes"
           elseif vim.bo.filetype == "dapui_console" then
-            vim.opt_local.statusline = 'Console'
+            vim.opt_local.statusline = "Console"
           elseif vim.bo.filetype == "dap-repl" then
-            vim.opt_local.statusline = 'REPL'
+            vim.opt_local.statusline = "REPL"
           end
-        end
+        end,
       })
     end,
   },

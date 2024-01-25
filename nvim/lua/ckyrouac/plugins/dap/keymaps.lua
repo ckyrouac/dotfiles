@@ -14,7 +14,7 @@ vim.keymap.set("n", "<Leader>dsi", ":lua require('dap').step_into()<CR>", { sile
 vim.keymap.set("n", "<Leader>dso", ":lua require('dap').step_out()<CR>", { silent = true, desc = 'Step Out' })
 
 -- hover
-vim.keymap.set("n", "<Leader>dhh", ":lua require('dap.ui.variables').hover()<CR>", { silent = true, desc = 'Hover' })
+vim.keymap.set("n", "<Leader>dhh", ":lua require('dap.ui.widgets').hover()<CR>", { silent = true, desc = 'Hover' })
 vim.keymap.set("v", "<Leader>dhv", ":lua require('dap.ui.variables').visual_hover()<CR>", { silent = true, desc = 'Visual Hover' })
 
 -- widgets
