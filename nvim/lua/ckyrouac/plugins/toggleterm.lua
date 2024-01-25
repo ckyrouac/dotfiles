@@ -36,7 +36,7 @@ return {
         start_in_insert = true,
         insert_mappings = true,
         terminal_mappings = true,
-        direction = "horizontal",
+        direction = "float",
         shell = vim.o.shell,
         on_open = function()
           vim.cmd("startinsert!")

@@ -17,6 +17,21 @@ return {
         },
         view = {
           width = 50,
+          preserve_window_proportions = true,
+          relativenumber = false,
+          number = false,
+          signcolumn = "no",
+          float = {
+            enable = true,
+            open_win_config = {
+              relative = "editor",
+              border = "rounded",
+              width = 50,
+              height = 40,
+              row = 1,
+              col = 1,
+            },
+          },
         },
         renderer = {
           group_empty = true,
@@ -27,7 +42,7 @@ return {
         hijack_cursor = true,
         diagnostics = {
           enable = true,
-        }
+        },
       })
 
       vim.keymap.set("n", "<leader>f", ":NvimTreeFindFile<cr>", { silent = true })
