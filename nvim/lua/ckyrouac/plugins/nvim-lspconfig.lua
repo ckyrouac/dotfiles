@@ -137,6 +137,17 @@ return {
         end,
       })
 
+      vim.g.rustaceanvim = {
+        server = {
+          on_attach = on_attach,
+        },
+        tools = {
+          hover_actions = {
+            auto_focus = true,
+          },
+        },
+      }
+
       -- configure the built in diagnostics
       vim.diagnostic.config({
         signs = true,
