@@ -2,7 +2,8 @@ return {
   {
     "mhartington/formatter.nvim",
     config = function()
-      -- format on save
+      -- uncomment to enable global format on save
+      --
       -- local augroup = vim.api.nvim_create_augroup
       -- local autocmd = vim.api.nvim_create_autocmd
       -- augroup("__formatter__", { clear = true })
@@ -11,27 +12,27 @@ return {
       --         command = ":FormatWrite",
       -- })
 
-      -- Provides the Format, FormatWrite, FormatLock, and FormatWriteLock commands
       require("formatter").setup({
-        -- Enable or disable logging
         logging = true,
-        -- Set the log level
         log_level = vim.log.levels.WARN,
-        -- All formatter configurations are opt-in
         filetype = {
-          -- Formatter configurations for filetype "lua" go here
-          -- and will be executed in order
           lua = {
-            -- require("formatter.filetypes.lua").stylua,
             function()
-              -- Supports conditional formatting
-              -- if util.get_current_buffer_file_name() == "special.lua" then
-              -- 	return nil
-              -- end
-
               local util = require("formatter.util")
-              return {
-                exe = "stylua",
+
+              -- check for .stylelua.toml in project root, fall back to .stylelua.toml in dotfiles
+              local args = {}
+              if vim.fn.empty(vim.fn.glob(vim.fn.getcwd() .. "/.stylelua.toml")) then
+                args = {
+                  "--config-path",
+                  "/home/chris/dotfiles/.stylelua.toml",
+                  "--search-parent-directories",
+                  "--stdin-filepath",
+                  util.escape_path(util.get_current_buffer_file_path()),
+                  "--",
+                  "-",
+                }
+              else
                 args = {
                   "--config-path",
                   vim.fn.getcwd() .. "/.stylelua.toml",
@@ -40,11 +41,19 @@ return {
                   util.escape_path(util.get_current_buffer_file_path()),
                   "--",
                   "-",
-                },
+                }
+              end
+
+              return {
+                exe = "stylua",
+                args = args,
                 stdin = true,
               }
             end,
           },
+
+          json = require("formatter.filetypes.json").prettier,
+          rust = require("formatter.filetypes.rust").rustfmt,
 
           -- Use the special "*" filetype for defining formatter configurations on
           -- any filetype

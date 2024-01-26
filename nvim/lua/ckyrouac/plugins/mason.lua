@@ -18,6 +18,8 @@ return {
           "luacheck",
           "pyright",
           "stylua",
+          "jq",
+          "jsonlint",
         },
         automatic_installation = true,
       })
