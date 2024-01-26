@@ -19,8 +19,8 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<Leader>o", ":lua require('oil').toggle_float(vim.fn.getcwd())<cr>", { silent = true, desc = "Oil files" })
-      vim.keymap.set("n", "<A-2>", ":lua require('oil').toggle_float(vim.fn.getcwd())<cr>", { silent = true, desc = "Oil files" })
+      vim.keymap.set("n", "<Leader>o", ":lua require('oil').toggle_float()<cr>", { silent = true, desc = "Oil files" })
+      vim.keymap.set("n", "<A-2>", ":lua require('oil').toggle_float()<cr>", { silent = true, desc = "Oil files" })
     end,
   },
 }
