@@ -4,7 +4,7 @@ return {
     config = function()
       local dapui = require("dapui")
       local dap = require("dap")
-      dap.listeners.after._initialized["dapui_config"] = function()
+      dap.listeners.after.event_initialized["dapui_config"] = function()
         dapui.open()
       end
       -- dap.listeners.before.event_terminated["dapui_config"] = function()
@@ -19,20 +19,20 @@ return {
           {
             elements = {
               {
-                id = "scopes",
-                size = 0.25,
+                id = "watches",
+                size = 0.3,
               },
               {
-                id = "breakpoints",
-                size = 0.25,
+                id = "scopes",
+                size = 0.35,
               },
               {
                 id = "stacks",
-                size = 0.25,
+                size = 0.2,
               },
               {
-                id = "watches",
-                size = 0.25,
+                id = "breakpoints",
+                size = 0.15,
               },
             },
             position = "left",
@@ -74,13 +74,13 @@ return {
         pattern = { "*" },
         callback = function()
           if vim.bo.filetype == "dapui_watches" then
-            vim.opt_local.winbar = "Watches"
+            vim.opt_local.winbar = " Watches"
           elseif vim.bo.filetype == "dapui_stacks" then
-            vim.opt_local.winbar = "Stacks"
+            vim.opt_local.winbar = " Stacks"
           elseif vim.bo.filetype == "dapui_breakpoints" then
-            vim.opt_local.winbar = "Breakpoints"
+            vim.opt_local.winbar = " Breakpoints"
           elseif vim.bo.filetype == "dapui_scopes" then
-            vim.opt_local.winbar = "Scopes"
+            vim.opt_local.winbar = " Scopes"
           elseif vim.bo.filetype == "dapui_console" then
             vim.opt_local.statusline = "Console"
           elseif vim.bo.filetype == "dap-repl" then
