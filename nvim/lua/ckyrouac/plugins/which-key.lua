@@ -30,7 +30,7 @@ return {
       -- search chains
       ["<leader>sp"] = { name = "Projects", _ = "which_key_ignore" },
       ["<leader>sf"] = { name = "Files", _ = "which_key_ignore" },
-      ["<leader>sg"] = { name = "Contents", _ = "which_key_ignore" },
+      ["<leader>sc"] = { name = "Contents", _ = "which_key_ignore" },
     })
 
     -- visual chains

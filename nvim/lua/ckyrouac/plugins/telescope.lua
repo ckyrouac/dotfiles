@@ -129,43 +129,59 @@ return {
       telescope.load_extension("noice")
       telescope.load_extension("advanced_git_search")
 
-      local function telescope_live_grep_open_files()
+      local function search_open_files()
         require("telescope.builtin").live_grep({
           grep_open_files = true,
-          prompt_title = "Live Grep in Open Files",
+          prompt_title = "Search Open Files",
         })
       end
 
-      local function find_in_home_dir()
-        require("telescope.builtin").find_files({ cwd = "~/", hidden = true })
+      local function search_entire_project_contents()
+        require("telescope.builtin").live_grep({
+          prompt_title = "Search Entire Project",
+        })
       end
 
-      local function find_in_cwd()
+      local function find_files_in_home_dir()
+        require("telescope.builtin").find_files({ cwd = "~/", hidden = true, prompt_title = "Find Files in Home Directory" })
+      end
+
+      local function find_files_in_project()
         require("telescope.builtin").find_files({
           cwd = vim.fn.getcwd(),
           hidden = true,
-          name = "asdf",
           follow = true,
           prompt_title = "Find Files in Project",
         })
       end
 
+      local function find_recently_opened_files()
+        require("telescope.builtin").oldfiles({
+          prompt_title = "Find Recently Opened Files",
+        })
+      end
+
+      local function find_currently_open_files()
+        require("telescope.builtin").buffers({
+          prompt_title = "Find Currently Open Files",
+        })
+      end
       -- telescope keymaps
 
       -- top level
       vim.keymap.set(
         "n",
         "<leader>?",
-        require("telescope.builtin").live_grep,
+        search_entire_project_contents,
         { desc = "Search entire project", silent = true }
       )
       vim.keymap.set(
         "n",
         "<leader>/",
-        require("telescope.builtin").live_grep,
+        search_entire_project_contents,
         { desc = "Search entire project", silent = true }
       )
-      vim.keymap.set("n", "<leader><space>", find_in_cwd, { desc = "Find files in project", silent = true })
+      vim.keymap.set("n", "<leader><space>", find_files_in_project, { desc = "Find files in project", silent = true })
 
       vim.keymap.set(
         "n",
@@ -220,38 +236,34 @@ return {
         ":Telescope neovim-project history layout_strategy=vertical<cr>",
         { desc = "Search projects recent", silent = true }
       )
-      vim.keymap.set(
-        "n",
-        "<leader>sx",
-        ":noh<CR>",
-        { desc = "Clear search highlights", silent = true })
+      vim.keymap.set("n", "<leader>sx", ":noh<CR>", { desc = "Clear search highlights", silent = true })
 
       -- files
       vim.keymap.set(
         "n",
         "<leader>sfr",
-        require("telescope.builtin").oldfiles,
+        find_recently_opened_files,
         { desc = "Recently Opened Files", silent = true }
       )
       vim.keymap.set(
         "n",
         "<leader>sfo",
-        require("telescope.builtin").buffers,
+        find_currently_open_files,
         { desc = "Currently Open Files", silent = true }
       )
-      vim.keymap.set("n", "<leader>sfu", find_in_home_dir, { desc = "Entire home directory", silent = true })
+      vim.keymap.set("n", "<leader>sfu", find_files_in_home_dir, { desc = "Entire home directory", silent = true })
 
       -- grep contents
       vim.keymap.set(
         "n",
         "<leader>sco",
-        telescope_live_grep_open_files,
+        search_open_files,
         { desc = "Currently Open Files", silent = true }
       )
       vim.keymap.set(
         "n",
         "<leader>scp",
-        require("telescope.builtin").live_grep,
+        search_entire_project_contents,
         { desc = "Entire Project", silent = true }
       )
     end,
