@@ -1,6 +1,6 @@
 -- function keys
 vim.keymap.set("n", "<F4>", ":lua require('dapui').toggle()<CR>", { silent = true, desc = 'Toggle DAP UI' })
-vim.keymap.set("n", "<F5>", ":lua require('dap').toggle_breakpoint()<CR>", { silent = true, desc = 'Toggle Breakpoint' })
+vim.keymap.set("n", "<F5>", ":lua require('persistent-breakpoints.api').toggle_breakpoint()<CR>", { silent = true, desc = 'Toggle Breakpoint' })
 vim.keymap.set("n", "<F9>", ":lua require('dap').continue()<CR>", { silent = true, desc = 'DAP Continue' })
 
 vim.keymap.set("n", "<F8>", ":lua require('dap').step_over()<CR>", { silent = true, desc = 'Step Over' })
@@ -43,7 +43,7 @@ vim.keymap.set(
   ":lua require('dap').set_breakpoint({ nil, nil, vim.fn.input('Log point message: ') })<CR>",
   { silent = true, desc = 'Breakpoint Log Message' }
 )
-vim.keymap.set("n", "<Leader>dbt", ":lua require('dap').toggle_breakpoint()<CR>", { silent = true, desc = 'Toggle Breakpoint' })
+vim.keymap.set("n", "<Leader>dbt", ":lua require('persistent-breakpoints.api').toggle_breakpoint()<CR>", { silent = true, desc = 'Toggle Breakpoint' })
 
 -- scopes
 vim.keymap.set(
