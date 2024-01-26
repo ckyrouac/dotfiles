@@ -169,6 +169,7 @@ return {
       -- telescope keymaps
 
       -- top level
+      vim.keymap.set("n", "<leader>sx", ":noh<CR>", { desc = "Clear search highlights", silent = true })
       vim.keymap.set(
         "n",
         "<leader>?",
@@ -226,17 +227,16 @@ return {
       -- projects
       vim.keymap.set(
         "n",
-        "<leader>spa",
+        "<leader>pa",
         ":Telescope neovim-project discover layout_strategy=vertical<cr>",
-        { desc = "Search projects all", silent = true }
+        { desc = "All", silent = true }
       )
       vim.keymap.set(
         "n",
-        "<leader>spr",
+        "<leader>pr",
         ":Telescope neovim-project history layout_strategy=vertical<cr>",
-        { desc = "Search projects recent", silent = true }
+        { desc = "Recent", silent = true }
       )
-      vim.keymap.set("n", "<leader>sx", ":noh<CR>", { desc = "Clear search highlights", silent = true })
 
       -- files
       vim.keymap.set(
