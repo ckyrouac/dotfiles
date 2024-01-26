@@ -28,7 +28,6 @@ vim.keymap.set("n", "<M-C-W>", ":SmartQCloseSplits<cr>", { silent = true, desc =
 
 -- vim.keymap.set("n", "<C-q>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
 
-vim.keymap.set("n", "<leader>sc", ":noh<CR>", { desc = "Clear search highlights", silent = true })
 vim.keymap.set("n", "<M-C-Q>", ":wqa!<CR>", { desc = "Quit and save everything", silent = true })
 vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "Inspect", silent = true })
 

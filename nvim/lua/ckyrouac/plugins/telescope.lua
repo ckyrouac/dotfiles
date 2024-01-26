@@ -117,12 +117,8 @@ return {
         defaults = {
           mappings = {
             i = {
-              ["<M-t>"] = require("telescope.actions").close,
               ["<M-w>"] = require("telescope.actions").close,
-              ["<M-q>"] = require("telescope.actions").close,
-              ["<C-f>"] = require("telescope.actions").close,
-              ["<A-o>"] = require("telescope.actions").close,
-              ["<M-O>"] = require("telescope.actions").close,
+              ["<esc>"] = require("telescope.actions").close,
             },
           },
         },
@@ -132,43 +128,6 @@ return {
       telescope.load_extension("ui-select")
       telescope.load_extension("noice")
       telescope.load_extension("advanced_git_search")
-
-      -- Telescope live_grep in git root
-      -- Function to find the git root directory based on the current buffer's path
-      local function find_git_root()
-        -- Use the current buffer's path as the starting point for the git search
-        local current_file = vim.api.nvim_buf_get_name(0)
-        local current_dir
-        local cwd = vim.fn.getcwd()
-        -- If the buffer is not associated with a file, return nil
-        if current_file == "" then
-          current_dir = cwd
-        else
-          -- Extract the directory from the current file's path
-          current_dir = vim.fn.fnamemodify(current_file, ":h")
-        end
-
-        -- Find the Git root directory from the current file's path
-        local git_root =
-          vim.fn.systemlist("git -C " .. vim.fn.escape(current_dir, " ") .. " rev-parse --show-toplevel")[1]
-        if vim.v.shell_error ~= 0 then
-          print("Not a git repository. Searching on current working directory")
-          return cwd
-        end
-        return git_root
-      end
-
-      -- Custom live_grep function to search in git root
-      local function live_grep_git_root()
-        local git_root = find_git_root()
-        if git_root then
-          require("telescope.builtin").live_grep({
-            search_dirs = { git_root },
-          })
-        end
-      end
-
-      vim.api.nvim_create_user_command("LiveGrepGitRoot", live_grep_git_root, {})
 
       local function telescope_live_grep_open_files()
         require("telescope.builtin").live_grep({
@@ -181,59 +140,33 @@ return {
         require("telescope.builtin").find_files({ cwd = "~/", hidden = true })
       end
 
+      local function find_in_cwd()
+        require("telescope.builtin").find_files({
+          cwd = vim.fn.getcwd(),
+          hidden = true,
+          name = "asdf",
+          follow = true,
+          prompt_title = "Find Files in Project",
+        })
+      end
+
       -- telescope keymaps
-      vim.keymap.set(
-        "n",
-        "<leader>t",
-        require("telescope.builtin").find_files,
-        { desc = "[S]earch [F]iles", silent = true }
-      )
 
-      vim.keymap.set(
-        "n",
-        "<C-f>",
-        require("telescope.builtin").current_buffer_fuzzy_find,
-        { desc = "Fuzzily search in current buffer", silent = true }
-      )
-      vim.keymap.set("n", "<C-S-F>", ":LiveGrepGitRoot<cr>", { desc = "[S]earch by [G]rep on Git Root", silent = true })
-
-      vim.keymap.set(
-        "n",
-        "<A-t>",
-        require("telescope.builtin").find_files,
-        { desc = "[S]earch [F]iles", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<M-O>",
-        ":Telescope neovim-project discover layout_strategy=vertical<cr>",
-        { desc = "[S]earch [p]rojects [a]ll", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<A-o>",
-        ":Telescope neovim-project history layout_strategy=vertical<cr>",
-        { desc = "[S]earch [p]rojects [r]ecent", silent = true }
-      )
-
+      -- top level
       vim.keymap.set(
         "n",
         "<leader>?",
-        require("telescope.builtin").oldfiles,
-        { desc = "[?] Find recently opened files", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader><space>",
-        require("telescope.builtin").buffers,
-        { desc = "[ ] Find existing buffers", silent = true }
+        require("telescope.builtin").live_grep,
+        { desc = "Search entire project", silent = true }
       )
       vim.keymap.set(
         "n",
         "<leader>/",
-        require("telescope.builtin").current_buffer_fuzzy_find,
-        { desc = "[/] Fuzzily search in current buffer", silent = true }
+        require("telescope.builtin").live_grep,
+        { desc = "Search entire project", silent = true }
       )
+      vim.keymap.set("n", "<leader><space>", find_in_cwd, { desc = "Find files in project", silent = true })
+
       vim.keymap.set(
         "n",
         "<leader>e",
@@ -249,87 +182,77 @@ return {
       vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>", { desc = "Undo history", silent = true })
       vim.keymap.set(
         "n",
-        "<leader>s/",
-        telescope_live_grep_open_files,
-        { desc = "[S]earch [/] in Open Files", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>ss",
+        "<leader>st",
         require("telescope.builtin").builtin,
-        { desc = "[S]earch [S]elect Telescope", silent = true }
+        { desc = "Telescope builtin", silent = true }
       )
-      vim.keymap.set(
-        "n",
-        "<leader>gf",
-        require("telescope.builtin").git_files,
-        { desc = "Search [G]it [F]iles", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>sh",
-        require("telescope.builtin").help_tags,
-        { desc = "[S]earch [H]elp", silent = true }
-      )
+      vim.keymap.set("n", "<leader>sh", require("telescope.builtin").help_tags, { desc = "Help", silent = true })
       vim.keymap.set(
         "n",
         "<leader>sw",
         require("telescope.builtin").grep_string,
-        { desc = "[S]earch current [W]ord", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>sg",
-        require("telescope.builtin").live_grep,
-        { desc = "[S]earch by [G]rep", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>sG",
-        ":LiveGrepGitRoot<cr>",
-        { desc = "[S]earch by [G]rep on Git Root", silent = true }
+        { desc = "Current Word", silent = true }
       )
       vim.keymap.set(
         "n",
         "<leader>sd",
         require("telescope.builtin").diagnostics,
-        { desc = "[S]earch [D]iagnostics", silent = true }
+        { desc = "Diagnostics", silent = true }
       )
-      vim.keymap.set(
-        "n",
-        "<leader>sr",
-        require("telescope.builtin").resume,
-        { desc = "[S]earch [R]esume", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>so",
-        require("telescope.builtin").oldfiles,
-        { desc = "[S]earch recently [o]pened files", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>su",
-        find_in_home_dir,
-        { desc = "[S]earch user's entire [h]ome directory", silent = true }
-      )
+      vim.keymap.set("n", "<leader>sr", require("telescope.builtin").resume, { desc = "Resume", silent = true })
       vim.keymap.set(
         "n",
         "<leader>sk",
         require("telescope.builtin").keymaps,
-        { desc = "[S]earch [k]eymaps", silent = true }
+        { desc = "Search keymaps", silent = true }
       )
+
+      -- projects
       vim.keymap.set(
         "n",
-        "<leader>spp",
+        "<leader>spa",
         ":Telescope neovim-project discover layout_strategy=vertical<cr>",
-        { desc = "[S]earch [p]rojects", silent = true }
+        { desc = "Search projects all", silent = true }
       )
       vim.keymap.set(
         "n",
         "<leader>spr",
         ":Telescope neovim-project history layout_strategy=vertical<cr>",
-        { desc = "[S]earch [p]rojects [r]ecent", silent = true }
+        { desc = "Search projects recent", silent = true }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>sx",
+        ":noh<CR>",
+        { desc = "Clear search highlights", silent = true })
+
+      -- files
+      vim.keymap.set(
+        "n",
+        "<leader>sfr",
+        require("telescope.builtin").oldfiles,
+        { desc = "Recently Opened Files", silent = true }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>sfo",
+        require("telescope.builtin").buffers,
+        { desc = "Currently Open Files", silent = true }
+      )
+      vim.keymap.set("n", "<leader>sfu", find_in_home_dir, { desc = "Entire home directory", silent = true })
+
+      -- grep contents
+      vim.keymap.set(
+        "n",
+        "<leader>sco",
+        telescope_live_grep_open_files,
+        { desc = "Currently Open Files", silent = true }
+      )
+      vim.keymap.set(
+        "n",
+        "<leader>scp",
+        require("telescope.builtin").live_grep,
+        { desc = "Entire Project", silent = true }
       )
     end,
   },

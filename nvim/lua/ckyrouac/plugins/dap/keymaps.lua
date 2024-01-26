@@ -1,5 +1,6 @@
 -- function keys
 vim.keymap.set("n", "<F4>", ":lua require('dapui').toggle()<CR>", { silent = true, desc = 'Toggle DAP UI' })
+vim.keymap.set("n", "<S-F4>", ":lua require('dapui').open({reset=true})<CR>", { silent = true, desc = 'Reset DAP UI' })
 vim.keymap.set("n", "<F5>", ":lua require('persistent-breakpoints.api').toggle_breakpoint()<CR>", { silent = true, desc = 'Toggle Breakpoint' })
 vim.keymap.set("n", "<F9>", ":lua require('dap').continue()<CR>", { silent = true, desc = 'DAP Continue' })
 
