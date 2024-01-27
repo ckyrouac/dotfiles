@@ -117,7 +117,8 @@ return {
         defaults = {
           mappings = {
             i = {
-              ["<M-w>"] = require("telescope.actions").close,
+              ["<C-w>"] = require("telescope.actions").close,
+              ["<C-q>"] = require("telescope.actions").close,
               ["<esc>"] = require("telescope.actions").close,
             },
           },

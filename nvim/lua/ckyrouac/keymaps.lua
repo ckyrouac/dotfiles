@@ -22,9 +22,14 @@ vim.keymap.set("n", "<c-h>", "<c-w>h", { silent = true, desc = "Left pane" })
 -- Buffer navigation keybinds
 vim.keymap.set("n", "{", ":bp<cr>", { silent = true, desc = "Left buffer" })
 vim.keymap.set("n", "}", ":bn<cr>", { silent = true, desc = "Right buffer" })
-vim.keymap.set("n", "w", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
+vim.keymap.set("n", "<C-w>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
+vim.keymap.set("n", "<leader>q", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
 vim.keymap.set("n", "W", ":Bdelete other<cr>", { silent = true, desc = "Close other buffers" })
 vim.keymap.set("n", "<M-C-W>", ":SmartQCloseSplits<cr>", { silent = true, desc = "Close other splits" })
+
+vim.keymap.set("n", "<leader>xq", "<Plug>(smartq_this)", { silent = true, desc = "Current buffer" })
+vim.keymap.set("n", "<leader>xo", ":Bdelete other<cr>", { silent = true, desc = "Other buffers" })
+vim.keymap.set("n", "<leader>xs", ":SmartQCloseSplits<cr>", { silent = true, desc = "Other splits" })
 
 -- vim.keymap.set("n", "<C-q>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
 

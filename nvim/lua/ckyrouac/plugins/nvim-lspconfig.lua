@@ -96,9 +96,6 @@ return {
         nmap("gD", vim.lsp.buf.declaration, "Goto Declaration")
         nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "Workspace Add Folder")
         nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "Workspace Remove Folder")
-        nmap("<leader>wl", function()
-          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, "Workspace List Folders")
 
         -- Create a command `:Format` local to the LSP buffer
         -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
