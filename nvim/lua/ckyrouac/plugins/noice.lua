@@ -42,7 +42,6 @@ return {
         })
 
         require("notify").setup({
-          top_down = false,
           render = "minimal",
           stages = "no_animation"
         })
