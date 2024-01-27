@@ -19,6 +19,7 @@ return {
         on_open = function()
           vim.api.nvim_buf_set_keymap(0, "t", "<A-3>", [[q]], { noremap = true, silent = true })
           vim.api.nvim_buf_set_keymap(0, "t", "<A-w>", [[q]], { noremap = true, silent = true })
+          vim.api.nvim_buf_set_keymap(0, "t", "<leader>og", [[q]], { noremap = true, silent = true })
         end,
       })
 
@@ -28,7 +29,18 @@ return {
         lazygit:toggle()
       end
 
-      vim.api.nvim_set_keymap("n", "<A-3>", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap(
+        "n",
+        "<leader>og",
+        "<cmd>lua _lazygit_toggle()<CR>",
+        { noremap = true, silent = true, desc = "Git" }
+      )
+      vim.api.nvim_set_keymap(
+        "n",
+        "<A-3>",
+        "<cmd>lua _lazygit_toggle()<CR>",
+        { noremap = true, silent = true, desc = "Lazy Git Terminal" }
+      )
 
       -- dropdown
       local dropdown = Terminal:new({
