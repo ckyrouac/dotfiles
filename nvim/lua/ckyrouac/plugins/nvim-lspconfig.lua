@@ -34,7 +34,7 @@ return {
           },
         },
         pyright = {},
-        -- rust_analyzer = {},
+        rust_analyzer = {},
         -- tsserver = {},
         -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -137,17 +137,17 @@ return {
         end,
       })
 
-      vim.g.rustaceanvim = {
-        server = {
-          on_attach = on_attach,
-        },
-        tools = {
-          hover_actions = {
-            auto_focus = true,
-          },
-        },
-      }
-
+      -- vim.g.rustaceanvim = {
+      --   server = {
+      --     on_attach = on_attach,
+      --   },
+      --   tools = {
+      --     hover_actions = {
+      --       auto_focus = true,
+      --     },
+      --   },
+      -- }
+      --
       -- configure the built in diagnostics
       vim.diagnostic.config({
         signs = true,
