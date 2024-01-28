@@ -191,12 +191,6 @@ return {
         vim.diagnostic.open_float,
         { desc = "Open floating diagnostic message", silent = true }
       )
-      vim.keymap.set(
-        "n",
-        "<leader>q",
-        require("telescope.builtin").diagnostics,
-        { desc = "Open diagnostics list", silent = true }
-      )
       vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>", { desc = "Undo history", silent = true })
       vim.keymap.set(
         "n",
