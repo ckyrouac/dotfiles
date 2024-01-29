@@ -2,7 +2,7 @@ return {
   {
     "aaronhallaert/advanced-git-search.nvim",
     dependencies = {
-      "nvim-telescope/telescope.nvim",
+      "ckyrouac/telescope.nvim",
       "tpope/vim-fugitive",
       "tpope/vim-rhubarb",
       "sindrets/diffview.nvim",

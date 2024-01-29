@@ -24,7 +24,7 @@ return {
     end,
     dependencies = {
       { "nvim-lua/plenary.nvim" },
-      { "nvim-telescope/telescope.nvim" },
+      { "ckyrouac/telescope.nvim" },
       { "Shatur/neovim-session-manager" },
     },
     lazy = false,

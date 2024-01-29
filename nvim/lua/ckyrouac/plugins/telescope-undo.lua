@@ -3,7 +3,7 @@ return {
     "debugloop/telescope-undo.nvim",
     dependencies = {
       {
-        "nvim-telescope/telescope.nvim",
+        "ckyrouac/telescope.nvim",
         dependencies = { "nvim-lua/plenary.nvim" },
       },
     },
