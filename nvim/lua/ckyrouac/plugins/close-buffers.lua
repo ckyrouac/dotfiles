@@ -1,3 +1,6 @@
 return {
-  "Asheq/close-buffers.vim",
+  {
+    "Asheq/close-buffers.vim",
+    cond = true,
+  }
 }

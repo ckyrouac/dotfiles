@@ -1,6 +1,10 @@
 return {
   {
     "jay-babu/mason-nvim-dap.nvim",
+    cond = true,
+    dependencies = {
+      "mfussenegger/nvim-dap",
+    },
     config = function()
       -- mason-lspconfig requires that these setup functions are called in this order
       -- before setting up the servers.

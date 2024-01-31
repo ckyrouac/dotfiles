@@ -1,6 +1,7 @@
 return {
   {
     "rcarriga/nvim-dap-ui",
+    cond = true,
     config = function()
       local dapui = require("dapui")
       local dap = require("dap")

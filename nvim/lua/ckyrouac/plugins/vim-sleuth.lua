@@ -1,3 +1,6 @@
 return {
-  "tpope/vim-sleuth",
+  {
+    "tpope/vim-sleuth",
+    cond = true,
+  }
 }

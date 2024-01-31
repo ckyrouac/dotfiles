@@ -1,3 +1,6 @@
 return {
-  "tpope/vim-rhubarb",
+  {
+    "tpope/vim-rhubarb",
+    cond = true,
+  }
 }

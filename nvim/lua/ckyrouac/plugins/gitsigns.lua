@@ -2,6 +2,7 @@
 
 return {
   {
+    cond = true,
     "lewis6991/gitsigns.nvim",
     event = {
       "VeryLazy",

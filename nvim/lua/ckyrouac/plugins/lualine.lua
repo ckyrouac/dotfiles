@@ -1,6 +1,7 @@
 return {
   {
     -- Set lualine as statusline
+    cond = true,
     "nvim-lualine/lualine.nvim",
     -- See `:help lualine.txt`
     opts = {

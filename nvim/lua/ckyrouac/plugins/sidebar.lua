@@ -1,6 +1,7 @@
 return {
   {
     "ckyrouac/sidebar.nvim",
+    cond = false,
     config = function()
       require("sidebar-nvim").setup({
         side = "right",

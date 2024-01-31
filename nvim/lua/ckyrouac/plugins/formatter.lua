@@ -1,6 +1,7 @@
 return {
   {
     "mhartington/formatter.nvim",
+    cond = true,
     config = function()
       -- uncomment to enable global format on save
       --

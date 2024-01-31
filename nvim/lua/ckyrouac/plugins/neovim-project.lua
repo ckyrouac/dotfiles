@@ -1,6 +1,10 @@
 return {
   {
     "coffebar/neovim-project",
+
+    -- Disable neovim-project because it breaks the rustacean LSP
+    -- from loading upon startup unless a rust buffer is active
+    cond = false,
     opts = {
       projects = { -- define project roots
         "~/projects/*",

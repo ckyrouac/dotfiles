@@ -1,6 +1,7 @@
 return {
   "folke/which-key.nvim",
   opts = {},
+  cond = true,
   config = function()
     require("which-key").setup({
       icons = {

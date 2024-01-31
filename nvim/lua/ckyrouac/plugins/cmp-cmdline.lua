@@ -1,6 +1,7 @@
 return {
   {
     "hrsh7th/cmp-cmdline",
+    cond = true,
     config = function()
       local cmp = require("cmp")
 

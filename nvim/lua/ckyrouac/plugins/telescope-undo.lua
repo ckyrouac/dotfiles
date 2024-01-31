@@ -1,6 +1,7 @@
 return {
   {
     "debugloop/telescope-undo.nvim",
+    cond = true,
     dependencies = {
       {
         "ckyrouac/telescope.nvim",

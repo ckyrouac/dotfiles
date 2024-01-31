@@ -1,6 +1,7 @@
 return {
   {
     "pocco81/auto-save.nvim",
+    cond = true,
     config = function ()
       require('auto-save').setup({
         execution_message = {
