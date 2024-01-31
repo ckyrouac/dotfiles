@@ -19,6 +19,7 @@ return {
       ["<leader>p"] = { name = "Projects", _ = "which_key_ignore" },
       ["<leader>o"] = { name = "Open Tool", _ = "which_key_ignore" },
       ["<leader>x"] = { name = "Close", _ = "which_key_ignore" },
+      ["<leader>m"] = { name = "Markdown", _ = "which_key_ignore" },
 
       -- dap chains
       ["<leader>ds"] = { name = "Steps", _ = "which_key_ignore" },
