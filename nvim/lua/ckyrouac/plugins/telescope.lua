@@ -223,30 +223,36 @@ return {
       -- files
       vim.keymap.set(
         "n",
-        "<leader>sfr",
+        "<leader>fr",
         find_recently_opened_files,
         { desc = "Recently Opened Files", silent = true }
       )
       vim.keymap.set(
         "n",
-        "<leader>sfo",
+        "<leader>fo",
         find_currently_open_files,
         { desc = "Currently Open Files", silent = true }
       )
-      vim.keymap.set("n", "<leader>sfu", find_files_in_home_dir, { desc = "Entire home directory", silent = true })
+      vim.keymap.set(
+        "n",
+        "<leader>fp",
+        find_currently_open_files,
+        { desc = "Project Files", silent = true }
+      )
+      vim.keymap.set("n", "<leader>fh", find_files_in_home_dir, { desc = "Entire Home Directory", silent = true })
 
       -- grep contents
       vim.keymap.set(
         "n",
-        "<leader>sco",
+        "<leader>so",
         search_open_files,
-        { desc = "Currently Open Files", silent = true }
+        { desc = "Grep currently Open Files", silent = true }
       )
       vim.keymap.set(
         "n",
-        "<leader>scp",
+        "<leader>sp",
         search_entire_project_contents,
-        { desc = "Entire Project", silent = true }
+        { desc = "Grep entire Project", silent = true }
       )
     end,
   },

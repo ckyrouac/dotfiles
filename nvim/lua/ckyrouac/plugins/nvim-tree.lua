@@ -46,7 +46,7 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<leader>f", ":NvimTreeFindFile<cr>", { silent = true })
+      vim.keymap.set("n", "<leader>ff", ":NvimTreeFindFile<cr>", { silent = true, desc = "Find File in Nvif Tree" })
       vim.keymap.set("n", "<A-1>", ":NvimTreeToggle<cr>", { silent = true })
 
       -- restore nvimtree on startup if vim exited with nvimtree open

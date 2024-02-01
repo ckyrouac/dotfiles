@@ -21,6 +21,7 @@ return {
       ["<leader>o"] = { name = "Open Tool", _ = "which_key_ignore" },
       ["<leader>x"] = { name = "Close", _ = "which_key_ignore" },
       ["<leader>m"] = { name = "Markdown", _ = "which_key_ignore" },
+      ["<leader>f"] = { name = "Find", _ = "which_key_ignore" },
 
       -- dap chains
       ["<leader>ds"] = { name = "Steps", _ = "which_key_ignore" },
@@ -31,11 +32,6 @@ return {
 
       -- git chains
       ["<leader>gt"] = { name = "Toggle", _ = "which_key_ignore" },
-
-      -- search chains
-      ["<leader>sp"] = { name = "Projects", _ = "which_key_ignore" },
-      ["<leader>sf"] = { name = "Files", _ = "which_key_ignore" },
-      ["<leader>sc"] = { name = "Contents", _ = "which_key_ignore" },
     })
 
     -- visual chains
