@@ -4,10 +4,10 @@ return {
     cond = true,
     opts = {
       toggler = {
-        line = "<C-/>",
+        line = "",
       },
       opleader = {
-        line = "<C-/>",
+        line = "",
       },
     },
   },
