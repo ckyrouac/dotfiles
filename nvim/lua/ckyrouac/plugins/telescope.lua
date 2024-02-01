@@ -220,20 +220,6 @@ return {
         { desc = "Search keymaps", silent = true }
       )
 
-      -- projects
-      vim.keymap.set(
-        "n",
-        "<leader>pa",
-        ":Telescope neovim-project discover layout_strategy=vertical<cr>",
-        { desc = "All", silent = true }
-      )
-      vim.keymap.set(
-        "n",
-        "<leader>pr",
-        ":Telescope neovim-project history layout_strategy=vertical<cr>",
-        { desc = "Recent", silent = true }
-      )
-
       -- files
       vim.keymap.set(
         "n",
