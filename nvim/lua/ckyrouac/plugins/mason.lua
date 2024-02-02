@@ -24,6 +24,7 @@ return {
           "stylua",
           "jq",
           "jsonlint",
+          "rust_analyzer",
         },
         automatic_installation = true,
       })
