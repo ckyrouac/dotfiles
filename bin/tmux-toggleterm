@@ -1,0 +1,38 @@
+#!/bin/bash
+
+function active-pane()
+{
+    local active_pane=$(tmux list-panes -F "#{?pane_active,#P,}" | tr -d " ")
+    echo $active_pane
+}
+
+# return 1 if active window is zoomed
+function window-is-zoomed()
+{
+    local is_zoomed=$(tmux list-windows -F "#{?window_active,#{window_zoomed_flag},}")
+    echo $is_zoomed
+}
+
+function toggle-term()
+{
+    if [ $(window-is-zoomed) -eq 1 ]; then
+        #unmaximize and focus pane 2 (terminal)
+        tmux select-pane -t 2
+    else
+        #maximize and focus pane 1 (vim)
+        tmux resize-pane -t 1 -Z
+    fi
+}
+
+function first-window-is-active()
+{
+    local active_window=$(tmux list-windows -F "#{?window_active,#I,}" | tr -d " ")
+    echo $active_window
+}
+
+# only use the toggle terminal in the first (vim) window
+if [ $(first-window-is-active) -eq 1 ]; then
+    toggle-term
+else
+    exit 0
+fi

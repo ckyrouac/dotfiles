@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+#
+# Based off https://github.com/ThePrimeagen/.dotfiles/blob/602019e902634188ab06ea31251c01c1a43d1621/bin/.local/scripts/tmux-sessionizer
+#
+function usage() {
+  echo -e "Usage:\n"
+  echo -e "tmux-sessionizer <switch>\n"
+
+  printf "%-25s %s\n" "Switches:" ""
+  printf "%-25s %s\n" "-a, --all" "All projects in defined directories"
+  printf "%-25s %s\n" "-e, --existing" "Existing tmux sessions"
+
+  printf "%-25s %s\n" "" ""
+  printf "%-25s %s\n" "-h, --help" ""
+}
+
+function args()
+{
+    options=$(getopt -o p:haek --long kill --long help --long existing --long all -- "$@")
+    option_code=$?
+    [ "$option_code" -eq 0 ] || {
+        echo "Incorrect option provided"
+        usage
+        exit 1
+    }
+    eval set -- "$options"
+    while true; do
+        case "$1" in
+        -a)
+          ALL=true
+          ;;
+        --all)
+          ALL=true
+          ;;
+        -k)
+          KILL=true
+          ;;
+        --kill)
+          KILL=true
+          ;;
+        -e)
+          EXISTING=true
+          ;;
+        --existing)
+          EXISTING=true
+          ;;
+        -h)
+          usage
+          exit 1;
+          ;;
+        --help)
+          usage
+          exit 1;
+          ;;
+        --)
+        shift
+        break
+        ;;
+        esac
+        shift
+    done
+}
+
+function init_session()
+{
+    tmux select-window -t 1
+    tmux rename-window vim
+    tmux split-window -v -l 30%
+    tmux select-pane -t 1
+    tmux resize-pane -t 1 -Z
+    tmux send-keys -t 1 nvim
+}
+
+function switch-session()
+{
+    selected=$1
+
+    if [[ -z $selected ]]; then
+        exit 0
+    fi
+
+    selected_name=$(basename "$selected" | tr . _)
+    tmux_running=$(pgrep tmux)
+
+    if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+        tmux new-session -s "$selected_name" -c "$selected"
+        init_session
+        exit 0
+    fi
+
+    if ! tmux has-session -t="$selected_name" 2> /dev/null; then
+        tmux new-session -ds "$selected_name" -c "$selected"
+        init_session
+    fi
+
+    tmux switch-client -t "$selected_name"
+}
+
+args "$0" "$@"
+
+# prevent multiple switches
+if [ -n "$ALL" ] && [ -n "$EXISTING" ]; then
+    echo "Only one switch can be used at a time"
+    usage
+    exit 1
+fi
+
+# default to all
+if [ -z "$ALL" ] && [ -z "$EXISTING" ] && [ -z "$KILL" ]; then
+    ALL=true
+fi
+
+if [ "$ALL" = true ]; then
+    selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d | fzf-tmux -p --reverse)
+    switch-session "$selected"
+    exit 0
+elif [ "$EXISTING" = true ]; then
+    selected=$(tmux list-sessions -F "#S" | fzf-tmux -p --reverse)
+    switch-session "$selected"
+    exit 0
+elif [ "$KILL" = true ]; then
+    selected=$(tmux list-sessions -F "#S" | fzf-tmux -p --reverse)
+    if [[ -z $selected ]]; then
+        exit 0
+    fi
+    tmux kill-session -t "$selected"
+    exit 0
+fi

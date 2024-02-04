@@ -7,6 +7,7 @@ export EDITOR='nvim'
 export VISUAL='nvim'
 
 export PATH=$PATH:/home/chris/bin
+export PATH=$PATH:/home/chris/dotfiles/bin
 export PATH=$PATH:/usr/local/kubebuilder/bin
 
 #java
