@@ -1,11 +1,5 @@
 #!/bin/bash
 
-function active-pane()
-{
-    local active_pane=$(tmux list-panes -F "#{?pane_active,#P,}" | tr -d " ")
-    echo $active_pane
-}
-
 # return 1 if active window is zoomed
 function window-is-zoomed()
 {
@@ -24,14 +18,28 @@ function toggle-term()
     fi
 }
 
+# return 1 if first window is active
 function first-window-is-active()
 {
     local active_window=$(tmux list-windows -F "#{?window_active,#I,}" | tr -d " ")
     echo $active_window
 }
 
-# only use the toggle terminal in the first (vim) window
-if [ $(first-window-is-active) -eq 1 ]; then
+function num-panes()
+{
+    local num_panes=$(tmux list-panes -F "#P" | tail -n 1)
+    echo $num_panes
+}
+
+function split-window()
+{
+    tmux split-window -v -l 40%
+}
+
+if [ $(num-panes) -eq 1 ]; then
+    split-window
+    exit 0
+elif [ $(first-window-is-active) -eq 1 ]; then # only use the toggle terminal in the first (vim) window
     toggle-term
 else
     exit 0

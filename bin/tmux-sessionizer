@@ -24,25 +24,32 @@ function args()
         exit 1
     }
     eval set -- "$options"
+    i=0
     while true; do
         case "$1" in
         -a)
           ALL=true
+          i=$((i+1))
           ;;
         --all)
           ALL=true
+          i=$((i+1))
           ;;
         -k)
           KILL=true
+          i=$((i+1))
           ;;
         --kill)
           KILL=true
+          i=$((i+1))
           ;;
         -e)
           EXISTING=true
+          i=$((i+1))
           ;;
         --existing)
           EXISTING=true
+          i=$((i+1))
           ;;
         -h)
           usage
@@ -61,14 +68,26 @@ function args()
     done
 }
 
+args "$0" "$@"
+
+# prevent multiple switches
+num_switches=$i
+if [ "$num_switches" -gt 1 ]; then
+    echo "Only one switch can be used at a time"
+    usage
+    exit 1
+fi
+
 function init_session()
 {
+    dir=$1
+
     tmux select-window -t 1
     tmux rename-window vim
-    tmux split-window -v -l 30%
+    tmux split-window -v -l 40% -c "$dir"
     tmux select-pane -t 1
     tmux resize-pane -t 1 -Z
-    tmux send-keys -t 1 nvim
+    tmux send-keys -t 1 "nvim" Enter
 }
 
 function switch-session()
@@ -84,26 +103,17 @@ function switch-session()
 
     if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
         tmux new-session -s "$selected_name" -c "$selected"
-        init_session
+        init_session "$selected"
         exit 0
     fi
 
     if ! tmux has-session -t="$selected_name" 2> /dev/null; then
         tmux new-session -ds "$selected_name" -c "$selected"
-        init_session
+        init_session "$selected"
     fi
 
     tmux switch-client -t "$selected_name"
 }
-
-args "$0" "$@"
-
-# prevent multiple switches
-if [ -n "$ALL" ] && [ -n "$EXISTING" ]; then
-    echo "Only one switch can be used at a time"
-    usage
-    exit 1
-fi
 
 # default to all
 if [ -z "$ALL" ] && [ -z "$EXISTING" ] && [ -z "$KILL" ]; then
