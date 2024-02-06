@@ -46,8 +46,20 @@ return {
         },
       })
 
-      vim.keymap.set("n", "<leader>ff", ":NvimTreeFindFile<cr>", { silent = true, desc = "Find File in Nvif Tree" })
-      vim.keymap.set("n", "<A-1>", ":NvimTreeToggle<cr>", { silent = true })
+      local utils = require("ckyrouac/utils")
+
+      local function nvimtree_toggle()
+        require("nvim-tree.api").tree.toggle()
+        utils.dapui_refresh()
+      end
+
+      local function nvimtree_find_file()
+        require("nvim-tree.api").tree.find_file({open=true})
+        utils.dapui_refresh()
+      end
+
+      vim.keymap.set("n", "<leader>ff", nvimtree_find_file, { silent = true, desc = "Find File in Nvif Tree" })
+      vim.keymap.set("n", "<A-1>", nvimtree_toggle, { silent = true })
 
       -- restore nvimtree on startup if vim exited with nvimtree open
       vim.api.nvim_create_autocmd({ "BufEnter" }, {

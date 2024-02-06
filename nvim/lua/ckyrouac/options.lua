@@ -1,4 +1,6 @@
 -- Disable netrw for nvim-tree
+local utils = require("ckyrouac/utils")
+
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
@@ -87,43 +89,17 @@ vim.api.nvim_create_autocmd({ "BufLeave" }, {
   end,
 })
 
-local function dapui_is_open()
-  local List = require("plenary.collections.py_list")
-  local dapUIFiletypes = List({
-    "dapui_watches",
-    "dapui_stacks",
-    "dapui_breakpoints",
-    "dapui_scopes",
-    "dapui_console",
-    "dapui_console",
-    "dap-repl",
-  })
-
-  local buffers = vim.api.nvim_list_bufs()
-
-  for buf in pairs(buffers) do
-    local filetype = vim.fn.getbufvar(buf, "&filetype")
-    if dapUIFiletypes:contains(filetype) then
-      return true
-    end
-  end
-
-  return false
-end
-
 vim.api.nvim_create_autocmd({ "VimResized" }, {
   pattern = { "*" },
   callback = function()
-    if dapui_is_open() then
-      require('dapui').open({reset=true})
-    end
+    utils.dapui_refresh()
   end,
 })
 
 vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
   pattern = { "*" },
   callback = function()
-    if dapui_is_open() then
+    if utils.dapui_is_open() then
       require('dapui').close()
     end
   end,
