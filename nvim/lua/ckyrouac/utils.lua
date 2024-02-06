@@ -24,6 +24,8 @@ local function dapui_is_open()
   return false
 end
 
+M.dapui_is_open = dapui_is_open
+
 function M.dapui_refresh()
   if dapui_is_open() then
     require('dapui').open({reset=true})
