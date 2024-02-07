@@ -44,6 +44,11 @@ return {
         diagnostics = {
           enable = true,
         },
+        git = {
+          ignore = false,
+          enable = true,
+          timeout = 500,
+        },
       })
 
       local utils = require("ckyrouac/utils")
@@ -54,7 +59,7 @@ return {
       end
 
       local function nvimtree_find_file()
-        require("nvim-tree.api").tree.find_file({open=true})
+        require("nvim-tree.api").tree.find_file({ open = true, focus = true })
         utils.dapui_refresh()
       end
 
