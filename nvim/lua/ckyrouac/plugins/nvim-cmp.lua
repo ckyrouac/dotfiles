@@ -14,6 +14,8 @@ return {
 
       -- Adds a number of user-friendly snippets
       "rafamadriz/friendly-snippets",
+
+      "onsails/lspkind.nvim",
     },
     config = function()
       -- [[ Configure nvim-cmp ]]
@@ -22,6 +24,8 @@ return {
       local luasnip = require("luasnip")
       require("luasnip.loaders.from_vscode").lazy_load()
       luasnip.config.setup({})
+
+      local lspkind = require("lspkind")
 
       cmp.setup({
         window = {
@@ -64,9 +68,25 @@ return {
           end, { "i", "s" }),
         }),
         sources = {
+          { name = "copilot" },
           { name = "nvim_lsp" },
           { name = "luasnip" },
           { name = "path" },
+        },
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = "symbol_text",
+            menu = {
+              nvim_lsp = " LSP",
+              luasnip = " LuaSnip",
+              path = " Path",
+              copilot = " Copilot",
+            },
+            max_width = 50,
+            symbol_map = { Copilot = "" },
+            ellipsis_char = "...",
+            show_labelDetails = true,
+          }),
         },
       })
     end,
