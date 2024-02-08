@@ -32,8 +32,6 @@ vim.keymap.set("n", "<leader>xq", "<Plug>(smartq_this)", { silent = true, desc =
 vim.keymap.set("n", "<leader>xo", ":Bdelete other<cr>", { silent = true, desc = "Other buffers" })
 vim.keymap.set("n", "<leader>xs", ":SmartQCloseSplits<cr>", { silent = true, desc = "Other splits" })
 
--- vim.keymap.set("n", "<C-q>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
-
 vim.keymap.set("n", "<M-C-Q>", ":wqa!<CR>", { desc = "Quit and save everything", silent = true })
 vim.keymap.set("n", "<leader>i", ":Inspect<CR>", { desc = "Inspect", silent = true })
 
