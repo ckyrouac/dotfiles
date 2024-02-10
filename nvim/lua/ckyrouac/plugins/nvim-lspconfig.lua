@@ -87,7 +87,7 @@ return {
         -- nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
 
         -- require('telescope.builtin').lsp_code_action
-        nmap("<M-CR>", vim.lsp.buf.code_action, "Code Action")
+        -- nmap("<M-CR>", vim.lsp.buf.code_action, "Code Action")
 
         -- See `:help K` for why this keymap
         nmap("K", vim.lsp.buf.hover, "Hover Documentation")

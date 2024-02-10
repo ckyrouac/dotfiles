@@ -68,10 +68,10 @@ return {
           end, { "i", "s" }),
         }),
         sources = {
-          { name = "copilot" },
-          { name = "nvim_lsp" },
-          { name = "luasnip" },
-          { name = "path" },
+          -- { name = "copilot", max_item_count = 5 },
+          { name = "nvim_lsp", max_item_count = 15 },
+          { name = "luasnip", max_item_count = 5 },
+          { name = "path", max_item_count = 5 },
         },
         formatting = {
           format = lspkind.cmp_format({
@@ -80,10 +80,10 @@ return {
               nvim_lsp = " LSP",
               luasnip = " LuaSnip",
               path = " Path",
-              copilot = " Copilot",
+              -- copilot = " Copilot",
             },
             max_width = 50,
-            symbol_map = { Copilot = "" },
+            -- symbol_map = { Copilot = "" },
             ellipsis_char = "...",
             show_labelDetails = true,
           }),
