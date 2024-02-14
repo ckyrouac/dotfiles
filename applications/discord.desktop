@@ -4,5 +4,5 @@ Type=Application
 Name=Discord
 GenericName=Discord
 Icon=insync
-Exec=~/bin/Discord/Discord
+Exec=/home/chris/bin/Discord/Discord
 Terminal=false

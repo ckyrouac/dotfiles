@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=keymapp
+GenericName=keymapp
+Icon=/home/chris/dotfiles/bin/keymapp-latest/icon.png
+Exec=/home/chris/dotfiles/bin/keymapp-latest/keymapp
+Terminal=false
