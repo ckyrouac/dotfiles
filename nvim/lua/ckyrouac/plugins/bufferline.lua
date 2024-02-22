@@ -41,7 +41,7 @@ return {
             },
             {
               padding = 0,
-              filetype = "dapui_watches",
+              filetype = "dapui_breakpoints",
               text = "🐞",
               text_align = "left",
               highlight = "Normal",
