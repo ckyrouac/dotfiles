@@ -20,6 +20,7 @@ return {
           rust = true,
           go = true,
           lua = true,
+          c = true,
           ["*"] = false,
         },
       })

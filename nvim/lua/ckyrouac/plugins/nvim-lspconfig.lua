@@ -163,25 +163,37 @@ return {
         -- }
       })
 
+      -- c config
+      local cmp_nvim_lsp = require("cmp_nvim_lsp")
+
+      require("lspconfig").clangd.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        cmd = {
+          "clangd",
+          "--offset-encoding=utf-16",
+        },
+      })
+
       vim.api.nvim_create_autocmd({ "CursorHold" }, {
         pattern = { "*" },
         callback = function()
           vim.lsp.buf.document_highlight()
-        end
+        end,
       })
 
       vim.api.nvim_create_autocmd({ "CursorHoldI" }, {
         pattern = { "*" },
         callback = function()
           vim.lsp.buf.document_highlight()
-        end
+        end,
       })
 
       vim.api.nvim_create_autocmd({ "CursorMoved" }, {
         pattern = { "*" },
         callback = function()
           vim.lsp.buf.clear_references()
-        end
+        end,
       })
     end,
   },
