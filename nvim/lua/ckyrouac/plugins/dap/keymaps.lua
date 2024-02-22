@@ -96,4 +96,13 @@ vim.keymap.set("n", "<Leader>dc", ":lua require('dap.ui.variables').scopes()<CR>
 -- toggle UI
 vim.keymap.set("n", "<Leader>di", ":lua require('dapui').toggle()<CR>", { silent = true, desc = "Toggle UI" })
 
+-- center search results
+vim.keymap.set("n", "n", "nzz", { silent = true })
+vim.keymap.set("n", "N", "Nzz", { silent = true })
+vim.keymap.set(
+  'c', '<CR>',
+  function() return vim.fn.getcmdtype() == '/' and '<CR>zz' or '<CR>' end,
+  { expr = true }
+)
+
 return {}
