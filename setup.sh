@@ -12,7 +12,7 @@ function usage () {
   echo -en "-v : setup vim.\n";
   echo -en "-z : setup zsh.\n";
   echo -en "-g : setup git.\n";
-  echo -en "-t : setup st terminal.\n";
+  echo -en "-t : setup alacritty terminal.\n";
   echo -en "-x : setup tmux.\n";
   echo -en "-d : setup gnome\n";
   echo -en "-p : setup programming languages\n";
@@ -112,15 +112,9 @@ function setup-terminal () {
   sudo fc-cache /usr/share/fonts
 
   set +e
-  mkdir -p ~/bin
-  cd ~/bin
-  rm -rf ~/bin/st
+  rm -rf ~/.config/alacritty
+  ln -s ~/dotfiles/alacritty ~/.config/alacritty
   set -e
-
-  git clone git@github.com:ckyrouac/st.git
-  cd ~/bin/st
-  sudo make clean install
-  cd ~/dotfiles
 }
 
 function setup-tmux () {
@@ -298,8 +292,8 @@ while getopts u:e:agvzxcdrthspm flag; do
 done
 
 info_msg "Installing deps"
-sudo yum update
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel shellcheck libpq-devel diff-so-fancy
+sudo yum update -y
+sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel shellcheck libpq-devel diff-so-fancy alacritty
 sudo dnf groupinstall -y "Development Tools" "Development Libraries"
 
 if [ -z "$SETUP_VIM" ] && \
@@ -345,7 +339,7 @@ if { [ "$SETUP_ZSH" = true ] || [ "$SETUP_ALL" = true ]; }; then
 fi
 
 if { [ "$SETUP_TERMINAL" = true ] || [ "$SETUP_ALL" = true ]; }; then
-  info_msg "Setting up st terminal"
+  info_msg "Setting up alacritty terminal"
   setup-terminal
 fi
 
