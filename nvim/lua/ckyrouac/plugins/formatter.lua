@@ -55,6 +55,8 @@ return {
 
           json = require("formatter.filetypes.json").prettier,
           rust = require("formatter.filetypes.rust").rustfmt,
+          go = require("formatter.filetypes.go").goimports,
+          xml = require("formatter.filetypes.xml").xmlformat,
 
           -- Use the special "*" filetype for defining formatter configurations on
           -- any filetype
