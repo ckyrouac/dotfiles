@@ -25,6 +25,8 @@ return {
           "jq",
           "jsonlint",
           "rust_analyzer",
+          "goimports",
+          "xmlformatter",
         },
         automatic_installation = true,
       })
