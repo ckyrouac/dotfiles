@@ -2,7 +2,7 @@
  * Extension
  *
  * @author     Javad Rahmatzadeh <j.rahmatzadeh@gmail.com>
- * @copyright  2020-2023
+ * @copyright  2020-2024
  * @license    GPL-3.0-only
  */
 
@@ -21,6 +21,8 @@ import * as MessageTray from 'resource:///org/gnome/shell/ui/messageTray.js';
 import * as OSDWindow from 'resource:///org/gnome/shell/ui/osdWindow.js';
 import * as OverviewControls from 'resource:///org/gnome/shell/ui/overviewControls.js';
 import * as Panel from 'resource:///org/gnome/shell/ui/panel.js';
+import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
+import * as Search from 'resource:///org/gnome/shell/ui/search.js';
 import * as SearchController from 'resource:///org/gnome/shell/ui/searchController.js';
 import * as SwitcherPopup from 'resource:///org/gnome/shell/ui/switcherPopup.js';
 import * as WindowMenu from 'resource:///org/gnome/shell/ui/windowMenu.js';
@@ -68,41 +70,48 @@ export default class JustPerfection extends Extension
 
         let InterfaceSettings = new Gio.Settings({schema_id: 'org.gnome.desktop.interface'});
 
-        this.#api = new API({
-            Main,
-            BackgroundMenu,
-            OverviewControls,
-            WorkspaceSwitcherPopup,
-            SwitcherPopup,
-            InterfaceSettings,
-            SearchController,
-            WorkspaceThumbnail,
-            WorkspacesView,
-            Panel,
-            WindowPreview,
-            Workspace,
-            LookingGlass,
-            MessageTray,
-            OSDWindow,
-            WindowMenu,
-            AltTab,
-            St,
-            Gio,
-            GLib,
-            Clutter,
-            Util,
-            Meta,
-            GObject,
-        }, shellVersion);
+        this.#api = new API(
+            {
+                Main,
+                BackgroundMenu,
+                OverviewControls,
+                WorkspaceSwitcherPopup,
+                SwitcherPopup,
+                InterfaceSettings,
+                Search,
+                SearchController,
+                WorkspaceThumbnail,
+                WorkspacesView,
+                Panel,
+                PanelMenu,
+                WindowPreview,
+                Workspace,
+                LookingGlass,
+                MessageTray,
+                OSDWindow,
+                WindowMenu,
+                AltTab,
+                St,
+                GLib,
+                Clutter,
+                Util,
+                Meta,
+                GObject,
+            },
+            shellVersion
+        );
 
         this.#api.open();
 
         let settings = this.getSettings();
 
-        this.#manager = new Manager({
-            API: this.#api,
-            Settings: settings,
-        }, shellVersion);
+        this.#manager = new Manager(
+            {
+                API: this.#api,
+                Settings: settings,
+            },
+            shellVersion
+        );
 
         this.#manager.registerSettingsSignals();
         this.#manager.applyAll();

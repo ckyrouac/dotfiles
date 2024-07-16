@@ -2,15 +2,13 @@
  * Prefs Dialog
  *
  * @author     Javad Rahmatzadeh <j.rahmatzadeh@gmail.com>
- * @copyright  2020-2023
+ * @copyright  2020-2024
  * @license    GPL-3.0-only
  */
 
-import Adw from 'gi://Adw';
 import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 import Gio from 'gi://Gio';
-import GLib from 'gi://GLib';
 
 import {ExtensionPreferences} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 import * as Config from 'resource:///org/gnome/Shell/Extensions/js/misc/config.js';
@@ -33,23 +31,21 @@ export default class JustPerfectionPrefs extends ExtensionPreferences
         const shellVersion = parseFloat(Config.PACKAGE_VERSION);
         const gettextDomain = this.metadata['gettext-domain'];
 
-        let UIFolderPath = this.dir.get_child('ui').get_path();
+        let ResourcesFolderPath = this.path;
         let prefsKeys = new PrefsKeys(shellVersion);
 
         let prefs = new Prefs(
             {
                 Builder: new Gtk.Builder(),
                 Settings: this.getSettings(),
-                Gtk,
                 Gdk,
                 Gio,
-                GLib,
             },
             prefsKeys,
             shellVersion
         );
 
-        prefs.fillPrefsWindow(window, UIFolderPath, gettextDomain);
+        prefs.fillPrefsWindow(window, ResourcesFolderPath, gettextDomain);
     }
 }
 
