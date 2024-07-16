@@ -34,3 +34,9 @@ background = "#1E1F22"
 
 [colors]
 cursor = { cursor = "#BCBEC4" }
+
+[keyboard]
+bindings = [
+  { key = "Up", mods = "Shift", action = "IncreaseFontSize" },
+  { key = "Down", mods = "Shift", action = "DecreaseFontSize" },
+]
