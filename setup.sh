@@ -53,9 +53,9 @@ function setup-gnome () {
   set -e
   ln -s ~/dotfiles/gnome/shortcuts.conf ~/.config/run-or-raise/shortcuts.conf
 
-  cp ~/dotfiles/bin/* ~/bin
+  # cp ~/dotfiles/bin/* ~/bin
 
-  dconf load -f /org/gnome/ < ~/dotfiles/gnome/gnome-backup.dconf
+  # dconf load -f /org/gnome/ < ~/dotfiles/gnome/gnome-backup.dconf
   info_msg "Done setting up Gnome"
 }
 
