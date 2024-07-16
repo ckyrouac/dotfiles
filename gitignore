@@ -11,3 +11,6 @@ tags
 
 .idea
 
+__debug*
+
+.tmp
