@@ -1,3 +1,3 @@
 #!/bin/bash
-tmux new-session -d -s terminal-dropdown
-st -t terminal-dropdown -e tmux attach-session -t terminal-dropdown
+tmux new-session -d -s general
+alacritty -t terminal-dropdown -e tmux attach-session -t general
