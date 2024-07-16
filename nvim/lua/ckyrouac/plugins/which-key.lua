@@ -22,6 +22,7 @@ return {
       ["<leader>x"] = { name = "Close", _ = "which_key_ignore" },
       ["<leader>m"] = { name = "Markdown", _ = "which_key_ignore" },
       ["<leader>f"] = { name = "Find", _ = "which_key_ignore" },
+      ["<leader>t"] = { name = "Test", _ = "which_key_ignore" },
 
       -- dap chains
       ["<leader>ds"] = { name = "Steps", _ = "which_key_ignore" },
@@ -32,6 +33,9 @@ return {
 
       -- git chains
       ["<leader>gt"] = { name = "Toggle", _ = "which_key_ignore" },
+
+      -- test chains
+      ["<leader>to"] = { name = "Output", _ = "which_key_ignore" },
     })
 
     -- visual chains
