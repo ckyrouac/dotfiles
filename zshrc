@@ -56,5 +56,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export LIBVA_DRIVER_NAME=iHD
 
+bindkey '' autosuggest-accept
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
