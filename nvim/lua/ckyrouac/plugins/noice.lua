@@ -45,6 +45,7 @@ return {
         require("notify").setup({
           render = "minimal",
           stages = "no_animation",
+          timeout = 3000,
         })
       end,
     },
