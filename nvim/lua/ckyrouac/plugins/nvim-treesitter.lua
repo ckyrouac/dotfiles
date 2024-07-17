@@ -27,6 +27,8 @@ return {
             "vimdoc",
             "vim",
             "bash",
+            "markdown",
+            "nu",
           },
 
           -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
