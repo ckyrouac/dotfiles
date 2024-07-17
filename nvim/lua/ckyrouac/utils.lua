@@ -18,4 +18,32 @@ function M.dapui_refresh()
   end
 end
 
+local function is_floating(winid)
+  local cfg = vim.api.nvim_win_get_config(winid)
+  return cfg.relative ~= ''
+end
+
+local function list_floating_windows()
+  local all_wins = vim.api.nvim_list_wins()
+  local floating_wins = {}
+
+  for _, winid in ipairs(all_wins) do
+    if is_floating(winid) then
+      local attrs = vim.api.nvim_win_get_config(winid)
+      attrs.bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(winid))
+      attrs.buftype = vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(winid), 'buftype')
+      attrs.filetype = vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(winid), 'filetype')
+      table.insert(floating_wins, attrs)
+    end
+  end
+
+  return floating_wins
+end
+
+local function print_inspect()
+  print(vim.inspect(list_floating_windows()))
+end
+
+vim.keymap.set("n", "<leader>j", print_inspect, { silent = true, desc = "Rust Hover" })
+
 return M
