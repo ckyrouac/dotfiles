@@ -139,13 +139,8 @@ return {
         server = {
           on_attach = on_attach,
         },
-        tools = {
-          hover_actions = {
-            auto_focus = true,
-          },
-        },
       }
-      --
+
       -- configure the built in diagnostics
       vim.diagnostic.config({
         signs = true,
@@ -164,7 +159,7 @@ return {
       })
 
       -- c config
-      local cmp_nvim_lsp = require("cmp_nvim_lsp")
+      require("cmp_nvim_lsp")
 
       require("lspconfig").clangd.setup({
         on_attach = on_attach,
