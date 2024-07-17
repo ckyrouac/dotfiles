@@ -1,0 +1,12 @@
+#!/bin/bash
+
+CONNECTION=$1
+OS=$2
+
+flag="-x"
+if [ "$OS" == "mac" ]; then
+  flag="-X"
+fi
+
+ssh "$CONNECTION" tmux -u new-session -d -s remote
+alacritty -t terminal-remote -e ssh "$flag" "$CONNECTION" -t tmux -u attach-session -t remote
