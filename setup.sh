@@ -195,9 +195,9 @@ function setup-programming-languages () {
     echo "n already installed"
   else
     echo "Installing n (node version manager)"
-    sudo yum install npm -y
+    sudo dnf install npm -y
     sudo npm install -g n
-    sudo yum remove npm -y
+    sudo dnf remove npm -y
     sudo n lts
   fi
 
@@ -292,8 +292,8 @@ while getopts u:e:agvzxcdrthspm flag; do
 done
 
 info_msg "Installing deps"
-sudo yum update -y
-sudo yum install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel shellcheck libpq-devel diff-so-fancy alacritty
+sudo dnf update -y
+sudo dnf install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app google-chrome-stable lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel shellcheck libpq-devel diff-so-fancy alacritty
 sudo dnf groupinstall -y "Development Tools" "Development Libraries"
 
 if [ -z "$SETUP_VIM" ] && \
