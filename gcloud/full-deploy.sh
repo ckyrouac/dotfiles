@@ -13,7 +13,7 @@ BIB_CONFIG=$3
 BUTANE=$4
 
 IMAGE_NAME='fedora-dev-bootc'
-ZONE='us-east1-a'
+ZONE='us-east4-a'
 
 function build_container_image () {
     info_msg "building container image"
