@@ -170,6 +170,10 @@ return {
         },
       })
 
+      require("nu").setup({
+        on_attach = on_attach,
+      })
+
       vim.api.nvim_create_autocmd({ "CursorHold" }, {
         pattern = { "*" },
         callback = function()
