@@ -43,7 +43,7 @@ jobs:
         push: true
         tags: ghcr.io/${{ github.repository }}/your-image-name:latest
         file: ./Containerfile
-        buildargs:
+        build-args: |
             gituser=ckyrouac
             gitemail=${{ secrets.EMAIL  }}
             user=chris
