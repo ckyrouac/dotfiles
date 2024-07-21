@@ -136,7 +136,6 @@ RUN mkdir ~/.config && \
     ~/.pyenv/bin/pyenv global 3.12.1
 
 USER 0
-RUN chsh -s /usr/bin/zsh $user && \
-    touch /root/bump
+RUN chsh -s /usr/bin/zsh $user && touch /bump
 
 WORKDIR /
