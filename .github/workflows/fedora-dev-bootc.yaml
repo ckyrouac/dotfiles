@@ -2,10 +2,10 @@ name: Build and Push Fedora Dev Bootc Image
 
 on:
   schedule:
-    - cron: '0 0 * * *' # This cron expression runs the workflow daily at midnight UTC
+    - cron: '0 0 * * *'
   push:
     branches:
-      - main  # Optionally, trigger on push to the main branch
+      - master
 
 jobs:
   build-and-push:
