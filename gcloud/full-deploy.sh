@@ -74,15 +74,15 @@ function migrate_disk_image () {
 function create_vm () {
     info_msg "creating new vm"
 
-    rm -f fedora-dev.ign
+    IGN_FILE=output/fedora-dev.ign
+    rm -f "$IGN_FILE"
 
-    butane --pretty --strict "$BUTANE" > fedora-dev.ign
+    butane --pretty --strict "$BUTANE" > "$IGN_FILE"
 
-    CONFIG='fedora-dev.ign'
     gcloud compute instances create              \
         --image-project "development-429901"    \
         --image "${IMAGE_NAME}" \
-        --metadata-from-file "user-data=${CONFIG}" \
+        --metadata-from-file "user-data=${IGN_FILE}" \
         --zone "${ZONE}" "${IMAGE_NAME}" \
         --machine-type "$MACHINE_TYPE"
 }
