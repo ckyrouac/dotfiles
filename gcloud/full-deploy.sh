@@ -14,6 +14,7 @@ BUTANE=$4
 
 IMAGE_NAME='fedora-dev-bootc'
 ZONE='us-east4-a'
+MACHINE_TYPE='c2-standard-8'
 
 function build_container_image () {
     info_msg "building container image"
@@ -73,6 +74,8 @@ function migrate_disk_image () {
 function create_vm () {
     info_msg "creating new vm"
 
+    rm -f fedora-dev.ign
+
     butane --pretty --strict "$BUTANE" > fedora-dev.ign
 
     CONFIG='fedora-dev.ign'
@@ -80,11 +83,12 @@ function create_vm () {
         --image-project "development-429901"    \
         --image "${IMAGE_NAME}" \
         --metadata-from-file "user-data=${CONFIG}" \
-        --zone "${ZONE}" "${IMAGE_NAME}"
+        --zone "${ZONE}" "${IMAGE_NAME}" \
+        --machine-type "$MACHINE_TYPE"
 }
 
 function info_msg () {
-  echo -en "\n>>> $1\n"
+  echo -en "\n$1\n"
 }
 
 build_container_image
