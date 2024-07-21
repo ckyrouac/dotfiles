@@ -1,0 +1,53 @@
+name: Build and Push Fedora Dev Bootc Image
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # This cron expression runs the workflow daily at midnight UTC
+  push:
+    branches:
+      - main  # Optionally, trigger on push to the main branch
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    #
+    # - name: Build with podman
+    #   run: |
+    #     set -xeu
+    #     echo ${{ secrets.GITHUB_TOKEN }} | podman login ghcr.io -u ckyrouac --password-stdin
+    #     podman build \
+    #         --build-arg "gituser=ckyrouac" \
+    #         --build-arg "gitemail=${{ secrets.EMAIL  }} \
+    #         --build-arg "user=chris" \
+    #         -t "ghcr.io/ckyrouac/$image_name" .
+    #     podman push "ghcr.io/ckyrouac/$IMAGE_NAME"
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/${{ github.repository }}/your-image-name:latest
+        buildargs:
+            gituser=ckyrouac
+            gitemail=${{ secrets.EMAIL  }}
+            user=chris
+           
+
+    - name: Log out from GitHub Container Registry
+      run: docker logout ghcr.io
+
