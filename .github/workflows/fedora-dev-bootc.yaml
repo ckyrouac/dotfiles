@@ -42,6 +42,7 @@ jobs:
         context: .
         push: true
         tags: ghcr.io/${{ github.repository }}/your-image-name:latest
+        file: ./Containerfile
         buildargs:
             gituser=ckyrouac
             gitemail=${{ secrets.EMAIL  }}
