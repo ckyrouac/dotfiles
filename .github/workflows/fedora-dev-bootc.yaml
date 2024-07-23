@@ -8,7 +8,7 @@ on:
     - cron: '0 0 * * *'
   push:
     branches:
-      - master
+      - bootc
 
 jobs:
   build-and-push:
@@ -17,17 +17,8 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-    #
-    # - name: Build with podman
-    #   run: |
-    #     set -xeu
-    #     echo ${{ secrets.GITHUB_TOKEN }} | podman login ghcr.io -u ckyrouac --password-stdin
-    #     podman build \
-    #         --build-arg "gituser=ckyrouac" \
-    #         --build-arg "gitemail=${{ secrets.EMAIL  }} \
-    #         --build-arg "user=chris" \
-    #         -t "ghcr.io/ckyrouac/$image_name" .
-    #     podman push "ghcr.io/ckyrouac/$IMAGE_NAME"
+      with:
+        ref: bootc
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
