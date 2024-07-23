@@ -38,6 +38,5 @@ fi
 . "$HOME/.cargo/env"
 
 #golang
-export GOPATH=~/projects/gopath
-export PATH=$PATH:${GOPATH//://bin:}/bin
-[[ -s "/home/chris/.gvm/scripts/gvm" ]] && source "/home/chris/.gvm/scripts/gvm"
+export GOPATH=~/gopath
+export PATH=$PATH:/usr/local/go/bin
