@@ -21,11 +21,13 @@ alias json='python -mjson.tool'
 alias p='pgrep -fa'
 alias viewimage='feh'
 alias kc='kubectl'
+alias alacritty='alacritty --config-file=/etc/alacritty.toml'
+alias lazygit='lazygit -ucd /etc/lazygit'
 function kcn {
-    kubectl config set-context --current --namespace=$1
+    kubectl config set-context --current --namespace="$1"
 }
 function kubecluster {
-    kubectl config use-context $1
+    kubectl config use-context "$1"
 }
 alias kcp='kubectl get pods'
 
@@ -35,18 +37,19 @@ export KEYTIMEOUT=1
 alias gro='git fetch origin && git rebase origin/master'
 alias gnb='git checkout -b'
 
-source ~/.local.rc
+# source ~/.local.rc
 
 export HISTTIMEFORMAT="%T"
 
 #vim
+alias nvim='nvim -u /etc/xdg/nvim/init.lua'
 alias vim='nvim'
 
 #minikube dev env aliases
 alias stop-clowder='kubectl scale --replicas=0 deployments/clowder-controller-manager -n clowder-system'
 alias start-clowder='kubectl scale --replicas=1 deployments/clowder-controller-manager -n clowder-system'
 
-if [ -f `which powerline-daemon` ]; then
+if [ -f "$(which powerline-daemon)" ]; then
 	powerline-daemon -q
 	POWERLINE_BASH_CONTINUATION=1
 	POWERLINE_BASH_SELECT=1
@@ -55,8 +58,8 @@ fi
 
 #fzf
 export FZF_TMUX=1
-source ~/dotfiles/fzf-key-bindings.zsh
+source /etc/fzf-key-bindings.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/chris/.sdkman"
-[[ -s "/home/chris/.sdkman/bin/sdkman-init.sh" ]] && source "/home/chris/.sdkman/bin/sdkman-init.sh"
+# export SDKMAN_DIR="/home/chris/.sdkman"
+# [[ -s "/home/chris/.sdkman/bin/sdkman-init.sh" ]] && source "/home/chris/.sdkman/bin/sdkman-init.sh"
