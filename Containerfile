@@ -90,10 +90,7 @@ RUN if test -z "$user"; then echo "must provide user"; exit 1; fi; \
     # go
     rm -rf /usr/local/go && \
     wget https://go.dev/dl/go1.22.5.linux-amd64.tar.gz && \
-    tar -xzf go1.22.5.linux-amd64.tar.gz -c /usr/local && \
-
-    pwd
-
+    tar -xzf go1.22.5.linux-amd64.tar.gz -C /usr/local
 
 ###################################################################
 
