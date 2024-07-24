@@ -19,8 +19,7 @@ MACHINE_TYPE='c2-standard-8'
 function build_container_image () {
     info_msg "building container image"
     podman build \
-        --build-arg "gituser=ckyrouac" \
-        --build-arg "mail=$EMAIL" \
+        --build-arg "email=$EMAIL" \
         --build-arg "user=chris" \
         -t "ghcr.io/ckyrouac/$IMAGE_NAME" .
     podman push "ghcr.io/ckyrouac/$IMAGE_NAME"
@@ -50,10 +49,10 @@ function build_disk_image () {
 function cleanup_gcloud () {
     info_msg "cleaning up existing gcloud resources"
     set +e
-    gcloud alpha migration vms image-imports delete "$IMAGE_NAME"
-    gcloud storage rm gs://ckyrouac-logs/disk.vmdk
-    gcloud compute images delete "$IMAGE_NAME"
-    gcloud compute instances delete "$IMAGE_NAME"
+    gcloud alpha migration vms image-imports delete --quiet "$IMAGE_NAME"
+    gcloud storage rm --quiet gs://ckyrouac-logs/disk.vmdk
+    gcloud compute images delete --quiet "$IMAGE_NAME"
+    gcloud compute instances delete --quiet "$IMAGE_NAME"
     set -e
 }
 
@@ -69,6 +68,20 @@ function migrate_disk_image () {
         --source-file=gs://ckyrouac-logs/disk.vmdk \
         --target-project="projects/${PROJECT}/locations/global/targetProjects/${PROJECT}" \
         --skip-os-adaptation
+
+    echo "waiting for migration to complete..."
+    attempts=0
+    max_attempts=300
+    while (( attempts < max_attempts )); do
+      STATUS=$(gcloud alpha migration vms image-imports describe "$IMAGE_NAME" | grep state | awk '{print $2}')
+      if [[ $STATUS == "SUCCEEDED" ]]; then
+        echo "SUCCESS"
+        echo "Image migration completed!"
+        break
+      fi
+      sleep 1
+      attempts=$((attempts++))
+    done
 }
 
 function create_vm () {
