@@ -38,11 +38,9 @@ jobs:
         tags: ghcr.io/${{ github.repository }}/fedora-dev-bootc:latest
         file: ./Containerfile
         build-args: |
-            gituser=ckyrouac
-            gitemail=${{ secrets.EMAIL  }}
+            email=${{ secrets.EMAIL  }}
             user=chris
            
-
     - name: Log out from GitHub Container Registry
       run: docker logout ghcr.io
 
