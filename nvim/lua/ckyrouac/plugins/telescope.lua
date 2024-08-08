@@ -4,7 +4,6 @@ return {
   {
     "ckyrouac/telescope.nvim",
     cond = true,
-    -- branch = "0.1.x",
     dependencies = {
       "nvim-lua/plenary.nvim",
       -- Fuzzy Finder Algorithm which requires local dependencies to be built.
@@ -150,7 +149,6 @@ return {
       local function find_files_in_project()
         require("telescope.builtin").find_files({
           cwd = vim.fn.getcwd(),
-          hidden = true,
           follow = true,
           prompt_title = "Find Files in Project",
         })
