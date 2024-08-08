@@ -9,4 +9,4 @@ if [ "$OS" == "mac" ]; then
 fi
 
 ssh "$CONNECTION" tmux -u new-session -d -s remote
-alacritty -t terminal-remote -e ssh "$flag" "$CONNECTION" -t tmux -u attach-session -t remote
+env -u WAYLAND_DISPLAY alacritty -t terminal-remote -e ssh "$flag" "$CONNECTION" -t tmux -u attach-session -t remote
