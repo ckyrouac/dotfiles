@@ -170,13 +170,17 @@ return {
         },
       })
 
-      require("nu").setup({
+      require("lspconfig").nushell.setup({
         on_attach = on_attach,
+        capabilities = capabilities,
       })
 
       vim.api.nvim_create_autocmd({ "CursorHold" }, {
         pattern = { "*" },
         callback = function()
+          if vim.bo.filetype == "nu" then
+            return
+          end
           vim.lsp.buf.document_highlight()
         end,
       })
@@ -184,6 +188,9 @@ return {
       vim.api.nvim_create_autocmd({ "CursorHoldI" }, {
         pattern = { "*" },
         callback = function()
+          if vim.bo.filetype == "nu" then
+            return
+          end
           vim.lsp.buf.document_highlight()
         end,
       })
