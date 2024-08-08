@@ -5,47 +5,61 @@ return {
   config = function()
     require("which-key").setup({
       icons = {
+        mappings = false,
         group = "",
       },
     })
 
-    -- normal chains
-    require("which-key").register({
-      ["<leader>c"] = { name = "Code", _ = "which_key_ignore" },
-      ["<leader>d"] = { name = "Dap", _ = "which_key_ignore" },
-      ["<leader>g"] = { name = "Git", _ = "which_key_ignore" },
-      ["<leader>r"] = { name = "Rename", _ = "which_key_ignore" },
-      ["<leader>s"] = { name = "Search", _ = "which_key_ignore" },
-      ["<leader>w"] = { name = "Workspace", _ = "which_key_ignore" },
-      ["<leader>p"] = { name = "Projects", _ = "which_key_ignore" },
-      ["<leader>o"] = { name = "Open Tool", _ = "which_key_ignore" },
-      ["<leader>x"] = { name = "Close", _ = "which_key_ignore" },
-      ["<leader>m"] = { name = "Markdown", _ = "which_key_ignore" },
-      ["<leader>f"] = { name = "Find", _ = "which_key_ignore" },
-      ["<leader>t"] = { name = "Test", _ = "which_key_ignore" },
-
-      -- dap chains
-      ["<leader>ds"] = { name = "Steps", _ = "which_key_ignore" },
-      ["<leader>dh"] = { name = "Hover", _ = "which_key_ignore" },
-      ["<leader>du"] = { name = "Widgets", _ = "which_key_ignore" },
-      ["<leader>dr"] = { name = "REPL", _ = "which_key_ignore" },
-      ["<leader>db"] = { name = "Breakpoints", _ = "which_key_ignore" },
-
-      -- git chains
-      ["<leader>gt"] = { name = "Toggle", _ = "which_key_ignore" },
-
-      -- test chains
-      ["<leader>to"] = { name = "Output", _ = "which_key_ignore" },
+    require("which-key").add({
+      { "<leader>c", group = "Code" },
+      { "<leader>c_", hidden = true },
+      { "<leader>d", group = "Dap" },
+      { "<leader>d_", hidden = true },
+      { "<leader>db", group = "Breakpoints" },
+      { "<leader>db_", hidden = true },
+      { "<leader>dh", group = "Hover" },
+      { "<leader>dh_", hidden = true },
+      { "<leader>dr", group = "REPL" },
+      { "<leader>dr_", hidden = true },
+      { "<leader>ds", group = "Steps" },
+      { "<leader>ds_", hidden = true },
+      { "<leader>du", group = "Widgets" },
+      { "<leader>du_", hidden = true },
+      { "<leader>f", group = "Find" },
+      { "<leader>f_", hidden = true },
+      { "<leader>g", group = "Git" },
+      { "<leader>g_", hidden = true },
+      { "<leader>gt", group = "Toggle" },
+      { "<leader>gt_", hidden = true },
+      { "<leader>h", group = "Help" },
+      { "<leader>h_", hidden = true },
+      { "<leader>m", group = "Markdown" },
+      { "<leader>m_", hidden = true },
+      { "<leader>o", group = "Open Tool" },
+      { "<leader>o_", hidden = true },
+      { "<leader>p", group = "Projects" },
+      { "<leader>p_", hidden = true },
+      { "<leader>r", group = "Rename" },
+      { "<leader>r_", hidden = true },
+      { "<leader>s", group = "Search" },
+      { "<leader>s_", hidden = true },
+      { "<leader>t", group = "Test" },
+      { "<leader>t_", hidden = true },
+      { "<leader>to", group = "Output" },
+      { "<leader>to_", hidden = true },
+      { "<leader>w", group = "Workspace" },
+      { "<leader>w_", hidden = true },
+      { "<leader>x", group = "Close" },
+      { "<leader>x_", hidden = true },
     })
 
-    -- visual chains
-    require("which-key").register({
-      -- dap chains
-      ["<leader>d"] = { "Dap" },
-      ["<leader>dh"] = { "Hover" },
-
-      -- git chains
-      ["<leader>g"] = { "Git" },
-    }, { mode = "v" })
+    require("which-key").add({
+      {
+        mode = { "v" },
+        { "<leader>d", desc = "Dap" },
+        { "<leader>dh", desc = "Hover" },
+        { "<leader>g", desc = "Git" },
+      },
+    })
   end,
 }

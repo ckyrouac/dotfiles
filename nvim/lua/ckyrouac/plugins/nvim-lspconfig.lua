@@ -69,7 +69,10 @@ return {
           "Goto References"
         )
 
-        nmap("gd", require("telescope.builtin").lsp_definitions, "Goto Definition")
+        -- nmap("gd", require("telescope.builtin").lsp_definitions, "Goto Definition")
+        -- vim.keymap.set("n", "gd", function () vim.lsp.buf.definition() end, { buffer = bufnr, desc = "goto definition" })
+        nmap("gd", function () vim.lsp.buf.definition() end, "Goto Definition")
+
         nmap(
           "<C-LeftMouse>",
           "<LeftMouse><LeftRelease><cmd>:lua require('telescope.builtin').lsp_definitions()<CR>",
@@ -181,6 +184,7 @@ return {
           if vim.bo.filetype == "nu" then
             return
           end
+
           vim.lsp.buf.document_highlight()
         end,
       })
@@ -191,6 +195,7 @@ return {
           if vim.bo.filetype == "nu" then
             return
           end
+
           vim.lsp.buf.document_highlight()
         end,
       })

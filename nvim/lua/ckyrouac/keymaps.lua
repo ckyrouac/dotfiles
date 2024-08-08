@@ -2,6 +2,13 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- remove default mappings that conflict
+vim.keymap.del("n", "grn")
+vim.keymap.del("n", "gra")
+vim.keymap.del("n", "grr")
+vim.keymap.del("n", "<C-W>d")
+vim.keymap.del("n", "<C-W><C-D>")
+
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
@@ -9,9 +16,17 @@ vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+local function prev_diagnostic()
+  vim.diagnostic.jump({count=-1, float=true})
+end
+
+local function next_diagnostic()
+  vim.diagnostic.jump({count=1, float=true})
+end
+
 -- Diagnostic keymaps
-vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous diagnostic message", silent = true })
-vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next diagnostic message", silent = true })
+vim.keymap.set("n", "[d", prev_diagnostic, { desc = "Go to previous diagnostic message", silent = true })
+vim.keymap.set("n", "]d", next_diagnostic, { desc = "Go to next diagnostic message", silent = true })
 
 -- Pane navigation keybinds
 vim.keymap.set("n", "<c-j>", "<c-w>j", { silent = true, desc = "Bottom pane" })
