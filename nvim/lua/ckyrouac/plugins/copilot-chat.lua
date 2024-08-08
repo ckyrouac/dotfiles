@@ -30,7 +30,7 @@ return {
         })
       end
 
-      vim.api.nvim_set_keymap('n', '<leader>hc', "<cmd>lua _openChatWindow()<CR>", {noremap = true, silent = true})
+      vim.api.nvim_set_keymap('n', '<leader>hc', "<cmd>lua _openChatWindow()<CR>", {noremap = true, silent = true, desc = "Copilot Chat"})
     end,
   },
 }
