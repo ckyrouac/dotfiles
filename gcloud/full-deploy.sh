@@ -20,7 +20,7 @@ function build_container_image () {
     info_msg "building container image"
     podman build \
         --build-arg "gituser=ckyrouac" \
-        --build-arg "gitemail=$EMAIL" \
+        --build-arg "mail=$EMAIL" \
         --build-arg "user=chris" \
         -t "ghcr.io/ckyrouac/$IMAGE_NAME" .
     podman push "ghcr.io/ckyrouac/$IMAGE_NAME"
