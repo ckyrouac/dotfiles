@@ -8,6 +8,12 @@ return {
         mappings = false,
         group = "",
       },
+      disable = {
+        ft = {
+          "nofile",
+          "toggleterm",
+        },
+      },
     })
 
     require("which-key").add({
