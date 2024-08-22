@@ -42,7 +42,15 @@ return {
           lualine_b = {
             "branch",
             "diff",
-            "diagnostics",
+            {
+              "diagnostics",
+              on_click = function()
+                vim.cmd [[
+                  Trouble diagnostics toggle focus=true filter.buf=0
+                ]]
+                vim.lsp.diagnostic.show_line_diagnostics()
+              end,
+            },
           },
           lualine_c = {
             {
