@@ -57,6 +57,7 @@ return {
           rust = require("formatter.filetypes.rust").rustfmt,
           go = require("formatter.filetypes.go").goimports,
           xml = require("formatter.filetypes.xml").xmlformat,
+          python = require("formatter.filetypes.python").autopep8,
 
           -- Use the special "*" filetype for defining formatter configurations on
           -- any filetype
