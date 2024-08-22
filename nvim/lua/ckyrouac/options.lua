@@ -64,7 +64,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     if vim.w["SavedBufView"] and vim.w["SavedBufView"][bufnr] then
       local v = vim.fn.winsaveview()
       local atStartOfFile = v.lnum == 1 and v.col == 0
-      if atStartOfFile and vim.api.nvim_win_get_option(0, "diff") ~= true then
+      if atStartOfFile and vim.api.nvim_get_option_value("diff", {win=0}) ~= true then
         vim.fn.winrestview(vim.w["SavedBufView"][bufnr])
       end
 

@@ -29,11 +29,12 @@ local function list_floating_windows()
 
   for _, winid in ipairs(all_wins) do
     if is_floating(winid) then
-      local attrs = vim.api.nvim_win_get_config(winid)
-      attrs.bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(winid))
-      attrs.buftype = vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(winid), 'buftype')
-      attrs.filetype = vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(winid), 'filetype')
-      table.insert(floating_wins, attrs)
+      local full_attrs = {}
+      full_attrs.win_cfg = vim.api.nvim_win_get_config(winid)
+      full_attrs.bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(winid))
+      full_attrs.buftype = vim.api.nvim_get_option_value("buftype", {buf = vim.api.nvim_win_get_buf(winid)})
+      full_attrs.filetype = vim.api.nvim_get_option_value("filetype", {buf = vim.api.nvim_win_get_buf(winid)})
+      table.insert(floating_wins, full_attrs)
     end
   end
 
