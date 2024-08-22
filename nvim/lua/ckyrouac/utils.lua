@@ -45,6 +45,6 @@ local function print_inspect()
   print(vim.inspect(list_floating_windows()))
 end
 
-vim.keymap.set("n", "<leader>j", print_inspect, { silent = true, desc = "Rust Hover" })
+vim.keymap.set("n", "<leader>j", print_inspect, { silent = true, desc = "Print floating windows" })
 
 return M
