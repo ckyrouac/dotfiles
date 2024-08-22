@@ -47,6 +47,14 @@ return {
               highlight = "Normal",
               separator = true,
             },
+            {
+              padding = 0,
+              filetype = "trouble",
+              text = "  Trouble",
+              text_align = "left",
+              highlight = "Normal",
+              separator = true,
+            },
           },
         },
       })

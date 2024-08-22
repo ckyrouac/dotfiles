@@ -53,6 +53,9 @@ return {
 
       --  This function gets run when an LSP connects to a particular buffer.
       local on_attach = function(client, bufnr)
+        -- populate workspace diagnostics
+        require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
+
         -- A function that lets us more easily define mappings specific
         -- for LSP related items. It sets the mode, buffer and description for us each time.
         local nmap = function(keys, func, desc)

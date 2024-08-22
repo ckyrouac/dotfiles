@@ -55,7 +55,7 @@ return {
       { "<leader>to_", hidden = true },
       { "<leader>w", group = "Workspace" },
       { "<leader>w_", hidden = true },
-      { "<leader>x", group = "Close" },
+      { "<leader>x", group = "Trouble" },
       { "<leader>x_", hidden = true },
     })
 
