@@ -66,3 +66,6 @@ vim.keymap.set("n", "<leader>l", toggle_line_numbers, { silent = true, desc = "T
 -- mouse forward/back
 -- vim.keymap.set('n', '<X1Mouse>', '<C-i>', { silent = true, desc = 'Toggle relative line numbers' })
 -- vim.keymap.set('n', '<X2Mouse>', '<C-o>', { silent = true, desc = 'Toggle relative line numbers' })
+
+-- folds
+vim.keymap.set('n', '<leader>z', 'za', {desc = 'Toggle fold', noremap = true})

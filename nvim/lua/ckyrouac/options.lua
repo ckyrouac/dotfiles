@@ -43,6 +43,7 @@ vim.o.timeoutlen = 300
 vim.o.completeopt = "menuone,noselect"
 
 vim.o.mousemoveevent = true
+vim.o.mousem = "extend"
 
 vim.o.termguicolors = true
 
@@ -50,7 +51,6 @@ vim.o.expandtab = true
 vim.o.ts = 2
 
 vim.o.cursorline = true
-vim.o.foldcolumn = "1"
 vim.o.splitkeep = "screen"
 
 vim.o.shortmess = "filnxtToOFs"
