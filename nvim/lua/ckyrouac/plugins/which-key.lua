@@ -14,6 +14,12 @@ return {
           "toggleterm",
         },
       },
+      triggers = {
+        { "<leader>", mode = { "n", "v" } },
+        { "z", mode = { "n", "v" } },
+        { "g", mode = { "n", "v" } },
+        -- { "<auto>", mode = "nixsotc" },
+      },
     })
 
     require("which-key").add({
