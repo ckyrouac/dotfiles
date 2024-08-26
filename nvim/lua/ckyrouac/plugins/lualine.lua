@@ -82,7 +82,7 @@ return {
           lualine_x = {
             {
               get_workspace_error_count,
-              color = { fg = "#F75464" },
+              color = 'DiagnosticErrorAlt',
               icon = '󰅚',
               cond = function ()
                 return get_workspace_error_count() > 0
@@ -96,7 +96,7 @@ return {
             },
             {
               get_workspace_warn_count,
-              color = { fg = "#CF8E6D" },
+              color = 'DiagnosticWarnAlt',
               icon = '󰀪',
               cond = function ()
                 return get_workspace_warn_count() > 0
@@ -110,7 +110,7 @@ return {
             },
             {
               get_workspace_info_count,
-              color = { fg = "#AFBF7E" },
+              color = 'DiagnosticInfoAlt',
               icon = '💡',
               cond = function ()
                 return get_workspace_info_count() > 0
@@ -123,7 +123,7 @@ return {
               end,
             },
             {
-              color = { fg = "#ffffff" },
+              color = 'DiagnosticHintAlt',
               get_workspace_hint_count,
               icon = '🛈',
               cond = function ()
