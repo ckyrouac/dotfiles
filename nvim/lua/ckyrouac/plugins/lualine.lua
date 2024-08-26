@@ -22,6 +22,27 @@ return {
         end
       end
 
+
+      local function get_workspace_error_count()
+        local errors = vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.ERROR })
+        return #errors
+      end
+
+      local function get_workspace_warn_count()
+        local errors = vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.WARN })
+        return #errors
+      end
+
+      local function get_workspace_info_count()
+        local errors = vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.INFO })
+        return #errors
+      end
+
+      local function get_workspace_hint_count()
+        local errors = vim.diagnostic.get(nil, { severity = vim.diagnostic.severity.HINT })
+        return #errors
+      end
+
       local lualine = require("lualine")
       lualine.setup({
         inactive_sections = {
@@ -58,7 +79,65 @@ return {
               fmt = show_macro_recording,
             },
           },
-          lualine_x = { "filetype" },
+          lualine_x = {
+            {
+              get_workspace_error_count,
+              color = { fg = "#F75464" },
+              icon = '󰅚',
+              cond = function ()
+                return get_workspace_error_count() > 0
+              end,
+              on_click = function()
+                vim.cmd [[
+                  Trouble diagnostics toggle focus=true
+                ]]
+                vim.lsp.diagnostic.show_line_diagnostics()
+              end,
+            },
+            {
+              get_workspace_warn_count,
+              color = { fg = "#CF8E6D" },
+              icon = '󰀪',
+              cond = function ()
+                return get_workspace_warn_count() > 0
+              end,
+              on_click = function()
+                vim.cmd [[
+                  Trouble diagnostics toggle focus=true
+                ]]
+                vim.lsp.diagnostic.show_line_diagnostics()
+              end,
+            },
+            {
+              get_workspace_info_count,
+              color = { fg = "#AFBF7E" },
+              icon = '💡',
+              cond = function ()
+                return get_workspace_info_count() > 0
+              end,
+              on_click = function()
+                vim.cmd [[
+                  Trouble diagnostics toggle focus=true
+                ]]
+                vim.lsp.diagnostic.show_line_diagnostics()
+              end,
+            },
+            {
+              color = { fg = "#ffffff" },
+              get_workspace_hint_count,
+              icon = '',
+              cond = function ()
+                return get_workspace_hint_count() > 0
+              end,
+              on_click = function()
+                vim.cmd [[
+                  Trouble diagnostics toggle focus=true
+                ]]
+                vim.lsp.diagnostic.show_line_diagnostics()
+              end,
+            },
+            "filetype",
+          },
           lualine_y = { "location" },
           lualine_z = { "mode" },
         },
