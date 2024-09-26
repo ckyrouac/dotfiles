@@ -129,6 +129,12 @@ return {
         ensure_installed = vim.tbl_keys(servers),
       })
 
+
+
+      mason_lspconfig.setup_handlers {
+        ['rust_analyzer'] = function() end,
+      }
+
       mason_lspconfig.setup_handlers({
         function(server_name)
           require("lspconfig")[server_name].setup({
@@ -144,6 +150,11 @@ return {
       vim.g.rustaceanvim = {
         server = {
           on_attach = on_attach,
+        },
+        tools = {
+          float_win_config = {
+            border = "rounded",
+          },
         },
       }
 
