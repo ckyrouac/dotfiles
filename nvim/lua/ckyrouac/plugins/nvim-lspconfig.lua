@@ -74,7 +74,7 @@ return {
 
         -- nmap("gd", require("telescope.builtin").lsp_definitions, "Goto Definition")
         -- vim.keymap.set("n", "gd", function () vim.lsp.buf.definition() end, { buffer = bufnr, desc = "goto definition" })
-        nmap("gd", function () vim.lsp.buf.definition() end, "Goto Definition")
+        nmap("gd", vim.lsp.buf.definition, "Goto Definition")
 
         nmap(
           "<C-LeftMouse>",
