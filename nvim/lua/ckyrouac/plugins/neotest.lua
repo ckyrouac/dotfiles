@@ -26,7 +26,7 @@ return {
       vim.api.nvim_set_keymap(
         "n",
         "<leader>tt",
-        "<cmd>lua require('neotest').run.run()<CR>",
+        "<cmd>lua require('neotest').run.run({stdout = true})<CR>",
         { noremap = true, silent = true, desc = "Run nearest" }
       )
 
