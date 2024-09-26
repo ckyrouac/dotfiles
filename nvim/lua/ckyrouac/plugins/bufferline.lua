@@ -55,6 +55,14 @@ return {
               highlight = "Normal",
               separator = true,
             },
+            {
+              padding = 0,
+              filetype = "aerial",
+              text = "✈  Aerial",
+              text_align = "left",
+              highlight = "Normal",
+              separator = true,
+            },
           },
         },
       })
