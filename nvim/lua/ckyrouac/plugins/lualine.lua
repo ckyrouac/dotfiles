@@ -69,7 +69,6 @@ return {
                 vim.cmd [[
                   Trouble diagnostics toggle focus=true filter.buf=0
                 ]]
-                vim.lsp.diagnostic.show_line_diagnostics()
               end,
             },
           },
@@ -91,7 +90,6 @@ return {
                 vim.cmd [[
                   Trouble diagnostics toggle focus=true
                 ]]
-                vim.lsp.diagnostic.show_line_diagnostics()
               end,
             },
             {
@@ -105,7 +103,6 @@ return {
                 vim.cmd [[
                   Trouble diagnostics toggle focus=true
                 ]]
-                vim.lsp.diagnostic.show_line_diagnostics()
               end,
             },
             {
@@ -119,7 +116,6 @@ return {
                 vim.cmd [[
                   Trouble diagnostics toggle focus=true
                 ]]
-                vim.lsp.diagnostic.show_line_diagnostics()
               end,
             },
             {
@@ -133,7 +129,6 @@ return {
                 vim.cmd [[
                   Trouble diagnostics toggle focus=true
                 ]]
-                vim.lsp.diagnostic.show_line_diagnostics()
               end,
             },
             "filetype",
