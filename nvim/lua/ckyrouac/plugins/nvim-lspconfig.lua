@@ -63,7 +63,7 @@ return {
         end
 
         nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
-        nmap("<leader>ca", vim.lsp.buf.code_action, "Action")
+        nmap("<leader>ca", require("actions-preview").code_actions, "Action")
 
         nmap("gr", require("telescope.builtin").lsp_references, "Goto References")
         nmap(
