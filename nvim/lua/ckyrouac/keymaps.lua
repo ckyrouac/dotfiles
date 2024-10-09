@@ -34,11 +34,14 @@ vim.keymap.set("n", "<c-k>", "<c-w>k", { silent = true, desc = "Top pane" })
 vim.keymap.set("n", "<c-l>", "<c-w>l", { silent = true, desc = "Right pane" })
 vim.keymap.set("n", "<c-h>", "<c-w>h", { silent = true, desc = "Left pane" })
 
+-- remap macro
+vim.keymap.set("n", "<leader>q", "q", { silent = true, desc = "Record macro" })
+
 -- Buffer navigation keybinds
 vim.keymap.set("n", "{", ":bp<cr>", { silent = true, desc = "Left buffer" })
 vim.keymap.set("n", "}", ":bn<cr>", { silent = true, desc = "Right buffer" })
 vim.keymap.set("n", "<C-w>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
-vim.keymap.set("n", "<leader>q", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
+vim.keymap.set("n", "q", "<Plug>(smartq_this)", { silent = true, desc = "Smart close" })
 vim.keymap.set("n", "<M-w>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
 vim.keymap.set("n", "W", ":Bdelete other<cr>", { silent = true, desc = "Close other buffers" })
 vim.keymap.set("n", "<M-C-W>", ":SmartQCloseSplits<cr>", { silent = true, desc = "Close other splits" })
