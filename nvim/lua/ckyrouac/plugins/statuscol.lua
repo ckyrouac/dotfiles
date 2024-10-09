@@ -12,8 +12,12 @@ return {
             click = "v:lua.ScSa",
           },
           {
-            sign = { namespace = { "diagnostic/signs" }, maxwidth = 1, colwidth = 2, auto = false, foldclosed = true},
+            sign = { namespace = { "diagnostic/signs" }, maxwidth = 1, colwidth = 2, auto = true, foldclosed = true},
             click = "v:lua.ScSa"
+          },
+          {
+            sign = { namespace = { "marks" }, name = { ".*" }, maxwidth = 1, colwidth = 2, auto = true },
+            click = "v:lua.ScSa",
           },
           { text = { builtin.lnumfunc, " " }, click = "v:lua.ScLa", },
           {
