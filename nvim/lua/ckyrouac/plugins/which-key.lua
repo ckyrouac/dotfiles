@@ -18,6 +18,7 @@ return {
         { "<leader>", mode = { "n", "v" } },
         { "z", mode = { "n", "v" } },
         { "g", mode = { "n", "v" } },
+        { "m", mode = { "n", "v" } },
         -- { "<auto>", mode = "nixsotc" },
       },
     })
