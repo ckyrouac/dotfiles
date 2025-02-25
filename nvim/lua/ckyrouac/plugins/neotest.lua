@@ -40,7 +40,7 @@ return {
       vim.api.nvim_set_keymap(
         "n",
         "<leader>td",
-        "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<CR>",
+        "<cmd>lua require('neotest').run.run({strategy = 'dap'})<CR>",
         { noremap = true, silent = true, desc = "Debug current file" }
       )
 
