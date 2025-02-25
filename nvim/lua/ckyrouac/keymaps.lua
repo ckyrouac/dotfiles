@@ -17,11 +17,11 @@ vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = tr
 vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
 local function prev_diagnostic()
-  vim.diagnostic.jump({count=-1, float=true})
+  vim.diagnostic.jump({ count = -1, float = true })
 end
 
 local function next_diagnostic()
-  vim.diagnostic.jump({count=1, float=true})
+  vim.diagnostic.jump({ count = 1, float = true })
 end
 
 -- Diagnostic keymaps
@@ -54,6 +54,17 @@ vim.keymap.set("n", "d", '"_d', { silent = true })
 vim.keymap.set("v", "d", '"_d', { silent = true })
 vim.keymap.set("n", "D", '"_D', { silent = true })
 
+-- toggle inlay hints
+local function toggle_inlay_hints()
+  if vim.lsp.inlay_hint.is_enabled() then
+    vim.lsp.inlay_hint.enable(false)
+  else
+    vim.lsp.inlay_hint.enable(true)
+  end
+end
+
+vim.keymap.set("n", "<leader>k", toggle_inlay_hints, { silent = true, desc = "Toggle inlay hints" })
+
 -- paste in insert mode
 vim.keymap.set("i", "<C-S-V>", "<c-r>+", { silent = true, desc = "Paste in insert mode" })
 
@@ -71,4 +82,4 @@ vim.keymap.set("n", "<leader>l", toggle_line_numbers, { silent = true, desc = "T
 -- vim.keymap.set('n', '<X2Mouse>', '<C-o>', { silent = true, desc = 'Toggle relative line numbers' })
 
 -- folds
-vim.keymap.set('n', '<leader>z', 'za', {desc = 'Toggle fold', noremap = true})
+vim.keymap.set("n", "<leader>z", "za", { desc = "Toggle fold", noremap = true })
