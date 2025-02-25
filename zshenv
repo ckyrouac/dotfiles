@@ -37,6 +37,8 @@ fi
 #rust
 . "$HOME/.cargo/env"
 
+export TMT_VERBOSE=1
+
 #golang
 export GOPATH=~/projects/gopath
 export PATH=$PATH:${GOPATH//://bin:}/bin
