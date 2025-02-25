@@ -1,6 +1,7 @@
 return {
   {
-    "otavioschwanck/arrow.nvim",
+    "ckyrouac/arrow.nvim",
+    branch = "tweaks",
     cond = true,
     config = function()
       require("arrow").setup({
