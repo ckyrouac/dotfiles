@@ -55,6 +55,8 @@ fi
 
 #fzf
 export FZF_TMUX=1
+
+# source ~/dotfiles/fzf.zsh
 source ~/dotfiles/fzf-key-bindings.zsh
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!

@@ -42,6 +42,7 @@ fi
 # CTRL-F - Paste the selected file path(s) into the command line
 __fsel() {
   local cmd="fd --type f --hidden --full-path / ~/"
+
   setopt localoptions pipefail no_aliases 2> /dev/null
   local item
   eval "$cmd" | FZF_DEFAULT_OPTS="--height ${FZF_TMUX_HEIGHT:-40%} --reverse --scheme=path --bind=ctrl-z:ignore ${FZF_DEFAULT_OPTS-} ${FZF_CTRL_T_OPTS-}" $(__fzfcmd) -m "$@" | while read item; do
@@ -53,7 +54,7 @@ __fsel() {
 }
 
 __fzfcmd() {
-  echo "fzf-tmux -p --reverse -- "
+  echo "fzf --layout=reverse -- "
 }
 
 fzf-file-widget() {
