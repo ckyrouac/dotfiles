@@ -17,6 +17,8 @@ return {
       "folke/neodev.nvim",
     },
     config = function()
+      vim.lsp.inlay_hint.enable(true)
+
       -- :LspInfo border
       require("lspconfig.ui.windows").default_options = {
         border = "rounded",
@@ -54,7 +56,8 @@ return {
       --  This function gets run when an LSP connects to a particular buffer.
       local on_attach = function(client, bufnr)
         -- populate workspace diagnostics
-        require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
+        --
+        -- require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
 
         -- A function that lets us more easily define mappings specific
         -- for LSP related items. It sets the mode, buffer and description for us each time.
@@ -128,8 +131,6 @@ return {
       mason_lspconfig.setup({
         ensure_installed = vim.tbl_keys(servers),
       })
-
-
 
       mason_lspconfig.setup_handlers {
         ['rust_analyzer'] = function() end,
