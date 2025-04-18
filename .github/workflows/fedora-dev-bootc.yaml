@@ -18,7 +18,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        ref: bootc
+        ref: master
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
@@ -37,9 +37,9 @@ jobs:
         push: true
         tags: ghcr.io/${{ github.repository }}/fedora-dev-bootc:latest
         file: ./Containerfile
-        build-args: |
-            email=${{ secrets.EMAIL  }}
-            user=chris
+        # build-args: |
+        #     email=${{ secrets.EMAIL  }}
+        #     user=chris
            
     - name: Log out from GitHub Container Registry
       run: docker logout ghcr.io
