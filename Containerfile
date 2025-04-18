@@ -5,9 +5,9 @@ COPY ./fonts/JetBrainsMonoNerdFont /usr/share/fonts
 COPY ./bootc/install.toml /usr/lib/bootc/install/00-install.toml
 
 # Split into two layers, foundational and extra to avoid rebuilding the foundational
-# packages whenever updating the extra packages
+# packages when updating the extra packages
 
-#"foundational" layer that doesn't change frequently
+# "foundational" layer that doesn't change frequently
 RUN <<EOF
     set -euxo pipefail
 
@@ -75,11 +75,20 @@ RUN <<EOF
         virt-install \
         virt-manager
 
-    dnf clean all
+    curl -o insync.rpm https://cdn.insynchq.com/builds/linux/3.9.5.60024/insync-3.9.5.60024-fc42.x86_64.rpm
+    rpm -i insync.rpm
+    rm insync.rpm
+
+    curl -o slack.rpm https://downloads.slack-edge.com/desktop-releases/linux/x64/4.43.51/slack-4.43.51-0.1.el8.x86_64.rpm
+    rpm -i slack.rpm
+    rm slack.rpm
 EOF
 
+# machine specific layer
 RUN <<EOF
     dnf -y install akmod-nvidia
+
+    dnf clean all
 EOF
 
 # Final layer to run quick commands
