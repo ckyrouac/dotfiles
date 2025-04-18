@@ -73,7 +73,9 @@ RUN <<EOF
         virt-install \
         virt-manager \
         libXScrnSaver \
-        libappindicator-gtk3
+        libappindicator-gtk3 \
+        pavucontrol \
+        easyeffects
 
     curl -o insync.rpm https://cdn.insynchq.com/builds/linux/3.9.5.60024/insync-3.9.5.60024-fc42.x86_64.rpm
     rpm -i insync.rpm
