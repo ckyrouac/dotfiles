@@ -78,6 +78,10 @@ RUN <<EOF
     dnf clean all
 EOF
 
+RUN <<EOF
+    dnf -y install akmod-nvidia
+EOF
+
 # Final layer to run quick commands
 RUN <<EOF
     set -euxo pipefail
