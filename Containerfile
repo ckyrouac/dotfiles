@@ -23,7 +23,6 @@ RUN <<EOF
     # install groups
     # dnf -y group install development-tools c-development gnome-desktop cosmic-desktop system-tools sound-and-video
     dnf -y group install gnome-desktop
-    dnf -y install spice-vdagent
 EOF
 
 # "extra" layer that changes more frequently
@@ -172,6 +171,6 @@ RUN <<EOF
     fc-cache /usr/share/fonts
 
     # services
-    systemctl enable sshd lm_sensors libvirtd.socket spice-vdagentd.service
+    systemctl enable sshd lm_sensors libvirtd.socket
     systemctl set-default graphical.target
 EOF
