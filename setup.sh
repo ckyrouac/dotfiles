@@ -291,11 +291,6 @@ while getopts u:e:agvzxcdrthspm flag; do
   esac
 done
 
-info_msg "Installing deps"
-sudo dnf update -y
-sudo dnf install -y htop the_silver_searcher fd-find zsh util-linux-user trash-cli dejavu-fonts-all tmux xclip neovim tig make automake gcc gcc-c++ kernel-devel xorg-x11-proto-devel libX11-devel fontconfig-devel libXft-devel powerline python3-neovim keepassxc ripgrep bison gnome-extensions-app lldb rust-lldb tldr fzf gitui libstdc++-static seahorse sqlite-devel tk-devel shellcheck libpq-devel diff-so-fancy alacritty
-sudo dnf groupinstall -y "Development Tools" "Development Libraries"
-
 if [ -z "$SETUP_VIM" ] && \
    [ -z "$SETUP_GIT" ] && \
    [ -z "$SETUP_ZSH" ] && \
@@ -353,7 +348,7 @@ if { [ "$SETUP_GNOME" = true ] || [ "$SETUP_ALL" = true ]; }; then
   setup-gnome
 fi
 
-if { [ "$SETUP_PROGRAMMING_LANGUAGES" = true ] || [ "$SETUP_ALL" = true ]; }; then
+if { [ "$SETUP_PROGRAMMING_LANGUAGES" = true ]; }; then
   info_msg "Setting up programming languages"
   setup-programming-languages
 fi
