@@ -2,7 +2,7 @@ return {
   {
     -- Autocompletion
     "ckyrouac/nvim-cmp",
-    cond = true,
+    cond = false,
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
       "L3MON4D3/LuaSnip",

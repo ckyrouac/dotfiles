@@ -8,6 +8,7 @@ return {
       -- Automatically install LSPs to stdpath for neovim
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "saghen/blink.cmp",
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -52,6 +53,15 @@ return {
           },
         },
       }
+
+      -- -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      local lspconfig = require('lspconfig')
+      for server, config in pairs(servers) do
+        config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+        lspconfig[server].setup(config)
+      end
 
       --  This function gets run when an LSP connects to a particular buffer.
       local on_attach = function(client, bufnr)
@@ -121,10 +131,6 @@ return {
         end
       end
 
-      -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-
       -- Ensure the servers above are installed
       local mason_lspconfig = require("mason-lspconfig")
 
@@ -177,7 +183,7 @@ return {
       })
 
       -- c config
-      require("cmp_nvim_lsp")
+      -- require("cmp_nvim_lsp")
 
       require("lspconfig").clangd.setup({
         on_attach = on_attach,
