@@ -27,6 +27,7 @@ EOF
 # "extra" layer that changes more frequently
 RUN <<EOF
     set -euxo pipefail
+    dnf -y copr enable atim/lazygit
 
     dnf install -y \
         firewalld \
@@ -77,12 +78,18 @@ RUN <<EOF
         libXScrnSaver \
         libappindicator-gtk3 \
         pavucontrol \
-        easyeffects
+        easyeffects \
+        man-pages \
+        gnome-tweaks \
+        lazygit \
+        libusb
 
+    # insync
     curl -o insync.rpm https://cdn.insynchq.com/builds/linux/3.9.5.60024/insync-3.9.5.60024-fc42.x86_64.rpm
     rpm -i insync.rpm
     rm insync.rpm
 
+    # slack
     curl -o slack.rpm https://downloads.slack-edge.com/desktop-releases/linux/x64/4.43.51/slack-4.43.51-0.1.el8.x86_64.rpm
     rpm -i slack.rpm
     rm slack.rpm
