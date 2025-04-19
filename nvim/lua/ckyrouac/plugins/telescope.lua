@@ -2,7 +2,7 @@
 
 return {
   {
-    "ckyrouac/telescope.nvim",
+    "nvim-telescope/telescope.nvim",
     cond = true,
     dependencies = {
       "nvim-lua/plenary.nvim",
