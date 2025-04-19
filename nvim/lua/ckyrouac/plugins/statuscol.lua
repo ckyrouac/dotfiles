@@ -1,6 +1,7 @@
 return {
   {
-    "luukvbaal/statuscol.nvim", config = function()
+    "luukvbaal/statuscol.nvim",
+    config = function()
       local builtin = require("statuscol.builtin")
       require("statuscol").setup({
         -- configuration goes here, for example:
@@ -12,7 +13,7 @@ return {
           },
           { text = { builtin.foldfunc }, click = "v:lua.ScFa", colwidth = 2},
           {
-            sign = { namespace = { "diagnostic/signs" }, maxwidth = 1, colwidth = 2, auto = true, foldclosed = true},
+            sign = { namespace = { "diagnostic.signs" }, maxwidth = 1, colwidth = 2, auto = false, foldclosed = true},
             click = "v:lua.ScSa"
           },
           {
