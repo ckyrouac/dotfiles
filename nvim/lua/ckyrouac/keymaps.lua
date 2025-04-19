@@ -3,11 +3,11 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- remove default mappings that conflict
-vim.keymap.del("n", "grn")
-vim.keymap.del("n", "gra")
-vim.keymap.del("n", "grr")
-vim.keymap.del("n", "<C-W>d")
-vim.keymap.del("n", "<C-W><C-D>")
+-- vim.keymap.del("n", "grn")
+-- vim.keymap.del("n", "gra")
+-- vim.keymap.del("n", "grr")
+-- vim.keymap.del("n", "<C-W>d")
+-- vim.keymap.del("n", "<C-W><C-D>")
 
 -- See `:help vim.keymap.set()`
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
