@@ -109,6 +109,7 @@ function setup-git () {
 function setup-terminal () {
   cd /usr/share/fonts
   sudo cp -r ~/dotfiles/fonts/UbuntuMono /usr/share/fonts
+  sudo cp -r ~/dotfiles/fonts/JetBrainsMonoNerdFont /usr/share/fonts
   sudo fc-cache /usr/share/fonts
 
   set +e
