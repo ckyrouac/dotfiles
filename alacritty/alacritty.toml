@@ -1,5 +1,5 @@
 [window]
-decorations = "Full"
+decorations = "None"
 
 [font]
 normal = { family = "JetBrainsMono NF", style = "Regular" }
@@ -29,11 +29,11 @@ cyan = "#33bfbf"
 white = "#ffffff"
 
 [colors.primary]
-foreground = "#BCBEC4"
-background = "#1E1F22"
+foreground = "#e2eaf2"
+background = "#000000"
 
 [colors]
-cursor = { cursor = "#BCBEC4" }
+cursor = { cursor = "#e2eaf2" }
 
 [keyboard]
 bindings = [
