@@ -3,6 +3,8 @@ FROM quay.io/fedora/fedora-bootc:42
 COPY ./fonts/UbuntuMono /usr/share/fonts
 COPY ./fonts/JetBrainsMonoNerdFont /usr/share/fonts
 
+COPY ./bootc/etc /etc
+
 # Split into two layers, foundational and extra to avoid rebuilding the foundational
 # packages when updating the extra packages
 
@@ -84,6 +86,13 @@ RUN <<EOF
     curl -o slack.rpm https://downloads.slack-edge.com/desktop-releases/linux/x64/4.43.51/slack-4.43.51-0.1.el8.x86_64.rpm
     rpm -i slack.rpm
     rm slack.rpm
+
+    # keymapp
+    curl -o keymapp.tar.gz https://oryx.nyc3.cdn.digitaloceanspaces.com/keymapp/keymapp-latest.tar.gz
+    tar -xvf keymapp.tar.gz
+    rm keymapp.tar.gz
+    mv keymapp /usr/bin/keymapp
+    mv icon.png /usr/share/icons/keymapp.png
 EOF
 
 # machine specific layer
