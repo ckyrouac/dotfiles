@@ -52,7 +52,8 @@ EOF
 
 # machine specific layer
 RUN <<EOF
-    dnf -y install akmod-nvidia
+    # dnf -y install akmod-nvidia
+    dnf -y install xorg-x11-drv-nvidia-cuda
 
     dnf clean all
 EOF
