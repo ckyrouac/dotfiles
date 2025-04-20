@@ -35,6 +35,7 @@ make
 man-pages
 neovim
 pavucontrol
+plymouth
 powerline
 python3-neovim
 ripgrep
