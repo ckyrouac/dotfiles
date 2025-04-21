@@ -33,6 +33,7 @@ libusb
 lldb
 lm_sensors
 make
+man
 man-pages
 neovim
 pavucontrol
