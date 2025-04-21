@@ -2,6 +2,7 @@ alacritty
 automake
 bash-completion
 bison
+cargo
 dejavu-fonts-all
 diff-so-fancy
 easyeffects
@@ -39,6 +40,8 @@ plymouth
 powerline
 python3-neovim
 ripgrep
+rofi-wayland
+rust
 rust-lldb
 seahorse
 shellcheck
