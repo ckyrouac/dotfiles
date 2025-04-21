@@ -35,6 +35,28 @@ jobs:
       with:
         context: .
         push: true
+        tags: ghcr.io/${{ github.repository }}/bootc-base:latest
+        file: ./Containerfile
+        build-args: |
+            email=${{ secrets.EMAIL  }}
+            user=chris
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/${{ github.repository }}/bootc-desktop:latest
+        file: ./Desktop.containerfile
+        build-args: |
+            email=${{ secrets.EMAIL  }}
+            user=chris
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v3
+      with:
+        context: .
+        push: true
         tags: ghcr.io/${{ github.repository }}/bootc-thinkpad:latest
         file: ./Thinkpad.containerfile
         build-args: |
