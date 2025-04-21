@@ -51,6 +51,7 @@ seahorse
 shellcheck
 snapshot
 sqlite-devel
+systemd-networkd
 the_silver_searcher
 tig
 tk-devel
