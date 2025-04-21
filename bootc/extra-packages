@@ -8,6 +8,7 @@ diff-so-fancy
 easyeffects
 fd-find
 firewalld
+flatpak
 fontconfig-devel
 fuzzel
 fzf
@@ -20,7 +21,6 @@ gnome-tweaks
 golang
 google-chrome-stable
 htop
-hyprpolkitagent
 hyprland
 keepassxc
 kernel-devel

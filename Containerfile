@@ -56,6 +56,7 @@ EOF
 RUN <<EOF
     # dnf -y install akmod-nvidia
     dnf -y install xorg-x11-drv-nvidia-cuda
+    dnf -y install hyprpolkitagent
 
     dnf clean all
 EOF
