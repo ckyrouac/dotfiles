@@ -70,4 +70,7 @@ RUN <<EOF
     # services
     systemctl enable sshd lm_sensors libvirtd.socket
     systemctl set-default graphical.target
+
+    systemctl disable bootc-fetch-apply-updates.timer
+    systemctl disable bootc-fetch-apply-updates.service
 EOF
