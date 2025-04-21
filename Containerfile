@@ -24,10 +24,7 @@ RUN <<EOF
     # install groups
     # dnf -y group install development-tools c-development gnome-desktop cosmic-desktop system-tools sound-and-video
     dnf -y group install gnome-desktop
-EOF
 
-# "extra" layer that changes more frequently
-RUN <<EOF
     set -euxo pipefail
     dnf -y copr enable atim/lazygit
     dnf copr enable solopasha/hyprland
@@ -50,15 +47,6 @@ RUN <<EOF
     rm keymapp.tar.gz
     mv keymapp /usr/bin/keymapp
     mv icon.png /usr/share/icons/keymapp.png
-EOF
-
-# machine specific layer
-RUN <<EOF
-    # dnf -y install akmod-nvidia
-    dnf -y install xorg-x11-drv-nvidia-cuda
-    dnf -y install hyprpolkitagent
-
-    dnf clean all
 EOF
 
 # Final layer to run quick commands

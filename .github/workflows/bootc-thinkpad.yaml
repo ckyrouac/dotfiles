@@ -35,10 +35,8 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/${{ github.repository }}/fedora-dev-bootc:latest
-        file: ./Containerfile
-        cache-from: type=registry,ref=user/app:latest
-        cache-to: type=inline
+        tags: ghcr.io/${{ github.repository }}/bootc-thinkpad:latest
+        file: ./Thinkpad.containerfile
         build-args: |
             email=${{ secrets.EMAIL  }}
             user=chris
