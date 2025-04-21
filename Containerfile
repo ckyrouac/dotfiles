@@ -29,6 +29,7 @@ EOF
 RUN <<EOF
     set -euxo pipefail
     dnf -y copr enable atim/lazygit
+    dnf copr enable solopasha/hyprland
 
     cat /extra-packages | xargs dnf install -y
 
