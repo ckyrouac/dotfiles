@@ -4,6 +4,7 @@ COPY ./fonts/UbuntuMono /usr/share/fonts
 COPY ./fonts/JetBrainsMonoNerdFont /usr/share/fonts
 
 COPY ./bootc/etc /etc
+COPY ./bootc/usr /usr
 COPY ./bootc/extra-packages /
 
 # Split into two layers, foundational and extra to avoid rebuilding the foundational

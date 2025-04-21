@@ -1,0 +1,76 @@
+_swaync-client() {
+    local cur prev
+    _get_comp_words_by_ref cur prev
+
+    short=(
+        -h
+        -v
+        -R
+        -rs
+        -t
+        -op
+        -cp
+        -d
+        -D
+        -dn
+        -df
+        -I
+        -In
+        -Ia
+        -Ir
+        -Ic
+        -c
+        -C
+        -sw
+        -s
+        -swb
+    )
+
+    long=(
+        --help
+        --version
+        --reload-config
+        --reload-css
+        --toggle-panel
+        --open-panel
+        --close-panel
+        --toggle-dnd
+        --get-dnd
+        --dnd-on
+        --dnd-off
+        --get-inhibited
+        --get-num-inhibitors
+        --inhibitor-add
+        --inhibitor-remove
+        --inhibitors-clear
+        --count
+        --hide-latest
+        --close-latest
+        --close-all
+        --skip-wait
+        --subscribe
+        --subscribe-waybar
+    )
+    case $prev in
+        -s | --style)
+            _filedir
+            return
+            ;;
+        -c | --config)
+            _filedir
+            return
+            ;;
+    esac
+
+    if [[ $cur == --* ]]; then
+        COMPREPLY=($(compgen -W "${long[*]}" -- "$cur"))
+    elif [[ $cur == -* ]]; then
+        COMPREPLY=($(compgen -W "${short[*]}" -- "$cur"))
+        COMPREPLY+=($(compgen -W "${long[*]}" -- "$cur"))
+    else
+        COMPREPLY=($(compgen -W "${short[*]}" -- "$cur"))
+        COMPREPLY+=($(compgen -W "${long[*]}" -- "$cur"))
+        COMPREPLY+=($(compgen -c -- "$cur"))
+    fi
+
+} && complete -F _swaync-client swaync-client
