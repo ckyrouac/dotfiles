@@ -1,3 +1,3 @@
 #!/bin/bash
 tmux new-session -d -s general
-env -u WAYLAND_DISPLAY alacritty -t terminal-dropdown -e tmux attach-session -t general
+alacritty -t terminal-dropdown -e tmux attach-session -t general
