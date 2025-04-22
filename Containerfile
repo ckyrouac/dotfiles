@@ -16,6 +16,9 @@ COPY . /etc/dotfiles
 RUN <<EOF
     set -euxo pipefail
 
+    dnf -y copr enable atim/lazygit
+    dnf -y copr enable solopasha/hyprland
+
     # rpmfusion
     dnf install -y https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
@@ -26,10 +29,6 @@ RUN <<EOF
     # install groups
     # dnf -y group install development-tools c-development gnome-desktop cosmic-desktop system-tools sound-and-video
     dnf -y group install gnome-desktop
-
-    set -euxo pipefail
-    dnf -y copr enable atim/lazygit
-    dnf copr enable solopasha/hyprland
 
     cat /extra-packages | xargs dnf install -y
 
