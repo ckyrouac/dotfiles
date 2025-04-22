@@ -62,6 +62,7 @@ trash-cli
 util-linux-user
 virt-install
 virt-manager
+waybar
 xclip
 xorg-x11-proto-devel
 zsh
