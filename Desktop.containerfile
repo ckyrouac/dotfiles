@@ -1,7 +1,6 @@
 FROM ghcr.io/ckyrouac/dotfiles/bootc-base:latest
 
 RUN <<EOF
-    dnf -y module install nvidia-driver
-    dnf install -y nvidia-container-toolkit
+    dnf install -y akmod-nvidia
     dnf clean all
 EOF
