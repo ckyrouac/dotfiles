@@ -7,6 +7,8 @@ COPY ./bootc/etc /etc
 COPY ./bootc/usr /usr
 COPY ./bootc/extra-packages /
 
+COPY . /etc/dotfiles
+
 # Split into two layers, foundational and extra to avoid rebuilding the foundational
 # packages when updating the extra packages
 
