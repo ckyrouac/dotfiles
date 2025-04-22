@@ -57,7 +57,7 @@ RUN <<EOF
     fc-cache /usr/share/fonts
 
     # services
-    systemctl enable sshd lm_sensors libvirtd.socket hyprpaper.service
+    systemctl enable sshd lm_sensors libvirtd.socket
     systemctl set-default graphical.target
 
     systemctl disable bootc-fetch-apply-updates.timer
