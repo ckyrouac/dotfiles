@@ -27,6 +27,8 @@ RUN <<EOF
 
     cat /extra-packages | xargs dnf install -y
 
+    akmods --force
+
     # insync
     curl -o insync.rpm https://cdn.insynchq.com/builds/linux/3.9.5.60024/insync-3.9.5.60024-fc42.x86_64.rpm
     rpm -i insync.rpm
