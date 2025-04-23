@@ -1,6 +1,6 @@
 FROM ghcr.io/ckyrouac/dotfiles/bootc-base:latest
 
 RUN <<EOF
-    dnf install -y akmod-nvidia
+    dnf -y install xorg-x11-drv-nvidia-cuda
     dnf clean all
 EOF
