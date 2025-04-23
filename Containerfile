@@ -115,8 +115,8 @@ RUN <<EOF
     # services
     systemctl enable sshd lm_sensors libvirtd.socket
     systemctl set-default graphical.target
-    systemctl disable bootc-fetch-apply-updates.timer
-    systemctl disable bootc-fetch-apply-updates.service
+
+    # don't auto update
     rm /usr/lib/systemd/system/bootc-fetch-apply-updates.service
     rm /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
     rm /usr/lib/systemd/system/default.target.wants/bootc-fetch-apply-updates.timer
