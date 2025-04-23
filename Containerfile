@@ -9,10 +9,64 @@ COPY ./bootc/extra-packages /
 
 COPY . /etc/dotfiles
 
-# Split into two layers, foundational and extra to avoid rebuilding the foundational
-# packages when updating the extra packages
+# build hyprland
+RUN <<EOF
+    set -euxo pipefail
 
-# "foundational" layer that doesn't change frequently
+    dnf -y group install development-tools c-development
+
+    sudo dnf install -y libseat-devel libinput-devel wayland-protocols-devel libdrm-devel mesa-libgbm-devel libdisplay-info-devel hwdata-devel libuuid-devel re2-devel xcb-util-errors-devel xcb-util-devel xcb-util-wm-devel tomlplusplus-devel file-devel libseat-devel libinput-devel wayland-protocols-devel libdrm-devel mesa-libgbm-devel libdisplay-info-devel hwdata-devel git cmake pixman-devel cairo cairo-devel libjpeg-devel libwebp-devel libspng-devel GLC_lib vulkan-headers gtkglext-devel pugixml-devel libwayland-client wayland-devel libzip-devel librsvg2-devel libxkbcommon-devel
+
+    git clone https://github.com/hyprwm/hyprutils.git
+    cd hyprutils
+    cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+    cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
+    cmake --install build
+    cd ../
+
+    git clone https://github.com/hyprwm/hyprgraphics.git
+    cd hyprgraphics
+    cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+    cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
+    cmake --install build
+    cd ../
+
+    git clone https://github.com/hyprwm/hyprwayland-scanner.git
+    cd hyprwayland-scanner
+    cmake -DCMAKE_INSTALL_PREFIX=/usr -B build
+    cmake --build build -j `nproc`
+    cmake --install build
+    cd ../
+
+    git clone https://github.com/hyprwm/aquamarine.git
+    cd aquamarine
+    cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+    cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf _NPROCESSORS_CONF`
+    cd build
+    make install
+    cd ../../
+
+    git clone https://github.com/hyprwm/hyprlang.git
+    cd hyprlang
+    cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+    cmake --build ./build --config Release --target hyprlang -j`nproc 2>/dev/null || getconf _NPROCESSORS_CONF`
+    cmake --install ./build
+    cd ../
+
+    git clone https://github.com/hyprwm/hyprcursor
+    cd hyprcursor
+    cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+    cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf _NPROCESSORS_CONF`
+    cmake --install build
+    cd ../
+
+    git clone --recursive https://github.com/hyprwm/Hyprland
+    cd Hyprland
+    make all
+    make install
+    cd ../
+EOF
+
 RUN <<EOF
     set -euxo pipefail
 
@@ -47,11 +101,6 @@ RUN <<EOF
     rm keymapp.tar.gz
     mv keymapp /usr/bin/keymapp
     mv icon.png /usr/share/icons/keymapp.png
-EOF
-
-# Final layer to run quick commands
-RUN <<EOF
-    set -euxo pipefail
 
     # fonts
     fc-cache /usr/share/fonts
@@ -59,7 +108,6 @@ RUN <<EOF
     # services
     systemctl enable sshd lm_sensors libvirtd.socket
     systemctl set-default graphical.target
-
     systemctl disable bootc-fetch-apply-updates.timer
     systemctl disable bootc-fetch-apply-updates.service
 EOF
