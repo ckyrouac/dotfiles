@@ -4,7 +4,7 @@ RUN <<EOF
     set -euxo pipefail
 
     dnf -y module enable nvidia-driver
-    dnf install -y cuda-toolkit nvidia-container-toolkit nvidia-driver
+    dnf install -y nvidia-driver
 
     dnf clean all
 EOF
