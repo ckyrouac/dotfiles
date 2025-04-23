@@ -50,7 +50,6 @@ RUN <<EOF
     # services
     systemctl enable sshd lm_sensors libvirtd.socket
     systemctl set-default graphical.target
-    systemctl disable akmods.service
 
     # don't auto update
     rm /usr/lib/systemd/system/bootc-fetch-apply-updates.service
