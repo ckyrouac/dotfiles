@@ -15,7 +15,7 @@ RUN <<EOF
 
     dnf -y group install development-tools c-development
 
-    sudo dnf install -y libseat-devel libinput-devel wayland-protocols-devel libdrm-devel mesa-libgbm-devel libdisplay-info-devel hwdata-devel libuuid-devel re2-devel xcb-util-errors-devel xcb-util-devel xcb-util-wm-devel tomlplusplus-devel file-devel libseat-devel libinput-devel wayland-protocols-devel libdrm-devel mesa-libgbm-devel libdisplay-info-devel hwdata-devel git cmake pixman-devel cairo cairo-devel libjpeg-devel libwebp-devel libspng-devel GLC_lib vulkan-headers gtkglext-devel pugixml-devel libwayland-client wayland-devel libzip-devel librsvg2-devel libxkbcommon-devel
+    sudo dnf install -y libseat-devel libinput-devel wayland-protocols-devel libdrm-devel mesa-libgbm-devel libdisplay-info-devel hwdata-devel libuuid-devel re2-devel xcb-util-errors-devel xcb-util-devel xcb-util-wm-devel tomlplusplus-devel file-devel libseat-devel libinput-devel wayland-protocols-devel libdrm-devel mesa-libgbm-devel libdisplay-info-devel hwdata-devel git cmake pixman-devel cairo cairo-devel libjpeg-devel libwebp-devel libspng-devel GLC_lib vulkan-headers gtkglext-devel pugixml-devel libwayland-client wayland-devel libzip-devel librsvg2-devel libxkbcommon-devel qt6-qtwayland-devel
 
     git clone https://github.com/hyprwm/hyprutils.git
     cd hyprutils
@@ -57,6 +57,13 @@ RUN <<EOF
     cd hyprcursor
     cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
     cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf _NPROCESSORS_CONF`
+    cmake --install build
+    cd ../
+
+    git clone https://github.com/hyprwm/hyprland-qtutils
+    cd hyprland-qtutils
+    cmake --no-warn-unused-cli -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_INSTALL_PREFIX:PATH=/usr -S . -B ./build
+    cmake --build ./build --config Release --target all -j`nproc 2>/dev/null || getconf NPROCESSORS_CONF`
     cmake --install build
     cd ../
 
