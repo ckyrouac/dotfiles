@@ -48,7 +48,7 @@ RUN <<EOF
     fc-cache /usr/share/fonts
 
     # services
-    systemctl enable sshd lm_sensors libvirtd.socket
+    systemctl enable sshd lm_sensors libvirtd.socket libvirtd.service
     systemctl set-default graphical.target
 
     # don't auto update

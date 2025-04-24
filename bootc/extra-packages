@@ -37,6 +37,7 @@ libappindicator-gtk3
 libpq-devel
 libstdc++-static
 libusb
+libvirt
 lldb
 lm_sensors
 make
