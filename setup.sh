@@ -292,6 +292,11 @@ while getopts u:e:agvzxcdrthspm flag; do
   esac
 done
 
+# info_msg "Installing deps"
+# sudo dnf update -y
+# sudo dnf install -y zsh neovim tig make automake gcc gcc-c++ kernel-devel powerline python3-neovim ripgrep lldb rust-lldb tldr fzf gitui shellcheck diff-so-fancy
+# sudo dnf groupinstall -y "Development Tools" "Development Libraries"
+
 if [ -z "$SETUP_VIM" ] && \
    [ -z "$SETUP_GIT" ] && \
    [ -z "$SETUP_ZSH" ] && \
