@@ -42,7 +42,7 @@ export TMT_VERBOSE=1
 #golang
 export GOPATH=~/projects/gopath
 export PATH=$PATH:${GOPATH//://bin:}/bin
-[[ -s "/home/chris/.gvm/scripts/gvm" ]] && source "/home/chris/.gvm/scripts/gvm"
+# [[ -s "/var/home/chris/.gvm/scripts/gvm" ]] && source "/var/home/chris/.gvm/scripts/gvm"
 
 #cuda
 export PATH=$PATH:/usr/local/cuda-12.6/bin
