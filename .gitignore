@@ -8,3 +8,5 @@ view
 after/
 
 lazygit/state.yml
+
+dotconfig/hypr/machine-specific.conf
