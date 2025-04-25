@@ -7,7 +7,7 @@ COPY ./bootc/etc /etc
 COPY ./bootc/usr /usr
 COPY ./bootc/extra-packages /
 
-COPY . /etc/dotfiles
+COPY . /dotfiles
 
 RUN <<EOF
     set -euxo pipefail
@@ -55,4 +55,7 @@ RUN <<EOF
     rm /usr/lib/systemd/system/bootc-fetch-apply-updates.service
     rm /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
     rm /usr/lib/systemd/system/default.target.wants/bootc-fetch-apply-updates.timer
+
+    # dotfiles overlay
+    systemctl enable ostree-state-overlay@dotfiles.service
 EOF
