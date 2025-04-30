@@ -9,6 +9,7 @@ diff-so-fancy
 easyeffects
 eww-git
 fd-find
+firefox
 firewalld
 flatpak
 fontconfig-devel
@@ -44,7 +45,9 @@ make
 man
 man-pages
 neovim
+nvtop
 pavucontrol
+plocate
 plymouth
 powerline
 python3-neovim
@@ -67,6 +70,8 @@ util-linux-user
 uwsm
 virt-install
 virt-manager
+vulkan-tools
+vulkan-validation-layers
 waybar
 xclip
 xorg-x11-proto-devel
