@@ -21,7 +21,9 @@ gitui
 gnome-extensions-app
 gnome-sound-recorder
 gnome-tweaks
+gobject-introspection
 google-chrome-stable
+gtk4
 gtk4-layer-shell
 htop
 hyprland-git
@@ -69,6 +71,7 @@ tmux
 trash-cli
 util-linux-user
 uwsm
+vips-devel
 virt-install
 virt-manager
 vulkan-tools
