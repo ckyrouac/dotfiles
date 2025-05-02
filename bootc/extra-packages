@@ -70,6 +70,7 @@ tmux
 trash-cli
 util-linux-user
 uwsm
+vips
 vips-devel
 virt-install
 virt-manager
