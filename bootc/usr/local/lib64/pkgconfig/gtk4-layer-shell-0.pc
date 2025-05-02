@@ -1,0 +1,11 @@
+prefix=/usr/local
+includedir=${prefix}/include
+libdir=${prefix}/lib64
+
+Name: gtk4-layer-shell
+Description: Use the Layer Shell Wayland protocol with GTK4
+URL: https://github.com/wmww/gtk4-layer-shell
+Version: 1.0.4
+Requires.private: gtk4, wayland-client >= 1.10.0
+Libs: -L${libdir} -lgtk4-layer-shell
+Cflags: -I${includedir}/gtk4-layer-shell
