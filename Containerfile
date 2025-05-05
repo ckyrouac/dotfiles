@@ -18,6 +18,7 @@ RUN <<EOF
     # enable repos
     dnf -y install fedora-workstation-repositories 'dnf5-command(config-manager)'
     dnf config-manager setopt google-chrome.enabled=1
+    dnf copr enable erikreider/SwayNotificationCenter
 
     # install groups
     dnf -y group install gnome-desktop

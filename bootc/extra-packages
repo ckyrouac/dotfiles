@@ -1,3 +1,4 @@
+SwayNotificationCenter-git
 alacritty
 automake
 aylurs-gtk-shell2
@@ -17,6 +18,7 @@ fuzzel
 fzf
 gcc
 gcc-c++
+gcolor3
 gitui
 gnome-extensions-app
 gnome-sound-recorder
