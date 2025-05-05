@@ -50,7 +50,7 @@
 
 .notification-row .notification-background .notification {
   /* The actual notification */
-  border-radius: 12px;
+  border-radius: 0px;
   border: 1px solid var(--noti-border-color);
   padding: 0;
   transition: background 0.15s ease-in-out;
@@ -78,7 +78,7 @@
   border: none;
   color: var(--text-color);
   transition: background 0.15s ease-in-out;
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 .notification-row .notification-background .notification .notification-default-action:hover {
@@ -94,14 +94,14 @@
 
 .notification-row .notification-background .notification .notification-default-action .notification-content {
   background: transparent;
-  border-radius: 12px;
+  border-radius: 0px;
   padding: 0;
 }
 
 .notification-row .notification-background .notification .notification-default-action .notification-content .image {
   /* Notification Primary Image */
   -gtk-icon-filter: none;
-  border-radius: 100px;
+  border-radius: 0px;
   /* Size in px */
   margin: 4px;
 }
@@ -168,14 +168,14 @@
   color: var(--text-color);
   caret-color: var(--text-color);
   border: 1px solid var(--noti-border-color);
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 .notification-row .notification-background .notification .notification-default-action .notification-content .inline-reply .inline-reply-button {
   margin-left: 4px;
   background: rgba(var(--noti-bg), var(--noti-bg-alpha));
   border: 1px solid var(--noti-border-color);
-  border-radius: 12px;
+  border-radius: 0px;
   color: var(--text-color);
 }
 
@@ -204,7 +204,7 @@
 }
 
 .notification-row .notification-background .notification .notification-action > button {
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 .notification-group {
@@ -284,7 +284,7 @@
   /* The Control Center which contains the old notifications + widgets */
   background: var(--cc-bg);
   color: var(--text-color);
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 .control-center .control-center-list-placeholder {
@@ -333,7 +333,7 @@
 
 .widget-title > button {
   margin: 8px;
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 /* DND widget */
@@ -344,12 +344,12 @@
 }
 
 .widget-dnd switch {
-  border-radius: 12px;
+  border-radius: 0px;
   margin: 8px;
 }
 
 .widget-dnd switch slider {
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 /* Label widget */
@@ -374,7 +374,7 @@
 
 .widget-mpris .widget-mpris-player {
   margin: 16px 20px;
-  border-radius: 12px;
+  border-radius: 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
 }
 
@@ -393,7 +393,7 @@
 }
 
 .widget-mpris .widget-mpris-player .mpris-overlay .widget-mpris-album-art {
-  border-radius: 12px;
+  border-radius: 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.75);
   -gtk-icon-size: 96px;
 }
@@ -427,11 +427,11 @@
 .widget-buttons-grid {
   padding: 8px;
   margin: 8px;
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 .widget-buttons-grid flowboxchild > button {
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 .widget-buttons-grid flowboxchild > button.toggle:checked {
@@ -445,7 +445,7 @@
     background-color: rgba(var(--noti-bg), 1.0);
     padding: 8px;
     margin: 8px;
-    border-radius: 12px;
+    border-radius: 0px;
   }
 
   .AnyName>button {
@@ -473,7 +473,7 @@
 }
 
 .widget-menubar > .menu-button-bar > .widget-menubar-container button {
-  border-radius: 12px;
+  border-radius: 0px;
   margin: 0 4px;
 }
 
@@ -482,7 +482,7 @@
 }
 
 .widget-menubar > revealer button {
-  border-radius: 12px;
+  border-radius: 0px;
   margin: 8px;
   margin-top: 0;
 }
@@ -491,21 +491,21 @@
 .widget-volume {
   padding: 8px;
   margin: 8px;
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 .per-app-volume {
   background-color: var(--noti-bg-alt);
   padding: 4px 8px 8px 8px;
   margin: 0px 8px 8px 8px;
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 /* Backlight widget */
 .widget-backlight {
   padding: 8px;
   margin: 8px;
-  border-radius: 12px;
+  border-radius: 0px;
 }
 
 /* Inhibitors widget */
@@ -516,5 +516,5 @@
 
 .widget-inhibitors > button {
   margin: 8px;
-  border-radius: 12px;
+  border-radius: 0px;
 }
