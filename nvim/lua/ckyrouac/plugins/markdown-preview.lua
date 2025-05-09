@@ -9,7 +9,7 @@ return {
     end,
     config = function ()
       vim.g.mkdp_auto_close = 0
-      vim.keymap.set("n", "<leader>mp", ":MarkdownPreview<cr>", { silent = true, desc = "Preview" })
+      vim.keymap.set("n", "<leader>op", ":MarkdownPreview<cr>", { silent = true, desc = "Markdown Preview" })
     end
   },
 }
