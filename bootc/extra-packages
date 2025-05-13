@@ -53,6 +53,7 @@ nvtop
 pavucontrol
 plocate
 plymouth
+podman-machine
 powerline
 python3-neovim
 ripgrep
