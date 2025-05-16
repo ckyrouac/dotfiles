@@ -1,0 +1,16 @@
+[Unit]
+Description=Starts hyprswitch Daemon
+PartOf=graphical-session.target
+After=graphical-session.target
+StartLimitIntervalSec=600
+StartLimitBurst=60
+RestartSec=10
+# TODO decrease the StartLimitBurst to 5
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/hyprswitch -vv init
+Restart=always
+
+[Install]
+WantedBy=graphical-session.target
