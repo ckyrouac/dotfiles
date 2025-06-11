@@ -128,6 +128,7 @@ return {
       telescope.load_extension("ui-select")
       telescope.load_extension("noice")
       telescope.load_extension("advanced_git_search")
+      telescope.load_extension("recall")
 
       local function search_open_files()
         require("telescope.builtin").live_grep({

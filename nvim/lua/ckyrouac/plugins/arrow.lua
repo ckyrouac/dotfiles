@@ -2,7 +2,7 @@ return {
   {
     "ckyrouac/arrow.nvim",
     branch = "tweaks",
-    cond = true,
+    cond = false,
     config = function()
       require("arrow").setup({
         show_icons = true,
