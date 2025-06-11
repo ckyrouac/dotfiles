@@ -16,3 +16,6 @@ __debug*
 .tmp
 
 output
+
+.nvim.lua
+.vim
