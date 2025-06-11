@@ -12,7 +12,9 @@ return {
     config = function()
       require("neotest").setup({
         adapters = {
-          require("neotest-rust"),
+          require("neotest-rust") {
+            args = { "--success-output", "immediate" },
+          },
         },
       })
 
@@ -23,10 +25,21 @@ return {
         { noremap = true, silent = true, desc = "Run last" }
       )
 
+      ---@diagnostic disable-next-line: lowercase-global
+      function _run_and_attach()
+        require('neotest').run.run({stdout = true, stderr = true})
+
+        vim.defer_fn(function()
+          require('neotest').run.attach()
+          require('neotest').output_panel.toggle({ enter = true })
+        end, 1000)
+      end
+
       vim.api.nvim_set_keymap(
         "n",
         "<leader>tt",
-        "<cmd>lua require('neotest').run.run({stdout = true})<CR>",
+        "<cmd>lua _run_and_attach()<CR>",
+        -- "<cmd>lua require('neotest').run.run({stdout = true, stderr = true})<CR> ",
         { noremap = true, silent = true, desc = "Run nearest" }
       )
 
@@ -54,7 +67,7 @@ return {
       vim.api.nvim_set_keymap(
         "n",
         "<leader>too",
-        "<cmd>lua require('neotest').output_panel.toggle()<CR>",
+        "<cmd>lua require('neotest').output_panel.toggle({ enter = true })<CR>",
         { noremap = true, silent = true, desc = "Toggle output panel" }
       )
 
