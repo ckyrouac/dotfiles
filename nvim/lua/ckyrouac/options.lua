@@ -120,3 +120,6 @@ vim.filetype.add({
     ['.*containerfile'] = 'dockerfile',
   },
 })
+
+vim.opt.exrc = true
+vim.opt.secure = true

@@ -52,3 +52,6 @@ export WAYLAND_DISPLAY=wayland-1
 
 #podman machine
 # export CONTAINER_CONNECTION="podman-machine-default-root"
+
+#npm packages
+export PATH=$PATH:/var/home/chris/.npm-packages/bin
