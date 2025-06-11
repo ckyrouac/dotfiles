@@ -7,12 +7,13 @@ return {
     config = function()
       require("copilot").setup({
         suggestion = {
-          enabled = false,
+          enabled = true,
           auto_trigger = true,
           keymap = {
             accept = "<C-y>",
           },
         },
+        copilot_model = "gemini-2.5-pro",
         panel = { enabled = false },
         filetypes = {
           javascript = true,

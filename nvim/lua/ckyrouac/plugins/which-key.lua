@@ -24,6 +24,8 @@ return {
     })
 
     require("which-key").add({
+      { "<leader>a", group = "AI" },
+      { "<leader>a_", hidden = true },
       { "<leader>c", group = "Code" },
       { "<leader>c_", hidden = true },
       { "<leader>d", group = "Dap" },
