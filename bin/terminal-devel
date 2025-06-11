@@ -1,4 +1,4 @@
 #!/bin/bash
 tmux new-session -d -s general
 # env -u WAYLAND_DISPLAY alacritty -t "terminal-devel" -e tmux attach-session -t general
-alacritty -t "terminal-devel" -e tmux attach-session -t general
+kitty --name "terminal-devel" --class="kitty" -T "terminal-devel" tmux attach-session -t general
