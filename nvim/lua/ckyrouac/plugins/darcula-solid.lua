@@ -1,7 +1,7 @@
 return {
   {
     "ckyrouac/darcula-solid.nvim",
-    cond = true,
+    cond = false,
     priority = 1000,
     dependencies = {
       "rktjmp/lush.nvim",

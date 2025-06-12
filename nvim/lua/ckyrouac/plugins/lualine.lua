@@ -137,7 +137,7 @@ return {
           lualine_z = { "mode" },
         },
         options = {
-          theme = require("darcula-solid.lualine_theme"),
+          theme = "auto",
           disabled_filetypes = {
             "NvimTree",
             "SidebarNvim",

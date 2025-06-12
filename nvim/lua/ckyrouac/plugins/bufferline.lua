@@ -9,7 +9,7 @@ return {
         options = {
           diagnostics = "nvim_lsp",
           diagnostics_indicator = function(_, level)
-            local signs = require("darcula-solid.diagnostics").Signs
+            local signs = require("ckyrouac.diagnostics").Signs
 
             if level:match("error") then
               return signs.Error
@@ -26,7 +26,7 @@ return {
             {
               padding = 0,
               filetype = "NvimTree",
-              text = "🗄File Explorer",
+              text = "📁 File Explorer",
               text_align = "left",
               highlight = "Normal",
               separator = true,
