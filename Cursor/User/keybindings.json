@@ -1,0 +1,94 @@
+// Place your key bindings in this file to override the defaults
+[
+    {
+        "key": "ctrl+i",
+        "command": "composerMode.agent"
+    },
+    {
+        "key": "alt+shift+[",
+        "command": "workbench.action.previousEditor",
+    },
+    {
+        "key": "ctrl+pageup",
+        "command": "-workbench.action.previousEditor"
+    },
+    {
+        "key": "alt+shift+]",
+        "command": "workbench.action.nextEditor",
+    },
+    {
+        "key": "ctrl+pagedown",
+        "command": "-workbench.action.nextEditor"
+    },
+    {
+        "key": "space space",
+        "command": "workbench.action.quickOpen",
+        "when": "editorTextFocus && vim.active && vim.mode == 'Normal'"
+        // "when": "editorTextFocus && !editorReadOnly"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "-workbench.action.quickOpen"
+    },
+    {
+        "key": "space /",
+        "command": "workbench.action.findInFiles",
+        "when": "editorTextFocus && vim.active && vim.mode == 'Normal'"
+        // "when": "editorTextFocus && !editorReadOnly"
+    },
+    {
+        "key": "ctrl+shift+f",
+        "command": "-workbench.action.findInFiles"
+    },
+    {
+        "key": "ctrl+[",
+        "command": "cancelSelection",
+        "when": "editorHasSelection && textInputFocus"
+    },
+    {
+        "key": "escape",
+        "command": "-cancelSelection",
+        "when": "editorHasSelection && textInputFocus"
+    },
+    {
+        "key": "alt+w",
+        "command": "-toggleSearchEditorWholeWord",
+        "when": "inSearchEditor && searchInputBoxFocus"
+    },
+    {
+        "key": "alt+w",
+        "command": "-workbench.action.terminal.toggleFindWholeWord",
+        "when": "terminalFindVisible && terminalHasBeenCreated || terminalFindVisible && terminalProcessSupported"
+    },
+    {
+        "key": "alt+w",
+        "command": "-composer.toggleFindWholeWord",
+        "when": "composerFindWidgetFocused"
+    },
+    {
+        "key": "alt+w",
+        "command": "-toggleFindWholeWord",
+        "when": "editorFocus"
+    },
+    {
+        "key": "alt+w",
+        "command": "-toggleSearchWholeWord",
+        "when": "searchViewletFocus"
+    },
+    {
+        "key": "ctrl+[",
+        "command": "workbench.action.closeActiveEditor",
+        "when": "activeEditor == 'workbench.editor.searchEditor'"
+    },
+    {
+        "key": "Escape",
+        "command": "workbench.action.closeActiveEditor",
+        "when": "activeEditor == 'workbench.editor.searchEditor'"
+    },
+    {
+        "key": "q",
+        "command": "workbench.action.closeActiveEditor",
+        "when": "editorTextFocus && vim.active && vim.mode == 'Normal'"
+        // "when": "editorTextFocus && !editorReadOnly"
+    }
+]

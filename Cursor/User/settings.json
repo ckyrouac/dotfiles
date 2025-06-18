@@ -1,0 +1,23 @@
+{
+    "window.commandCenter": true,
+    "editor.fontSize": 16,
+    "editor.fontFamily": "'JetBrainsMono NF', 'monospace', monospace",
+    "editor.tabSize": 2,
+    "editor.cursorStyle": "block",
+    "extensions.experimental.affinity": {
+        "asvetliakov.vscode-neovim": 1
+    },
+    "vim.leader": "<space>",
+    "vim.cursorStylePerMode.normal": "block",
+    "vim.cursorStylePerMode.insert": "line",
+    "vim.cursorStylePerMode.visual": "line",
+    "vim.cursorStylePerMode.replace": "underline",
+    "search.mode": "newEditor",
+    "vim.handleKeys": {
+        "<C-w>": false,
+        "shift+alt+]": false
+    },
+    "editor.cursorBlinking": "solid",
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 500
+}
