@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=terminal-devel
+GenericName=terminal-devel
+Icon=/usr/share/icons/hicolor/256x256/apps/kitty.png
+Exec=/home/chris/dotfiles/bin/terminal-devel
+Terminal=false
