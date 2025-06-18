@@ -12,6 +12,7 @@ return {
         highlights = {},
         overrides = function(colors)
           return {
+            Visual = { bg = colors.blue, fg = colors.bg },
             ScrollbarHandle = { fg = "#ffffff", bg = "#2b2d30" },
             ScrollbarCursorHandle = { fg = "#2b2d30", bg = "#2b2d30" },
             ScrollbarCursor = { fg = "#000000", bg = "#000000" },
