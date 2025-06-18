@@ -18,7 +18,7 @@ return {
       "folke/neodev.nvim",
     },
     config = function()
-      vim.lsp.inlay_hint.enable(true)
+      vim.lsp.inlay_hint.enable(false)
 
       -- :LspInfo border
       require("lspconfig.ui.windows").default_options = {
