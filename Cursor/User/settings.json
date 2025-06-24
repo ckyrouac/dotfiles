@@ -12,7 +12,6 @@
     "vim.cursorStylePerMode.insert": "line",
     "vim.cursorStylePerMode.visual": "line",
     "vim.cursorStylePerMode.replace": "underline",
-    "search.mode": "newEditor",
     "vim.handleKeys": {
         "<C-w>": false,
         "shift+alt+]": false
@@ -21,4 +20,124 @@
     "files.autoSave": "afterDelay",
     "files.autoSaveDelay": 500,
     "window.titleBarStyle": "native",
+    "makefile.configureOnOpen": true,
+    "terminal.integrated.profiles.linux": {
+        "tmux": {
+            "path": "tmux",
+            "args": ["new-session", "-A", "-s", "${workspaceFolderBasename}-vscode"]
+        }
+    },
+    "terminal.integrated.defaultProfile.linux": "tmux",
+    "workbench.preferredDarkColorTheme": "Visual Studio Dark",
+    "workbench.colorTheme": "GitHub Dark Default",
+    "breadcrumbs.enabled": false,
+    "editor.codeLens": false,
+    "editor.inlayHints.enabled": "offUnlessPressed",
+    "editor.lineNumbers": "relative",
+    "editor.mouseWheelZoom": true,
+    "editor.occurrencesHighlightDelay": 500,
+    "gitlens.currentLine.enabled": false,
+    "gitlens.currentLine.pullRequests.enabled": false,
+    "editor.guides.indentation": false,
+    "editor.guides.bracketPairsHorizontal": true,
+    "editor.matchBrackets": "near",
+    "editor.stickyScroll.enabled": false,
+    "vim.useSystemClipboard": true,
+    "macros.list": {
+        "toggleAndFocusExplorer": [
+            "workbench.action.toggleSidebarVisibility",
+            "workbench.view.explorer"
+        ],
+        "toggleTerminal": [
+            "workbench.action.togglePanel",
+            "terminal.toggleVisibility"
+        ]
+    },
+    "vim.visualModeKeyBindingsNonRecursive": [],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": ["K"],
+            "commands": [
+                "editor.action.showHover"
+            ]
+        },
+        {
+            "before": ["p"],
+            "after": ["\"", "+", "p"]
+        },
+        {
+            "before": ["P"],
+            "after": ["\"", "+", "P"]
+        },
+        {
+            "before": ["<leader>", "/"],
+            "commands": ["periscope.search"]
+        },
+        {
+            "before": ["<leader>", "<leader>"],
+            "commands": ["workbench.action.quickOpen"]
+        },
+        {
+            "before": ["g", "d"],
+            "commands": ["editor.action.revealDefinition"]
+        },
+        {
+            "before": ["g", "r"],
+            "commands": ["editor.action.goToReferences"]
+        },
+        {
+            "before": ["m", "m"],
+            "commands": ["bookmarks.toggle"]
+        },
+        {
+            "before": ["m", "s"],
+            "commands": ["bookmarks.listFromAllFiles"]
+        },
+        {
+            "before": ["m", "c"],
+            "commands": ["bookmarks.clearFromAllFiles"]
+        },
+        {
+            "before": ["m", "n"],
+            "commands": ["bookmarks.jumpToNext"]
+        },
+        {
+            "before": ["m", "p"],
+            "commands": ["bookmarks.jumpToPrevious"]
+        },
+    ],
+    // "vim.otherModesKeyBindings": [
+    //     {
+    //         "before": ["g"],
+    //         "after": ["<Nop>"]
+    //     }
+    // ],
+    "search.mode": "reuseEditor",
+    "cursor.chat.terminalShowHoverHint": false,
+    "gitlens.graph.minimap.enabled": false,
+    "containers.containerClient": "com.microsoft.visualstudio.containers.podman",
+    "dev.containers.dockerPath": "/usr/bin/podman",
+    "containers.containerCommand": "podman",
+    "files.trimTrailingWhitespace": true,
+    "files.trimFinalNewlines": true,
+    "vim.statusBarColors.insert": [
+        "#5f0000",
+        "#ffffff"
+    ],
+    "vim.statusBarColors.commandlineinprogress": [
+        "#007acc",
+        "#ffffff"
+    ],
+    "vim.statusBarColors.visual": [
+        "#5f00af",
+        "#ffffff"
+    ],
+    "vim.statusBarColors.visualblock": [
+        "#86592d",
+        "#ffffff"
+    ],
+    "vim.statusBarColors.visualline": [
+        "#005f87",
+        "#ffffff"
+    ],
 }

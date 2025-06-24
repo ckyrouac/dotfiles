@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Cursor
+GenericName=Neovide
+Exec=/home/chris/bin/Cursor-1.1.3-x86_64.AppImage
+Icon=/home/chris/bin/cursor-color.svg
+Terminal=false
