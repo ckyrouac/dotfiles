@@ -5,6 +5,7 @@ aylurs-gtk-shell2
 bash-completion
 bison
 cargo
+deja-dup
 dejavu-fonts-all
 diff-so-fancy
 easyeffects
@@ -24,6 +25,7 @@ gnome-extensions-app
 gnome-shell-extension-auto-move-windows
 gnome-shell-extension-just-perfection
 gnome-sound-recorder
+gnome-themes-extra
 gnome-tweaks
 gobject-introspection
 google-chrome-stable
