@@ -2,9 +2,6 @@ FROM ghcr.io/ckyrouac/dotfiles/bootc-base:latest
 
 RUN <<EOF
     set -euxo pipefail
-
-    curl -fsSL https://code-server.dev/install.sh | sh -s --
-
     dnf -y install kmod-nvidia kernel-devel
     KERNEL_VERSION=$(rpm -q "kernel" --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')
     akmods --force --kernels "$KERNEL_VERSION" --kmod "nvidia"
