@@ -21,6 +21,7 @@ fzf
 gcc
 gcc-c++
 gcolor3
+git-core-doc
 gitui
 gnome-extensions-app
 gnome-shell-extension-auto-move-windows
