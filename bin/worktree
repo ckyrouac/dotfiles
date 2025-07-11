@@ -1,8 +1,65 @@
 #!/bin/bash
 
-WORKTREE=$1
+show_help() {
+    cat << EOF
+Usage: worktree [OPTIONS] <worktree-name>
+
+Create or delete git worktrees with associated tmux sessions.
+
+Options:
+    -d, --delete    Delete the specified worktree and its tmux session
+    -h, --help      Show this help message
+
+Examples:
+    worktree feature-branch     # Create worktree and tmux session
+    worktree -d feature-branch  # Delete worktree and tmux session
+EOF
+}
+
+DELETE=false
+
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        -d|--delete)
+            DELETE=true
+            shift
+            ;;
+        -h|--help)
+            show_help
+            exit 0
+            ;;
+        *)
+            WORKTREE=$1
+            shift
+            ;;
+    esac
+done
+
+if [ -z "$WORKTREE" ]; then
+    echo "Error: worktree name is required"
+    show_help
+    exit 1
+fi
+
 PROJECT=$(pwd | sed 's|.*/projects/\([^/]*\).*|\1|')
 
-git worktree add "$HOME/worktrees/$PROJECT/$WORKTREE"
-tmux-sessionizer -s "$HOME/worktrees/$PROJECT/$WORKTREE"
-tmux attach-session -t "$PROJECT/$WORKTREE"
+if [ "$DELETE" = true ]; then
+    # Delete tmux session if it exists
+    if tmux has-session -t "$PROJECT/$WORKTREE" 2>/dev/null; then
+        tmux kill-session -t "$PROJECT/$WORKTREE"
+    fi
+    
+    # Delete git worktree if it exists
+    if [ -d "$HOME/worktrees/$PROJECT/$WORKTREE" ]; then
+        git worktree remove "$HOME/worktrees/$PROJECT/$WORKTREE"
+    fi
+else
+    # Create git worktree
+    git worktree add "$HOME/worktrees/$PROJECT/$WORKTREE"
+    
+    # Create tmux session
+    tmux-sessionizer -s "$HOME/worktrees/$PROJECT/$WORKTREE"
+    
+    # Attach to session
+    tmux attach-session -t "$PROJECT/$WORKTREE"
+fi
