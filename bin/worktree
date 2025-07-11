@@ -12,6 +12,7 @@ Options:
     -h, --help      Show this help message
 
 Examples:
+    worktree                    # List all worktrees (default)
     worktree feature-branch     # Create worktree and tmux session
     worktree -d feature-branch  # Delete worktree and tmux session
     worktree -l                 # List all worktrees
@@ -101,15 +102,9 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-if [ "$LIST" = true ]; then
+if [ "$LIST" = true ] || [ -z "$WORKTREE" ]; then
     list_worktrees
     exit 0
-fi
-
-if [ -z "$WORKTREE" ]; then
-    echo "Error: worktree name is required"
-    show_help
-    exit 1
 fi
 
 PROJECT=$(get_project)
