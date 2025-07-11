@@ -42,6 +42,7 @@ vim.o.timeoutlen = 300
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = "menuone,noselect"
 
+vim.o.mouse = "a"
 vim.o.mousemoveevent = true
 vim.o.mousem = "extend"
 
@@ -57,12 +58,12 @@ vim.o.shortmess = "filnxtToOFs"
 
 -- bash
 vim.api.nvim_create_autocmd("FileType", {
-    pattern = "sh",
-    callback = function()
-        vim.opt_local.expandtab = true
-        vim.opt_local.shiftwidth = 4
-        vim.opt_local.softtabstop = 4
-    end,
+  pattern = "sh",
+  callback = function()
+    vim.opt_local.expandtab = true
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+  end,
 })
 
 -- Set SidebarNvim current line highlight when focused
@@ -74,7 +75,7 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     if vim.w["SavedBufView"] and vim.w["SavedBufView"][bufnr] then
       local v = vim.fn.winsaveview()
       local atStartOfFile = v.lnum == 1 and v.col == 0
-      if atStartOfFile and vim.api.nvim_get_option_value("diff", {win=0}) ~= true then
+      if atStartOfFile and vim.api.nvim_get_option_value("diff", { win = 0 }) ~= true then
         vim.fn.winrestview(vim.w["SavedBufView"][bufnr])
       end
 
@@ -110,16 +111,17 @@ vim.api.nvim_create_autocmd({ "VimLeavePre" }, {
   pattern = { "*" },
   callback = function()
     if utils.dapui_is_open() then
-      require('dapui').close()
+      require("dapui").close()
     end
   end,
 })
 
 vim.filetype.add({
   pattern = {
-    ['.*containerfile'] = 'dockerfile',
+    [".*containerfile"] = "dockerfile",
   },
 })
 
 vim.opt.exrc = true
 vim.opt.secure = true
+vim.opt.laststatus = 3
