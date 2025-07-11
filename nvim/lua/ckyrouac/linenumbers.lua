@@ -49,7 +49,7 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "WinLeave" }, {
       vim.o.foldcolumn = "0"
     else
       vim.o.number = true
-      vim.o.rnu = false
+      -- vim.o.rnu = false
 
       vim.o.signcolumn = "yes"
       vim.o.foldcolumn = "1"
