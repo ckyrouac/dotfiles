@@ -5,6 +5,7 @@ aylurs-gtk-shell2
 bash-completion
 bison
 cargo
+cups
 deja-dup
 dejavu-fonts-all
 diff-so-fancy
@@ -59,6 +60,7 @@ plocate
 plymouth
 podman-machine
 powerline
+printer-driver-brlaser
 python3-neovim
 ripgrep
 rofi-wayland
