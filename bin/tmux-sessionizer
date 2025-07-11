@@ -9,6 +9,7 @@ function usage() {
   printf "%-25s %s\n" "Switches:" ""
   printf "%-25s %s\n" "-a, --all" "All projects in defined directories"
   printf "%-25s %s\n" "-e, --existing" "Existing tmux sessions"
+  printf "%-25s %s\n" "-s, --session" "Specify the session to switch to"
 
   printf "%-25s %s\n" "" ""
   printf "%-25s %s\n" "-h, --help" ""
@@ -16,7 +17,7 @@ function usage() {
 
 function args()
 {
-    options=$(getopt -o p:haek --long kill --long help --long existing --long all -- "$@")
+    options=$(getopt -o p:haesk --long session --long kill --long help --long existing --long all -- "$@")
     option_code=$?
     [ "$option_code" -eq 0 ] || {
         echo "Incorrect option provided"
@@ -49,6 +50,14 @@ function args()
           ;;
         --existing)
           EXISTING=true
+          i=$((i+1))
+          ;;
+        -s)
+          SESSION=true
+          i=$((i+1))
+          ;;
+        --session)
+          SESSION=true
           i=$((i+1))
           ;;
         -h)
@@ -134,7 +143,7 @@ function switch-session()
 }
 
 # default to all
-if [ -z "$ALL" ] && [ -z "$EXISTING" ] && [ -z "$KILL" ]; then
+if [ -z "$ALL" ] && [ -z "$EXISTING" ] && [ -z "$KILL" ] && [ -z "$SESSION" ]; then
     ALL=true
 fi
 
@@ -154,5 +163,14 @@ elif [ "$KILL" = true ]; then
         exit 0
     fi
     tmux kill-session -t "$selected"
+    exit 0
+elif [ "$SESSION" = true ]; then
+    selected=$2
+    if [ -z "$selected" ]; then
+        echo "No session specified"
+        usage
+        exit 1
+    fi
+    switch-session "$selected"
     exit 0
 fi
