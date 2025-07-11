@@ -2,26 +2,76 @@
 
 show_help() {
     cat << EOF
-Usage: worktree [OPTIONS] <worktree-name>
+Usage: worktree [OPTIONS] [<worktree-name>]
 
-Create or delete git worktrees with associated tmux sessions.
+Create, delete, or list git worktrees with associated tmux sessions.
 
 Options:
     -d, --delete    Delete the specified worktree and its tmux session
+    -l, --list      List all worktrees (with git worktree or tmux session)
     -h, --help      Show this help message
 
 Examples:
     worktree feature-branch     # Create worktree and tmux session
     worktree -d feature-branch  # Delete worktree and tmux session
+    worktree -l                 # List all worktrees
 EOF
 }
 
+list_worktrees() {
+    PROJECT=$(pwd | sed 's|.*/projects/\([^/]*\).*|\1|')
+    
+    echo "Worktrees for project: $PROJECT"
+    echo "================================"
+    
+    # Get all worktrees from git
+    declare -A worktrees
+    
+    # Check git worktrees
+    if git worktree list 2>/dev/null | grep -q "$HOME/worktrees/$PROJECT/"; then
+        while IFS= read -r line; do
+            if [[ $line =~ $HOME/worktrees/$PROJECT/([^[:space:]]+) ]]; then
+                worktree_name="${BASH_REMATCH[1]}"
+                worktrees["$worktree_name"]="git"
+            fi
+        done < <(git worktree list 2>/dev/null)
+    fi
+    
+    # Check tmux sessions
+    if tmux list-sessions 2>/dev/null | grep -q "^$PROJECT/"; then
+        while IFS= read -r line; do
+            if [[ $line =~ ^$PROJECT/([^:]+): ]]; then
+                worktree_name="${BASH_REMATCH[1]}"
+                if [[ -n "${worktrees[$worktree_name]}" ]]; then
+                    worktrees["$worktree_name"]="git+tmux"
+                else
+                    worktrees["$worktree_name"]="tmux"
+                fi
+            fi
+        done < <(tmux list-sessions 2>/dev/null)
+    fi
+    
+    # Display results
+    if [ ${#worktrees[@]} -eq 0 ]; then
+        echo "No worktrees found"
+    else
+        for worktree in "${!worktrees[@]}"; do
+            printf "  %-20s [%s]\n" "$worktree" "${worktrees[$worktree]}"
+        done
+    fi
+}
+
 DELETE=false
+LIST=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
         -d|--delete)
             DELETE=true
+            shift
+            ;;
+        -l|--list)
+            LIST=true
             shift
             ;;
         -h|--help)
@@ -34,6 +84,11 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+if [ "$LIST" = true ]; then
+    list_worktrees
+    exit 0
+fi
 
 if [ -z "$WORKTREE" ]; then
     echo "Error: worktree name is required"
