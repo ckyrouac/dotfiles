@@ -45,11 +45,6 @@
         "command": "-workbench.action.findInFiles"
     },
     {
-        "key": "ctrl+[",
-        "command": "cancelSelection",
-        "when": "editorHasSelection && textInputFocus"
-    },
-    {
         "key": "escape",
         "command": "-cancelSelection",
         "when": "editorHasSelection && textInputFocus"
@@ -89,6 +84,16 @@
         "command": "workbench.action.closeActiveEditor",
         "when": "activeEditor == 'workbench.editor.searchEditor'"
     },
+    // {
+    //     "key": "ctrl+[",
+    //     "command": "cancelSelection",
+    //     "when": "editorHasSelection && textInputFocus"
+    // },
+    {
+        "key": "ctrl+[",
+        "command": "workbench.action.closeQuickOpen",
+        "when": "inQuickOpen"
+    },
     {
         "key": "Escape",
         "command": "workbench.action.closeActiveEditor",
@@ -99,11 +104,6 @@
         "command": "workbench.action.closeActiveEditor",
         "when": "editorTextFocus && vim.active && vim.mode == 'Normal'"
         // "when": "editorTextFocus && !editorReadOnly"
-    },
-    {
-        "key": "ctrl+[",
-        "command": "workbench.action.closeQuickOpen",
-        "when": "inQuickOpen"
     },
     {
         "key": "alt+1",
@@ -120,10 +120,6 @@
     {
         "key": "alt+2",
         "command": "-workbench.action.openEditorAtIndex2"
-    },
-    {
-        "key": "alt+2",
-        "command": "composer.startComposerPrompt"
     },
     {
         "key": "ctrl+i",
@@ -303,5 +299,35 @@
     {
         "key": "shift+alt+w",
         "command": "workbench.action.closeOtherEditors"
+    },
+    {
+        "key": "ctrl+shift+p",
+        "command": "workbench.action.showCommands"
+    },
+    {
+        "key": "shift+cmd+p",
+        "command": "-workbench.action.showCommands"
+    },
+    {
+        "key": "alt+3",
+        "command": "workbench.action.toggleActivityBarVisibility"
+    },
+    {
+        "key": "alt+2",
+        "command": "claude-code.runClaude.keyboard",
+        "when": "claude-code.hasClaudeInPath"
+    },
+    {
+        "key": "cmd+escape",
+        "command": "-claude-code.runClaude.keyboard",
+        "when": "claude-code.hasClaudeInPath"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "workbench.action.navigateBack"
+    },
+    {
+        "key": "ctrl+i",
+        "command": "workbench.action.navigateForward"
     }
 ]

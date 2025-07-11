@@ -27,7 +27,7 @@
             "args": ["new-session", "-A", "-s", "${workspaceFolderBasename}-vscode"]
         }
     },
-    "terminal.integrated.defaultProfile.linux": "tmux",
+    "terminal.integrated.defaultProfile.linux": "bash",
     "workbench.preferredDarkColorTheme": "Visual Studio Dark",
     "workbench.colorTheme": "GitHub Dark Default",
     "breadcrumbs.enabled": false,
@@ -51,6 +51,9 @@
         "toggleTerminal": [
             "workbench.action.togglePanel",
             "terminal.toggleVisibility"
+        ],
+        "toggleClaude": [
+            "claude-code.runClaude.keyboard"
         ]
     },
     "vim.visualModeKeyBindingsNonRecursive": [],
@@ -105,6 +108,30 @@
             "before": ["m", "p"],
             "commands": ["bookmarks.jumpToPrevious"]
         },
+        {
+            "before": ["]", "d"],
+            "commands": ["editor.action.marker.next"],
+        },
+        {
+            "before": ["[", "d"],
+            "commands": ["editor.action.marker.prev"],
+        },
+        {
+            "before": ["]", "c"],
+            "commands": ["workbench.action.editor.nextChange"],
+        },
+        {
+            "before": ["[", "c"],
+            "commands": ["workbench.action.editor.previousChange"],
+        },
+        {
+            "before": ["<leader>", "g", "r"],
+            "commands": ["git.revertSelectedRanges"],
+        },
+        {
+            "before": ["<leader>", "g", "s"],
+            "commands": ["git.stageSelectedRanges"],
+        }
     ],
     // "vim.otherModesKeyBindings": [
     //     {
@@ -140,4 +167,7 @@
         "#005f87",
         "#ffffff"
     ],
+    "editor.minimap.autohide": true,
+    "codeServerDevContainer.containerRuntime": "podman",
+    "workbench.activityBar.location": "hidden",
 }
