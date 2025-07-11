@@ -40,6 +40,12 @@ return {
             BufferLineErrorDiagnostic = { fg = colors.red },
             BufferLineError = { fg = colors.comment },
             BufferLineErrorVisible = { fg = colors.comment },
+            DiffAdd = { fg = colors.green },
+            DiffDelete = { fg = colors.red },
+            DiffChange = { fg = colors.blue },
+            -- DiffText = { fg = colors.cyan },
+            DiffAdded = { fg = colors.green },
+            DiffRemoved = { fg = colors.red },
           }
         end,
       })
