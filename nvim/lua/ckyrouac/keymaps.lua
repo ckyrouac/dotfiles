@@ -3,9 +3,10 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
 -- remove default mappings that conflict
--- vim.keymap.del("n", "grn")
--- vim.keymap.del("n", "gra")
--- vim.keymap.del("n", "grr")
+vim.keymap.del("n", "grn")
+vim.keymap.del("n", "gra")
+vim.keymap.del("n", "grr")
+vim.keymap.del("n", "gri")
 -- vim.keymap.del("n", "<C-W>d")
 -- vim.keymap.del("n", "<C-W><C-D>")
 
@@ -41,7 +42,16 @@ vim.keymap.set("n", "<leader>q", "q", { silent = true, desc = "Record macro" })
 vim.keymap.set("n", "{", ":bp<cr>", { silent = true, desc = "Left buffer" })
 vim.keymap.set("n", "}", ":bn<cr>", { silent = true, desc = "Right buffer" })
 vim.keymap.set("n", "<C-w>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
-vim.keymap.set("n", "q", "<Plug>(smartq_this)", { silent = true, desc = "Smart close" })
+-- Smart close function that handles Diffview
+local function smart_close()
+  if next(require('diffview.lib').views) == nil then
+    vim.cmd("SmartQ")
+  else
+    vim.cmd("DiffviewClose")
+  end
+end
+
+vim.keymap.set("n", "q", smart_close, { silent = true, desc = "Smart close" })
 vim.keymap.set("n", "<M-w>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
 vim.keymap.set("n", "W", ":Bdelete other<cr>", { silent = true, desc = "Close other buffers" })
 vim.keymap.set("n", "<M-C-W>", ":SmartQCloseSplits<cr>", { silent = true, desc = "Close other splits" })
