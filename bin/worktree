@@ -1,0 +1,8 @@
+#!/bin/bash
+
+WORKTREE=$1
+PROJECT=$(pwd | sed 's|.*/projects/\([^/]*\).*|\1|')
+
+git worktree add "$HOME/worktrees/$PROJECT/$WORKTREE"
+tmux-sessionizer -s "$HOME/worktrees/$PROJECT/$WORKTREE"
+tmux attach-session -t "$PROJECT/$WORKTREE"
