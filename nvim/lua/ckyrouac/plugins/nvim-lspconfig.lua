@@ -57,9 +57,9 @@ return {
       -- -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
       -- local capabilities = vim.lsp.protocol.make_client_capabilities()
       -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
-      local lspconfig = require('lspconfig')
+      local lspconfig = require("lspconfig")
       for server, config in pairs(servers) do
-        config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+        config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
         lspconfig[server].setup(config)
       end
 
@@ -72,7 +72,7 @@ return {
         -- A function that lets us more easily define mappings specific
         -- for LSP related items. It sets the mode, buffer and description for us each time.
         local nmap = function(keys, func, desc)
-          vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc, silent = true })
+          vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc, silent = true, noremap = true })
         end
 
         nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
@@ -87,7 +87,9 @@ return {
 
         -- nmap("gd", require("telescope.builtin").lsp_definitions, "Goto Definition")
         -- vim.keymap.set("n", "gd", function () vim.lsp.buf.definition() end, { buffer = bufnr, desc = "goto definition" })
-        nmap("gd", vim.lsp.buf.definition, "Goto Definition")
+        nmap("gd", vim.lsp.buf.definition, "Goto definition")
+        nmap("gD", vim.lsp.buf.declaration, "Goto Declaration")
+        nmap("gt", vim.lsp.buf.type_definition, "Goto Type definition")
 
         nmap(
           "<C-LeftMouse>",
@@ -113,7 +115,6 @@ return {
         -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
 
         -- Lesser used LSP functionality
-        nmap("gD", vim.lsp.buf.declaration, "Goto Declaration")
         nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "Workspace Add Folder")
         nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "Workspace Remove Folder")
 
@@ -138,9 +139,9 @@ return {
         ensure_installed = vim.tbl_keys(servers),
       })
 
-      mason_lspconfig.setup_handlers {
-        ['rust_analyzer'] = function() end,
-      }
+      mason_lspconfig.setup_handlers({
+        ["rust_analyzer"] = function() end,
+      })
 
       mason_lspconfig.setup_handlers({
         function(server_name)
