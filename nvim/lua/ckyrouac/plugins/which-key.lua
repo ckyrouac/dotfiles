@@ -46,6 +46,8 @@ return {
       { "<leader>g_", hidden = true },
       { "<leader>gt", group = "Toggle" },
       { "<leader>gt_", hidden = true },
+      { "<leader>gb", group = "Base" },
+      { "<leader>gb_", hidden = true },
       { "<leader>h", group = "Help" },
       { "<leader>h_", hidden = true },
       { "<leader>o", group = "Open Tool" },
