@@ -19,3 +19,10 @@ output
 
 .nvim.lua
 .vim
+
+.claude
+.devcontainer
+
+.vscode
+
+CLAUDE.md
