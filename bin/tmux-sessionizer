@@ -98,7 +98,25 @@ function switch-session()
         exit 0
     fi
 
-    selected_name=$(basename "$selected" | tr . _)
+    type="existing"
+    is_worktree=$(dirname "$selected" | xargs dirname | xargs basename) 
+    if [[ "$is_worktree" == "worktrees" ]]; then
+        type="worktree"
+    fi
+    is_project=$(dirname "$selected" | xargs basename)
+    if [[ "$is_project" == "projects" ]]; then
+        type="project"
+    fi
+
+    selected_name="$selected"
+    if [[ "$type" == "project" ]]; then
+        selected_name=$(basename "$selected" | tr . _)
+    elif [[ "$type" == "worktree" ]]; then
+        project_name=$(dirname "$selected" | xargs basename)
+        worktree_name=$(basename "$selected")
+        selected_name="$project_name/$worktree_name"
+    fi
+
     tmux_running=$(pgrep tmux)
 
     if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
@@ -121,8 +139,10 @@ if [ -z "$ALL" ] && [ -z "$EXISTING" ] && [ -z "$KILL" ]; then
 fi
 
 if [ "$ALL" = true ]; then
-    selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d | fzf-tmux -p --reverse)
-    switch-session "$selected"
+    worktrees=$(find ~/worktrees -mindepth 2 -maxdepth 2 -type d)
+    selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
+    switch=$(echo -e "$selected\n$worktrees" | fzf-tmux -p --reverse)
+    switch-session "$switch"
     exit 0
 elif [ "$EXISTING" = true ]; then
     selected=$(tmux list-sessions -F "#S" | fzf-tmux -p --reverse)
