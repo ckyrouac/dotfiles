@@ -178,6 +178,20 @@ else
     # Create git worktree
     git worktree add "$HOME/worktrees/$PROJECT/$WORKTREE"
     
+    # Copy .claude directory and CLAUDE.md from root project if they exist
+    local project_root=$(git rev-parse --show-toplevel)
+    local worktree_path="$HOME/worktrees/$PROJECT/$WORKTREE"
+    
+    if [ -d "$project_root/.claude" ]; then
+        cp -r "$project_root/.claude" "$worktree_path/"
+        echo "Copied .claude directory to worktree"
+    fi
+    
+    if [ -f "$project_root/CLAUDE.md" ]; then
+        cp "$project_root/CLAUDE.md" "$worktree_path/"
+        echo "Copied CLAUDE.md to worktree"
+    fi
+    
     # Create tmux session
     tmux-sessionizer -s "$HOME/worktrees/$PROJECT/$WORKTREE"
     
