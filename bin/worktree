@@ -9,6 +9,7 @@ Create, delete, or list git worktrees with associated tmux sessions.
 Options:
     -d, --delete    Delete the specified worktree and its tmux session
     -l, --list      List all worktrees (with git worktree or tmux session)
+    -r, --root      Switch to the project root directory
     -h, --help      Show this help message
 
 Examples:
@@ -16,6 +17,7 @@ Examples:
     worktree feature-branch     # Create worktree and tmux session
     worktree -d feature-branch  # Delete worktree and tmux session
     worktree -l                 # List all worktrees
+    worktree -r                 # Switch to project root
 EOF
 }
 
@@ -28,6 +30,44 @@ get_project() {
     else
         echo ""
     fi
+}
+
+switch_to_root() {
+    local current_path=$(pwd)
+    local project_name=$(get_project)
+    
+    if [ -z "$project_name" ]; then
+        echo "Error: Must be run from within a project directory (/*/projects/* or /*/worktrees/*)"
+        exit 1
+    fi
+    
+    # If already in project root, do nothing
+    if [[ $current_path =~ /projects/$project_name$ ]]; then
+        echo "Already in project root: $current_path"
+        return
+    fi
+    
+    # Find project root directory
+    local project_root=""
+    if [[ $current_path =~ (/[^/]*/projects/$project_name) ]]; then
+        project_root="${BASH_REMATCH[1]}"
+    else
+        # Look for project in common locations
+        for base in "$HOME/projects" "/var/home/*/projects"; do
+            if [ -d "$base/$project_name" ]; then
+                project_root="$base/$project_name"
+                break
+            fi
+        done
+    fi
+    
+    if [ -z "$project_root" ] || [ ! -d "$project_root" ]; then
+        echo "Error: Could not find project root for '$project_name'"
+        exit 1
+    fi
+    
+    echo "Switching to project root: $project_root"
+    tmux-sessionizer -s "$project_root"
 }
 
 list_worktrees() {
@@ -80,6 +120,7 @@ list_worktrees() {
 
 DELETE=false
 LIST=false
+ROOT=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
@@ -89,6 +130,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         -l|--list)
             LIST=true
+            shift
+            ;;
+        -r|--root)
+            ROOT=true
             shift
             ;;
         -h|--help)
@@ -101,6 +146,11 @@ while [[ $# -gt 0 ]]; do
             ;;
     esac
 done
+
+if [ "$ROOT" = true ]; then
+    switch_to_root
+    exit 0
+fi
 
 if [ "$LIST" = true ] || [ -z "$WORKTREE" ]; then
     list_worktrees
