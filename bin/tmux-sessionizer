@@ -90,13 +90,14 @@ fi
 function init_session()
 {
     dir=$1
+    session_name=$2
 
-    tmux select-window -t 1
-    tmux rename-window vim
-    tmux split-window -v -l 40% -c "$dir"
-    tmux select-pane -t 1
-    tmux resize-pane -t 1 -Z
-    tmux send-keys -t 1 "nvim" Enter
+    tmux select-window -t "$session_name:1"
+    tmux rename-window -t "$session_name:1" vim
+    tmux split-window -v -l 40% -c "$dir" -t "$session_name:1"
+    tmux select-pane -t "$session_name:1.1"
+    tmux resize-pane -t "$session_name:1.1" -Z
+    tmux send-keys -t "$session_name:1.1" "nvim" Enter
 }
 
 function switch-session()
@@ -130,13 +131,13 @@ function switch-session()
 
     if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
         tmux new-session -s "$selected_name" -c "$selected"
-        init_session "$selected"
+        init_session "$selected" "$selected_name"
         exit 0
     fi
 
     if ! tmux has-session -t="$selected_name" 2> /dev/null; then
         tmux new-session -ds "$selected_name" -c "$selected"
-        init_session "$selected"
+        init_session "$selected" "$selected_name"
     fi
 
     tmux switch-client -t "$selected_name"
