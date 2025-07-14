@@ -12,6 +12,9 @@ fi
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+# Add custom completions directory to fpath before prezto loads
+fpath=(~/.config/zsh/completions $fpath)
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
