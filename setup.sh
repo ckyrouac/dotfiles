@@ -252,6 +252,11 @@ function setup-misc () {
       ln -s "$dir" ~/.config/"$dirname"
     fi
   done
+
+  set +e
+  rm -rf ~/bin
+  set -e
+  ln -s ~/dotfiles/bin ~/bin
 }
 
 while getopts u:e:agvzxcdrthspm flag; do
