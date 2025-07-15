@@ -240,6 +240,18 @@ function setup-misc () {
   rm -rf ~/.config/lazygit
   set -e
   ln -s ~/dotfiles/lazygit ~/.config
+
+  # Create symlinks for each directory in dotconfig
+  mkdir -p ~/.config
+  for dir in ~/dotfiles/dotconfig/*/; do
+    if [ -d "$dir" ]; then
+      dirname=$(basename "$dir")
+      set +e
+      rm -rf ~/.config/"$dirname"
+      set -e
+      ln -s "$dir" ~/.config/"$dirname"
+    fi
+  done
 }
 
 while getopts u:e:agvzxcdrthspm flag; do
