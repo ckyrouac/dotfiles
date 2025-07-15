@@ -59,8 +59,11 @@ export NVM_DIR="$HOME/.nvm"
 
 export LIBVA_DRIVER_NAME=iHD
 
+if [ -n "$TOOLBOX_PATH" ]; then
+    alias podman='flatpak-spawn --host podman'
+fi
+
 bindkey '' autosuggest-accept
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
