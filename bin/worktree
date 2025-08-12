@@ -172,7 +172,7 @@ if [ "$DELETE" = true ]; then
     
     # Delete git worktree if it exists
     if [ -d "$HOME/worktrees/$PROJECT/$WORKTREE" ]; then
-        git worktree remove "$HOME/worktrees/$PROJECT/$WORKTREE"
+        git worktree remove --force "$HOME/worktrees/$PROJECT/$WORKTREE"
     fi
 else
     # Create git worktree
