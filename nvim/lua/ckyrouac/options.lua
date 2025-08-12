@@ -113,3 +113,9 @@ vim.filetype.add({
 vim.opt.exrc = true
 vim.opt.secure = true
 vim.opt.laststatus = 3
+
+vim.lsp.config.bashls = {
+  cmd = { 'bash-language-server', 'start' },
+  filetypes = { 'bash', 'sh' }
+}
+vim.lsp.enable 'bashls'
