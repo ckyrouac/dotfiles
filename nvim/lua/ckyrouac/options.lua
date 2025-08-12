@@ -5,18 +5,6 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- clipboard
--- vim.g.clipboard = 'unnamedplus'
-vim.g.clipboard = {
-  name = "myClipboard",
-  copy = {
-    ["+"] = { "wl-copy", "--type", "text/plain" },
-    ["*"] = { "wl-copy", "--type", "text/plain" },
-  },
-  paste = {
-    ["+"] = { "wl-paste", "--type", "text/plain", "-n" },
-    ["*"] = { "wl-paste", "--type", "text/plain", "-n" },
-  },
-}
 vim.cmd([[ set clipboard+=unnamedplus ]])
 
 -- Set highlight on search
