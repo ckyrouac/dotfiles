@@ -48,10 +48,14 @@ export PATH=$PATH:${GOPATH//://bin:}/bin
 export PATH=$PATH:/usr/local/cuda-12.6/bin
 
 #for hypr
-export WAYLAND_DISPLAY=wayland-1
+# export WAYLAND_DISPLAY=wayland-1
+
+#for gnome
+export WAYLAND_DISPLAY=wayland-0
 
 #podman machine
 # export CONTAINER_CONNECTION="podman-machine-default-root"
+#
 
 #npm packages
 export PATH=$PATH:/var/home/chris/.npm-packages/bin
