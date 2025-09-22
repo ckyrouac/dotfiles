@@ -39,6 +39,7 @@ hyprland-plugin-hyprexpo-git
 hyprland-qt-support
 hyprpaper
 hyprpolkitagent
+just
 keepassxc
 kernel-devel
 lazygit
@@ -60,6 +61,8 @@ mosh
 neovim
 nvtop
 pavucontrol
+perl-FindBin
+perl-IPC-Cmd
 plocate
 plymouth
 podman-machine
