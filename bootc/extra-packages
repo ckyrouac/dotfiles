@@ -59,7 +59,9 @@ man
 man-pages
 mosh
 neovim
+nu
 nvtop
+obs
 pavucontrol
 perl-FindBin
 perl-IPC-Cmd
@@ -75,6 +77,7 @@ rust
 rust-lldb
 seahorse
 shellcheck
+shotcut
 snapshot
 sqlite-devel
 systemd-networkd
@@ -94,6 +97,7 @@ vulkan-tools
 vulkan-validation-layers
 waybar
 waypipe
+wireguard-tools
 wireshark
 xclip
 xorg-x11-proto-devel
