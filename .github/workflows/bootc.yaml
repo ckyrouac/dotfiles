@@ -65,3 +65,19 @@ jobs:
 
       - name: Log out from GitHub Container Registry
         run: docker logout ghcr.io
+
+  rechunk:
+    runs-on: ubuntu-latest
+    container: quay.io/coreos-assembler/fcos-buildroot:testing-devel
+    steps:
+      - name: Rechunk base
+        id: rechunk_base
+        run: |
+          rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-base:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-base:chunked --format-version=2
+
+      - name: push rechunked base
+        uses: docker/push-action@v3
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/${{ github.repository }}/bootc-base:chunked
