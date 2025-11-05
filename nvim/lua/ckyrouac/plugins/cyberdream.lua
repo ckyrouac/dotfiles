@@ -46,6 +46,10 @@ return {
             -- DiffText = { fg = colors.cyan },
             DiffAdded = { fg = colors.green },
             DiffRemoved = { fg = colors.red },
+            yamlPlainScalar = { fg = colors.green },
+            yamlBlockString = { fg = colors.green },
+            yamlBlockScalarHeader = { fg = colors.green },
+            yamlBool = { fg = colors.cyan },
           }
         end,
       })
