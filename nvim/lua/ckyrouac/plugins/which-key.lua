@@ -30,16 +30,6 @@ return {
       { "<leader>c_", hidden = true },
       { "<leader>d", group = "Dap" },
       { "<leader>d_", hidden = true },
-      { "<leader>db", group = "Breakpoints" },
-      { "<leader>db_", hidden = true },
-      { "<leader>dh", group = "Hover" },
-      { "<leader>dh_", hidden = true },
-      { "<leader>dr", group = "REPL" },
-      { "<leader>dr_", hidden = true },
-      { "<leader>ds", group = "Steps" },
-      { "<leader>ds_", hidden = true },
-      { "<leader>du", group = "Widgets" },
-      { "<leader>du_", hidden = true },
       { "<leader>f", group = "Find" },
       { "<leader>f_", hidden = true },
       { "<leader>g", group = "Git" },
@@ -69,8 +59,6 @@ return {
     require("which-key").add({
       {
         mode = { "v" },
-        { "<leader>d", desc = "Dap" },
-        { "<leader>dh", desc = "Hover" },
         { "<leader>g", desc = "Git" },
       },
     })
