@@ -38,21 +38,23 @@ vim.keymap.set("n", "<c-h>", "<c-w>h", { silent = true, desc = "Left pane" })
 -- remap macro
 vim.keymap.set("n", "<leader>q", "q", { silent = true, desc = "Record macro" })
 
+-- Smart close function that handles Diffview and Fugitive
+local function smart_close()
+  if vim.bo.filetype == "git" and vim.fn.bufname('%'):match('^fugitive://') then
+    vim.cmd("bd")
+  elseif next(require('diffview.lib').views) ~= nil then
+    vim.cmd("DiffviewClose")
+  else
+    vim.cmd("SmartQ")
+  end
+end
+vim.keymap.set("n", "<C-w>", smart_close, { silent = true, desc = "Close current buffer" })
+vim.keymap.set("n", "q", smart_close, { silent = true, desc = "Smart close" })
+vim.keymap.set("n", "<M-w>", smart_close, { silent = true, desc = "Close current buffer" })
+
 -- Buffer navigation keybinds
 vim.keymap.set("n", "{", ":bp<cr>", { silent = true, desc = "Left buffer" })
 vim.keymap.set("n", "}", ":bn<cr>", { silent = true, desc = "Right buffer" })
-vim.keymap.set("n", "<C-w>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
--- Smart close function that handles Diffview
-local function smart_close()
-  if next(require('diffview.lib').views) == nil then
-    vim.cmd("SmartQ")
-  else
-    vim.cmd("DiffviewClose")
-  end
-end
-
-vim.keymap.set("n", "q", smart_close, { silent = true, desc = "Smart close" })
-vim.keymap.set("n", "<M-w>", "<Plug>(smartq_this)", { silent = true, desc = "Close current buffer" })
 vim.keymap.set("n", "W", ":Bdelete other<cr>", { silent = true, desc = "Close other buffers" })
 vim.keymap.set("n", "<M-C-W>", ":SmartQCloseSplits<cr>", { silent = true, desc = "Close other splits" })
 
