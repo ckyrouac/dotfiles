@@ -1,5 +1,8 @@
 -- Adds git related signs to the gutter, as well as utilities for managing changes
 
+-- Global variable to store the current gitsigns base
+_G.gitsigns_base = nil
+
 return {
   {
     cond = true,
@@ -51,12 +54,45 @@ return {
           return "<Ignore>"
         end, { expr = true, desc = "Jump to previous hunk" })
 
-        local function toggle_base()
+        local function toggle_base_default_branch()
           local handle = io.popen("git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|refs/remotes/||'")
           local default_branch = handle:read("*a"):gsub("%s+", "")
           handle:close()
 
           gs.change_base(default_branch, true)
+
+          -- Get commit message for the default branch
+          local msg_handle = io.popen("git log -1 --format='%s' " .. default_branch .. " 2>/dev/null")
+          local commit_msg = msg_handle:read("*a"):gsub("%s+$", "")
+          msg_handle:close()
+
+          _G.gitsigns_base = {
+            ref = default_branch,
+            message = commit_msg
+          }
+        end
+
+        local function toggle_base_previous_commit()
+          local n = vim.fn.input("Number of commits back: ")
+          if n and n ~= "" then
+            local num = tonumber(n)
+            if num and num > 0 then
+              local base_ref = "HEAD~" .. num
+              gs.change_base(base_ref, true)
+
+              -- Get commit message for HEAD~n
+              local msg_handle = io.popen("git log -1 --format='%s' " .. base_ref .. " 2>/dev/null")
+              local commit_msg = msg_handle:read("*a"):gsub("%s+$", "")
+              msg_handle:close()
+
+              _G.gitsigns_base = {
+                ref = base_ref,
+                message = commit_msg
+              }
+            else
+              vim.notify("Invalid number of commits", vim.log.levels.ERROR)
+            end
+          end
         end
 
         -- Actions
@@ -78,9 +114,11 @@ return {
         -- Toggles
         map("n", "<leader>gtb", gs.toggle_current_line_blame, { desc = "toggle blame" })
         map("n", "<leader>gtd", gs.toggle_deleted, { desc = "toggle deleted" })
-        map("n", "<leader>gbm", toggle_base, { desc = "set gitsigns base to main/master" })
+        map("n", "<leader>gbm", toggle_base_default_branch, { desc = "set gitsigns base to main/master" })
+        map("n", "<leader>gbp", toggle_base_previous_commit, { desc = "set gitsigns base to previous commit" })
         map("n", "<leader>gbr", function()
           gs.reset_base(true)
+          _G.gitsigns_base = nil
         end, { desc = "reset gitsigns base" })
 
         -- Text object

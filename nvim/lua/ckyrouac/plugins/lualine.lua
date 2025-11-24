@@ -43,6 +43,18 @@ return {
         return #errors
       end
 
+      local function get_gitsigns_base()
+        if _G.gitsigns_base then
+          local max_length = 50
+          local message = _G.gitsigns_base.message
+          if #message > max_length then
+            message = message:sub(1, max_length) .. "..."
+          end
+          return string.format("base: %s", message)
+        end
+        return ""
+      end
+
       local lualine = require("lualine")
       lualine.setup({
         inactive_sections = {
@@ -63,6 +75,13 @@ return {
           lualine_b = {
             "branch",
             "diff",
+            {
+              get_gitsigns_base,
+              cond = function()
+                return _G.gitsigns_base ~= nil
+              end,
+              color = { fg = '#ff9e64' },
+            },
             {
               "diagnostics",
               on_click = function()
