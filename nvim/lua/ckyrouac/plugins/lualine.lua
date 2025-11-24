@@ -55,6 +55,18 @@ return {
         return ""
       end
 
+      local function get_diffview_base()
+        if _G.diffview_base then
+          local max_length = 50
+          local message = _G.diffview_base.message
+          if #message > max_length then
+            message = message:sub(1, max_length) .. "..."
+          end
+          return string.format("diffview: %s", message)
+        end
+        return ""
+      end
+
       local lualine = require("lualine")
       lualine.setup({
         inactive_sections = {
@@ -81,6 +93,13 @@ return {
                 return _G.gitsigns_base ~= nil
               end,
               color = { fg = '#ff9e64' },
+            },
+            {
+              get_diffview_base,
+              cond = function()
+                return _G.diffview_base ~= nil
+              end,
+              color = { fg = '#7dcfff' },
             },
             {
               "diagnostics",
