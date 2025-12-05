@@ -63,4 +63,6 @@ source ~/dotfiles/fzf-key-bindings.zsh
 export SDKMAN_DIR="/home/chris/.sdkman"
 [[ -s "/home/chris/.sdkman/bin/sdkman-init.sh" ]] && source "/home/chris/.sdkman/bin/sdkman-init.sh"
 
+export GPG_TTY=$(tty)
+
 . "$HOME/.cargo/env"
