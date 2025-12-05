@@ -59,3 +59,13 @@ export WAYLAND_DISPLAY=wayland-0
 
 #npm packages
 export PATH=$PATH:/var/home/chris/.npm-packages/bin
+
+#bcvk
+export PATH=$PATH:/home/chris/projects/bcvk/target/release
+
+#rpm-ostree
+export PATH=/home/chris/projects/rpm-ostree/target/release:$PATH
+
+if [ -f /run/.toolboxenv ]; then
+  export CONTAINER_HOST=unix:///run/user/$UID/podman/podman.sock
+fi

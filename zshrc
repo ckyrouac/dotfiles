@@ -59,9 +59,11 @@ export NVM_DIR="$HOME/.nvm"
 
 export LIBVA_DRIVER_NAME=iHD
 
-if [ -n "$TOOLBOX_PATH" ]; then
-    alias podman='flatpak-spawn --host podman'
-fi
+
+
+# if [ -n "$TOOLBOX_PATH" ]; then
+#     alias podman='flatpak-spawn --host podman'
+# fi
 
 bindkey '' autosuggest-accept
 
