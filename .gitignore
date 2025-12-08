@@ -12,3 +12,4 @@ lazygit/state.yml
 dotconfig/hypr/machine-specific.conf
 
 applications/chrome-*-Default.desktop
+applications/mimeinfo.cache
