@@ -1,7 +1,7 @@
 return {
   {
     "milanglacier/minuet-ai.nvim",
-    cond = true,
+    cond = false,
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
