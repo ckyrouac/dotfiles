@@ -1,0 +1,15 @@
+[Install]
+WantedBy=multi-user.target
+
+[Unit]
+Description=code-server container
+
+[Container]
+Image=quay.io/ckyrouac/toolbox-dev
+Exec=/usr/bin/code-server
+PublishPort=8080:8080
+Volume=/home/chris:/home/chris
+User=chris
+
+[Service]
+Restart=always
