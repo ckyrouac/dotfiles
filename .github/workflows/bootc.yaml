@@ -80,12 +80,7 @@ jobs:
   rechunk:
     runs-on: ubuntu-latest
     needs: build-and-push
-    container: quay.io/coreos-assembler/fcos-buildroot:testing-devel
     steps:
-      - name: Install Deps
-        run: |
-          set -euxo pipefail
-          sudo dnf -y install podman
       - name: Log in to GitHub Container Registry
         uses: redhat-actions/podman-login@v1
         with:
@@ -96,19 +91,37 @@ jobs:
       - name: Rechunk base
         run: |
           set -euxo pipefail
-          rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-base:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-base:chunked --format-version=2
+          podman run --rm --privileged \
+            -v /var/lib/containers/storage:/var/lib/containers/storage \
+            quay.io/fedora/fedora-bootc:43 \
+            rpm-ostree compose build-chunked-oci --bootc \
+            --from=ghcr.io/${{ github.repository }}/bootc-base:latest \
+            --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-base:chunked \
+            --format-version=2
           podman push ghcr.io/${{ github.repository }}/bootc-base:chunked
 
       - name: Rechunk desktop
         run: |
           set -euxo pipefail
-          rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-desktop:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-desktop:chunked --format-version=2
+          podman run --rm --privileged \
+            -v /var/lib/containers/storage:/var/lib/containers/storage \
+            quay.io/fedora/fedora-bootc:43 \
+            rpm-ostree compose build-chunked-oci --bootc \
+            --from=ghcr.io/${{ github.repository }}/bootc-desktop:latest \
+            --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
+            --format-version=2
           podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
 
       - name: Rechunk thinkpad
         run: |
           set -euxo pipefail
-          rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked --format-version=2
+          podman run --rm --privileged \
+            -v /var/lib/containers/storage:/var/lib/containers/storage \
+            quay.io/fedora/fedora-bootc:43 \
+            rpm-ostree compose build-chunked-oci --bootc \
+            --from=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest \
+            --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked \
+            --format-version=2
           podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
 
       - name: Log out from GitHub Container Registry
