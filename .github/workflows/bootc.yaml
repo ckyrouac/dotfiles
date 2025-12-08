@@ -74,7 +74,7 @@ jobs:
       - name: Install Deps
         run: |
           set -euxo pipefail
-          sudo apt -y install podman
+          sudo dnf -y install podman
       - name: Log in to GitHub Container Registry
         uses: redhat-actions/podman-login@v1
         with:
