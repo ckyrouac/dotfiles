@@ -74,20 +74,6 @@ jobs:
               email=${{ secrets.EMAIL  }}
               user=chris
 
-      - name: Log out from GitHub Container Registry
-        run: docker logout ghcr.io
-
-  rechunk:
-    runs-on: ubuntu-latest
-    needs: build-and-push
-    steps:
-      - name: Log in to GitHub Container Registry
-        uses: redhat-actions/podman-login@v1
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Rechunk base
         run: |
           set -euxo pipefail
@@ -102,6 +88,7 @@ jobs:
           podman load -i bootc-base-chunked.tar
           podman tag localhost/bootc-base-chunked ghcr.io/${{ github.repository }}/bootc-base:chunked
           podman push ghcr.io/${{ github.repository }}/bootc-base:chunked
+          rm bootc-base-chunked.tar
 
       - name: Rechunk desktop
         run: |
@@ -117,6 +104,7 @@ jobs:
           podman load -i bootc-desktop-chunked.tar
           podman tag localhost/bootc-desktop-chunked ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+          rm bootc-desktop-chunked.tar
 
       - name: Rechunk thinkpad
         run: |
@@ -132,6 +120,7 @@ jobs:
           podman load -i bootc-thinkpad-chunked.tar
           podman tag localhost/bootc-thinkpad-chunked ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
           podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+          rm bootc-thinkpad-chunked.tar
 
       - name: Log out from GitHub Container Registry
         run: podman logout ghcr.io
