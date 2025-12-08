@@ -31,6 +31,7 @@ return {
       })
 
       local servers = {
+        yamlls = {},
         clangd = {},
         gopls = {
           gopls = {
@@ -55,8 +56,9 @@ return {
       }
 
       -- -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-      -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
       -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+
       local lspconfig = require("lspconfig")
       for server, config in pairs(servers) do
         config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
@@ -105,7 +107,6 @@ return {
         )
 
         nmap("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
-        -- nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
 
         -- require('telescope.builtin').lsp_code_action
         -- nmap("<M-CR>", vim.lsp.buf.code_action, "Code Action")
@@ -140,10 +141,7 @@ return {
       })
 
       mason_lspconfig.setup_handlers({
-        ["rust_analyzer"] = function() end,
-      })
-
-      mason_lspconfig.setup_handlers({
+        -- Default handler for all servers
         function(server_name)
           require("lspconfig")[server_name].setup({
             capabilities = capabilities,
@@ -153,6 +151,8 @@ return {
             semanticTokens = true,
           })
         end,
+        -- Disable rust_analyzer since rustaceanvim handles it
+        ["rust_analyzer"] = function() end,
       })
 
       vim.g.rustaceanvim = {
@@ -200,6 +200,18 @@ return {
         capabilities = capabilities,
       })
 
+      require("lspconfig").yamlls.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+          yaml = {
+            schemas = {
+              ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+            },
+          },
+        },
+      })
+
       vim.api.nvim_create_autocmd({ "CursorHold" }, {
         pattern = { "*" },
         callback = function()
@@ -207,7 +219,13 @@ return {
             return
           end
 
-          vim.lsp.buf.document_highlight()
+          -- Only highlight if an LSP client with documentHighlight support is attached
+          for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
+            if client.server_capabilities.documentHighlightProvider then
+              vim.lsp.buf.document_highlight()
+              return
+            end
+          end
         end,
       })
 
@@ -218,7 +236,13 @@ return {
             return
           end
 
-          vim.lsp.buf.document_highlight()
+          -- Only highlight if an LSP client with documentHighlight support is attached
+          for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
+            if client.server_capabilities.documentHighlightProvider then
+              vim.lsp.buf.document_highlight()
+              return
+            end
+          end
         end,
       })
 
