@@ -84,6 +84,7 @@ jobs:
       - name: Rechunk base
         run: |
           set -euxo pipefail
+          apt -y install podman
           podman build -t localhost/bootc-base:latest .
           podman run --rm --privileged \
             -v $(pwd):/workspace \
@@ -98,6 +99,7 @@ jobs:
           podman push ghcr.io/${{ github.repository }}/bootc-base:chunked
           podman rmi localhost/bootc-base:latest ghcr.io/${{ github.repository }}/bootc-base:chunked
           rm bootc-base-chunked.tar
+
       #
       # - name: Rechunk desktop
       #   run: |
