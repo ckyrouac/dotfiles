@@ -24,7 +24,6 @@ return {
           "stylua",
           "jq",
           "jsonlint",
-          "rust_analyzer",
           "goimports",
           "xmlformatter",
         },
