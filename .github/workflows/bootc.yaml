@@ -89,11 +89,7 @@ jobs:
             -v $(pwd):/workspace \
             -w /workspace \
             quay.io/fedora/fedora-bootc:43 \
-            podman build -t localhost/bootc-base:latest . && \
-            rpm-ostree compose build-chunked-oci --bootc \
-            --from=localhost/bootc-base:latest \
-            --output=oci-archive:bootc-base-chunked.tar \
-            --format-version=2
+            "podman build -t localhost/bootc-base:latest . && rpm-ostree compose build-chunked-oci --bootc --from=localhost/bootc-base:latest --output=oci-archive:bootc-base-chunked.tar --format-version=2"
           podman load -i bootc-base-chunked.tar
           podman tag localhost/bootc-base-chunked ghcr.io/${{ github.repository }}/bootc-base:chunked
           podman push ghcr.io/${{ github.repository }}/bootc-base:chunked
