@@ -4,6 +4,7 @@ PartOf=graphical-session.target
 After=graphical-session.target
 StartLimitIntervalSec=600
 StartLimitBurst=60
+ConditionPathExists=/etc/hyprland-enabled
 # TODO decrease the StartLimitBurst to 5
 
 [Service]
@@ -12,5 +13,5 @@ ExecStart=/usr/bin/hyprswitch -vv init
 Restart=always
 RestartSec=10
 
-[Install]
-WantedBy=graphical-session.target
+; [Install]
+; WantedBy=graphical-session.target

@@ -4,6 +4,7 @@ PartOf=graphical-session.target
 After=graphical-session.target
 StartLimitIntervalSec=600
 StartLimitBurst=60
+ConditionPathExists=/etc/hyprland-enabled
 
 [Service]
 Type=simple
@@ -11,6 +12,3 @@ ExecStart=/usr/bin/hyprswitch init
 Restart=always
 RestartSec=2
 Environment=LD_LIBRARY_PATH=/usr/local/lib64
-
-[Install]
-WantedBy=graphical-session.target

@@ -4,6 +4,7 @@ PartOf=graphical-session.target
 After=graphical-session.target
 StartLimitIntervalSec=600
 StartLimitBurst=600
+ConditionPathExists=/etc/hyprland-enabled
 
 [Service]
 Type=dbus
@@ -12,6 +13,3 @@ ExecStart=/usr/bin/swaync
 Restart=always
 RestartSec=2
 Environment=LD_LIBRARY_PATH=/usr/local/lib64
-
-[Install]
-WantedBy=graphical-session.target
