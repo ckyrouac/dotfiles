@@ -47,6 +47,7 @@ jobs:
         run: |
           set -euxo pipefail
           sudo apt -y install podman
+          podman --version
           podman build -t ghcr.io/ckyrouac/dotfiles/bootc-base:latest .
           podman push ghcr.io/ckyrouac/dotfiles/bootc-base:latest
 
