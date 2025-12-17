@@ -1,6 +1,6 @@
 FROM ghcr.io/ckyrouac/dotfiles/bootc-base:latest
 
-RUN dnf -y install kmod-nvidia kernel-devel xorg-x11-drv-nvidia-cuda && \
+RUN dnf -y install kmod-nvidia kernel-devel && \
     KERNEL_VERSION=$(rpm -q "kernel" --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}') && \
     akmods --force --kernels "$KERNEL_VERSION" --kmod "nvidia" && \
     systemctl disable akmods.service && \
