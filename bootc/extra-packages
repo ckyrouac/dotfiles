@@ -1,7 +1,5 @@
-SwayNotificationCenter-git
 alacritty
 automake
-aylurs-gtk-shell2
 bash-completion
 bison
 cargo
@@ -10,7 +8,6 @@ deja-dup
 dejavu-fonts-all
 diff-so-fancy
 easyeffects
-eww-git
 fd-find
 firefox
 firewalld
@@ -34,11 +31,6 @@ google-chrome-stable
 google-cloud-cli
 gtk4
 htop
-hyprland-git
-hyprland-plugin-hyprexpo-git
-hyprland-qt-support
-hyprpaper
-hyprpolkitagent
 just
 keepassxc
 kernel-devel
@@ -89,7 +81,6 @@ tmt+all
 tmux
 trash-cli
 util-linux-user
-uwsm
 vips
 vips-devel
 virt-install
