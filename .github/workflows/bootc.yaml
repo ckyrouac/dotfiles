@@ -47,21 +47,12 @@ jobs:
         run: |
           set -euxo pipefail
           sudo apt -y install podman
-          podman run --rm --privileged \
-            -v $(pwd):/workspace \
-            -w /workspace \
-            quay.io/fedora/fedora-bootc:43 \
-            sh -c "podman build -t ghcr.io/ckyrouac/dotfiles/bootc-base:latest . && rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/ckyrouac/dotfiles/bootc-base:latest --output=oci-archive:bootc-base-chunked.tar --format-version=2"
-          IMAGE_ID=$(podman load -i bootc-base-chunked.tar | grep -oP 'Loaded image.*: \K.*')
-          podman tag "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-base:chunked
-          podman push ghcr.io/${{ github.repository }}/bootc-base:chunked
-          podman rmi "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-base:chunked
-          rm bootc-base-chunked.tar
+          podman build -t ghcr.io/ckyrouac/dotfiles/bootc-base:latest .
+          podman push ghcr.io/ckyrouac/dotfiles/bootc-base:latest
 
       - name: Build desktop
         run: |
           set -euxo pipefail
-          sudo apt -y install podman
           podman run --rm --privileged \
             -v $(pwd):/workspace \
             -w /workspace \
@@ -76,7 +67,6 @@ jobs:
       - name: Build thinkpad
         run: |
           set -euxo pipefail
-          sudo apt -y install podman
           podman run --rm --privileged \
             -v $(pwd):/workspace \
             -w /workspace \
