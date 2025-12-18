@@ -1,4 +1,6 @@
 FROM ghcr.io/ckyrouac/dotfiles/bootc-base:latest
 
-RUN dnf -y install iwlwifi-mvm-firmware iwlwifi-dvm-firmware && \
+RUN <<EOF
+    dnf -y install iwlwifi-mvm-firmware iwlwifi-dvm-firmware
     dnf clean all
+EOF
