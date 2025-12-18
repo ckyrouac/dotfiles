@@ -118,6 +118,7 @@ jobs:
       - name: Rechunk desktop
         run: |
           set -euxo pipefail
+          podman pull ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           podman run --rm --privileged \
             -v $(pwd):/workspace \
             -w /workspace \
@@ -126,8 +127,8 @@ jobs:
           IMAGE_ID=$(podman load -i bootc-desktop-chunked.tar | grep -oP 'Loaded image.*: \K.*')
           podman tag "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
-          podman rmi "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-desktop:chunked
-          rm bootc-desktop-chunked.tar
+          # push a second time to preserve layer annotations
+          podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
 
   rechunk-thinkpad:
     runs-on: ubuntu-24.04
@@ -171,6 +172,7 @@ jobs:
       - name: Rechunk thinkpad
         run: |
           set -euxo pipefail
+          podman pull ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
           podman run --rm --privileged \
             -v $(pwd):/workspace \
             -w /workspace \
@@ -179,5 +181,5 @@ jobs:
           IMAGE_ID=$(podman load -i bootc-thinkpad-chunked.tar | grep -oP 'Loaded image.*: \K.*')
           podman tag "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
           podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-          podman rmi "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-          rm bootc-thinkpad-chunked.tar
+          # push a second time to preserve layer annotations
+          podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
