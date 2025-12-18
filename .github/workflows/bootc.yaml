@@ -58,40 +58,21 @@ jobs:
       - name: Build base
         run: |
           set -euxo pipefail
-          sudo apt -y install podman
-          podman --version
           podman build -t ghcr.io/ckyrouac/dotfiles/bootc-base:latest .
           podman push ghcr.io/ckyrouac/dotfiles/bootc-base:latest
-          df -h /
 
       - name: Build desktop
         run: |
           set -euxo pipefail
-          podman run --rm --privileged \
-            -v $(pwd):/workspace \
-            -w /workspace \
-            quay.io/fedora/fedora-bootc:43 \
-            sh -c "podman build -t localhost/bootc-desktop:latest -f Desktop.containerfile . && df -h / && podman rmi ghcr.io/ckyrouac/dotfiles/bootc-base:latest && df -h / && rpm-ostree compose build-chunked-oci --bootc --from=localhost/bootc-desktop:latest --output=oci-archive:bootc-desktop-chunked.tar --format-version=2"
-          IMAGE_ID=$(podman load -i bootc-desktop-chunked.tar | grep -oP 'Loaded image.*: \K.*')
-          podman tag "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-desktop:chunked
-          podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
-          podman rmi "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-desktop:chunked
-          podman rmi localhost/bootc-desktop:latest
-          rm bootc-desktop-chunked.tar
+          podman build -t ghcr.io/ckyrouac/dotfiles/bootc-desktop:latest -f Desktop.containerfile .
+          podman push ghcr.io/ckyrouac/dotfiles/bootc-desktop:latest -f Desktop.containerfile .
 
       - name: Build thinkpad
         run: |
           set -euxo pipefail
-          podman run --rm --privileged \
-            -v $(pwd):/workspace \
-            -w /workspace \
-            quay.io/fedora/fedora-bootc:43 \
-            sh -c "podman build -t localhost/bootc-thinkpad:latest -f Thinkpad.containerfile ."
-          IMAGE_ID=$(podman load -i bootc-thinkpad-chunked.tar | grep -oP 'Loaded image.*: \K.*')
-          podman tag "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-          podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-          podman rmi "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-          rm bootc-thinkpad-chunked.tar
+          podman build -t ghcr.io/ckyrouac/dotfiles/bootc-thinkpad:latest -f Thinkpad.containerfile .
+          podman push ghcr.io/ckyrouac/dotfiles/bootc-thinkpad:latest -f Thinkpad.containerfile .
+
   rechunk-desktop:
     runs-on: ubuntu-24.04
 
@@ -144,3 +125,56 @@ jobs:
           podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           podman rmi "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           rm bootc-desktop-chunked.tar
+
+  rechunk-thinkpad:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: Log in to Quay.io
+        uses: redhat-actions/podman-login@v1
+        with:
+          username: ${{ env.REGISTRY_USER }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+          registry: ${{ env.IMAGE_REGISTRY }}
+
+      - name: Update podman
+        run: |
+          set -euxo pipefail
+          # Require the runner is ubuntu-24.04
+          IDV=$(. /usr/lib/os-release && echo ${ID}-${VERSION_ID})
+          test "${IDV}" = "ubuntu-24.04"
+          # plucky is the next release
+          echo 'deb http://azure.archive.ubuntu.com/ubuntu plucky universe main' | sudo tee /etc/apt/sources.list.d/plucky.list
+          /bin/time -f '%E %C' sudo apt update
+          # skopeo is currently older in plucky for some reason hence --allow-downgrades
+          /bin/time -f '%E %C' sudo apt install -y --allow-downgrades crun/plucky podman/plucky skopeo/plucky
+
+      - name: Rechunk thinkpad
+        run: |
+          set -euxo pipefail
+          podman run --rm --privileged \
+            -v $(pwd):/workspace \
+            -w /workspace \
+            quay.io/fedora/fedora-bootc:43 \
+            sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest --output=oci-archive:bootc-thinkpad-chunked.tar --format-version=2"
+          IMAGE_ID=$(podman load -i bootc-thinkpad-chunked.tar | grep -oP 'Loaded image.*: \K.*')
+          podman tag "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+          podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+          podman rmi "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+          rm bootc-thinkpad-chunked.tar
