@@ -58,20 +58,23 @@ jobs:
       - name: Build base
         run: |
           set -euxo pipefail
-          podman build -t ghcr.io/ckyrouac/dotfiles/bootc-base:latest .
-          podman push ghcr.io/ckyrouac/dotfiles/bootc-base:latest
+          IMAGE=ghcr.io/${{ github.repository }}/bootc-base:latest
+          podman build -t "${IMAGE}" .
+          podman push "${IMAGE}"
 
       - name: Build desktop
         run: |
           set -euxo pipefail
-          podman build -t ghcr.io/ckyrouac/dotfiles/bootc-desktop:latest -f Desktop.containerfile .
-          podman push ghcr.io/ckyrouac/dotfiles/bootc-desktop:latest -f Desktop.containerfile .
+          IMAGE=ghcr.io/${{ github.repository }}/bootc-desktop:latest
+          podman build -t "${IMAGE}" -f Desktop.containerfile .
+          podman push "${IMAGE}"
 
       - name: Build thinkpad
         run: |
           set -euxo pipefail
-          podman build -t ghcr.io/ckyrouac/dotfiles/bootc-thinkpad:latest -f Thinkpad.containerfile .
-          podman push ghcr.io/ckyrouac/dotfiles/bootc-thinkpad:latest -f Thinkpad.containerfile .
+          IMAGE=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest
+          podman build -t "${IMAGE}" -f Thinkpad.containerfile .
+          podman push "${IMAGE}"
 
   rechunk-desktop:
     runs-on: ubuntu-24.04
