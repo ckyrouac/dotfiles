@@ -119,14 +119,14 @@ jobs:
       - name: Rechunk desktop
         run: |
           set -euxo pipefail
-          podman pull ghcr.io/${{ github.repository }}/bootc-desktop:chunked
-          podman run --rm --privileged --userns=host \
+          sudo podman pull ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+          sudo podman run --rm --privileged \
             -v /var/lib/containers/storage:/var/lib/containers/storage \
             ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
             sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-desktop:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-desktop:chunked --format-version=2"
-          podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+          sudo podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           # push a second time to preserve layer annotations
-          podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+          sudo podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
 
   # rechunk-thinkpad:
   #   needs: build-and-push
@@ -171,11 +171,11 @@ jobs:
   #     - name: Rechunk thinkpad
   #       run: |
   #         set -euxo pipefail
-  #         podman pull ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-  #         podman run --rm --privileged --userns=host \
+  #         sudo podman pull ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+  #         sudo podman run --rm --privileged \
   #           -v /var/lib/containers/storage:/var/lib/containers/storage \
   #           ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
   #           sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked --format-version=2"
-  #         podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+  #         sudo podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
   #         # push a second time to preserve layer annotations
-  #         podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+  #         sudo podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
