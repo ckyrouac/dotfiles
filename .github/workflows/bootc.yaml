@@ -120,7 +120,7 @@ jobs:
         run: |
           set -euxo pipefail
           podman pull ghcr.io/${{ github.repository }}/bootc-desktop:chunked
-          podman run --rm --privileged \
+          podman run --rm --privileged --userns=host \
             -v /var/lib/containers/storage:/var/lib/containers/storage \
             ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
             sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-desktop:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-desktop:chunked --format-version=2"
@@ -172,7 +172,7 @@ jobs:
         run: |
           set -euxo pipefail
           podman pull ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-          podman run --rm --privileged \
+          podman run --rm --privileged --userns=host \
             -v /var/lib/containers/storage:/var/lib/containers/storage \
             ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
             sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked --format-version=2"
