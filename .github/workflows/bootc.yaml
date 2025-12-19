@@ -76,7 +76,59 @@ jobs:
   #         podman build -t "${IMAGE}" -f Thinkpad.containerfile .
   #         podman push "${IMAGE}"
   #
-  # rechunk-desktop:
+  rechunk-desktop:
+    # needs: build-and-push
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@v1.3.1
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: Log in to Quay.io
+        uses: redhat-actions/podman-login@v1
+        with:
+          username: ${{ env.REGISTRY_USER }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+          registry: ${{ env.IMAGE_REGISTRY }}
+
+      - name: Update podman
+        run: |
+          set -euxo pipefail
+          # Require the runner is ubuntu-24.04
+          IDV=$(. /usr/lib/os-release && echo ${ID}-${VERSION_ID})
+          test "${IDV}" = "ubuntu-24.04"
+          # plucky is the next release
+          echo 'deb http://azure.archive.ubuntu.com/ubuntu plucky universe main' | sudo tee /etc/apt/sources.list.d/plucky.list
+          /bin/time -f '%E %C' sudo apt update
+          # skopeo is currently older in plucky for some reason hence --allow-downgrades
+          /bin/time -f '%E %C' sudo apt install -y --allow-downgrades crun/plucky podman/plucky skopeo/plucky
+
+      - name: Rechunk desktop
+        run: |
+          set -euxo pipefail
+          podman pull ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+          podman run --rm --privileged --userns=host \
+            -v /var/lib/containers/storage:/var/lib/containers/storage \
+            ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
+            sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-desktop:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-desktop:chunked --format-version=2"
+          podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+          # push a second time to preserve layer annotations
+          podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+
+  # rechunk-thinkpad:
   #   needs: build-and-push
   #   runs-on: ubuntu-24.04
   #
@@ -116,66 +168,14 @@ jobs:
   #         # skopeo is currently older in plucky for some reason hence --allow-downgrades
   #         /bin/time -f '%E %C' sudo apt install -y --allow-downgrades crun/plucky podman/plucky skopeo/plucky
   #
-  #     - name: Rechunk desktop
+  #     - name: Rechunk thinkpad
   #       run: |
   #         set -euxo pipefail
-  #         podman pull ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+  #         podman pull ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
   #         podman run --rm --privileged --userns=host \
   #           -v /var/lib/containers/storage:/var/lib/containers/storage \
   #           ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
-  #           sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-desktop:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-desktop:chunked --format-version=2"
-  #         podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+  #           sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked --format-version=2"
+  #         podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
   #         # push a second time to preserve layer annotations
-  #         podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
-
-  rechunk-thinkpad:
-    needs: build-and-push
-    runs-on: ubuntu-24.04
-
-    steps:
-      - name: Free Disk Space (Ubuntu)
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: true
-          android: true
-          dotnet: true
-          haskell: true
-          large-packages: true
-          docker-images: true
-          swap-storage: true
-
-      - name: Checkout repository
-        uses: actions/checkout@v2
-        with:
-          ref: master
-
-      - name: Log in to Quay.io
-        uses: redhat-actions/podman-login@v1
-        with:
-          username: ${{ env.REGISTRY_USER }}
-          password: ${{ env.REGISTRY_PASSWORD }}
-          registry: ${{ env.IMAGE_REGISTRY }}
-
-      - name: Update podman
-        run: |
-          set -euxo pipefail
-          # Require the runner is ubuntu-24.04
-          IDV=$(. /usr/lib/os-release && echo ${ID}-${VERSION_ID})
-          test "${IDV}" = "ubuntu-24.04"
-          # plucky is the next release
-          echo 'deb http://azure.archive.ubuntu.com/ubuntu plucky universe main' | sudo tee /etc/apt/sources.list.d/plucky.list
-          /bin/time -f '%E %C' sudo apt update
-          # skopeo is currently older in plucky for some reason hence --allow-downgrades
-          /bin/time -f '%E %C' sudo apt install -y --allow-downgrades crun/plucky podman/plucky skopeo/plucky
-
-      - name: Rechunk thinkpad
-        run: |
-          set -euxo pipefail
-          podman pull ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-          podman run --rm --privileged --userns=host \
-            -v /var/lib/containers/storage:/var/lib/containers/storage \
-            ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
-            sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked --format-version=2"
-          podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-          # push a second time to preserve layer annotations
-          podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+  #         podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
