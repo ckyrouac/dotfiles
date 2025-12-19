@@ -121,12 +121,9 @@ jobs:
           set -euxo pipefail
           podman pull ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           podman run --rm --privileged \
-            -v $(pwd):/workspace \
-            -w /workspace \
+            -v /var/lib/containers/storage:/var/lib/containers/storage \
             ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
-            sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-desktop:latest --output=oci-archive:bootc-desktop-chunked.tar --format-version=2"
-          IMAGE_ID=$(podman load -i bootc-desktop-chunked.tar | grep -oP 'Loaded image.*: \K.*')
-          podman tag "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+            sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-desktop:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-desktop:chunked --format-version=2"
           podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           # push a second time to preserve layer annotations
           podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
@@ -176,12 +173,9 @@ jobs:
           set -euxo pipefail
           podman pull ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
           podman run --rm --privileged \
-            -v $(pwd):/workspace \
-            -w /workspace \
+            -v /var/lib/containers/storage:/var/lib/containers/storage \
             ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
-            sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest --output=oci-archive:bootc-thinkpad-chunked.tar --format-version=2"
-          IMAGE_ID=$(podman load -i bootc-thinkpad-chunked.tar | grep -oP 'Loaded image.*: \K.*')
-          podman tag "$IMAGE_ID" ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+            sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked --format-version=2"
           podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
           # push a second time to preserve layer annotations
           podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
