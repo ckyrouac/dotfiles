@@ -1,0 +1,52 @@
+# GitLab CI/CD Pipeline for Fedora Dev Bootc Image
+# Equivalent to .github/workflows/bootc.yaml
+
+stages:
+  - rechunk
+
+variables:
+  IMAGE_REGISTRY: $CI_REGISTRY
+
+.free_disk_space: &free_disk_space
+  # Free disk space on the runner (equivalent to jlumbroso/free-disk-space action)
+  - df -h
+  - apt-get clean || true
+  - rm -rf /var/lib/apt/lists/* || true
+  - rm -rf /usr/share/dotnet || true
+  - rm -rf /usr/local/lib/android || true
+  - rm -rf /opt/ghc || true
+  - rm -rf /opt/hostedtoolcache || true
+  - df -h
+
+.install_podman: &install_podman
+  # Install updated podman from Ubuntu Plucky repos
+  - |
+    set -euxo pipefail
+    IDV=$(. /usr/lib/os-release && echo ${ID}-${VERSION_ID})
+    test "${IDV}" = "ubuntu-24.04"
+    echo 'deb http://azure.archive.ubuntu.com/ubuntu plucky universe main' | tee /etc/apt/sources.list.d/plucky.list
+    apt-get update
+    apt-get install -y --allow-downgrades crun/plucky podman/plucky skopeo/plucky
+
+rechunk-desktop:
+  stage: rechunk
+  image: ubuntu:24.04
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  before_script:
+    - *free_disk_space
+    - *install_podman
+    - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - |
+      set -euxo pipefail
+      IMAGE_BASE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-desktop"
+      podman pull "${IMAGE_BASE}:chunked"
+      podman run --rm --privileged \
+        -v /var/lib/containers/storage:/var/lib/containers/storage \
+        "${IMAGE_BASE}:chunked" \
+        sh -c "rpm-ostree compose build-chunked-oci --bootc --from=${IMAGE_BASE}:latest --output=containers-storage:${IMAGE_BASE}:chunked --format-version=2"
+      podman push "${IMAGE_BASE}:chunked"
+      # push a second time to preserve layer annotations
+      podman push "${IMAGE_BASE}:chunked"
