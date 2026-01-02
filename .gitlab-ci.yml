@@ -21,7 +21,6 @@ variables:
 
 rechunk-desktop:
   stage: rechunk
-  image: ubuntu:24.04
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
     - if: $CI_PIPELINE_SOURCE == "schedule"
