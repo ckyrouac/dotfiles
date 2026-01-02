@@ -32,11 +32,24 @@ rechunk-desktop:
     - |
       set -euxo pipefail
       IMAGE_BASE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-desktop"
-      podman pull "${IMAGE_BASE}:chunked"
+
+      # Build the image with :latest tag
+      podman build -t "${IMAGE_BASE}:latest" -f Containerfile .
+
+      # Try to pull the chunked tag if it exists (for layer caching)
+      # If it doesn't exist, use :latest as the base for rechunking
+      if podman pull "${IMAGE_BASE}:chunked"; then
+        RECHUNK_IMAGE="${IMAGE_BASE}:chunked"
+      else
+        RECHUNK_IMAGE="${IMAGE_BASE}:latest"
+      fi
+
+      # Rechunk from the base image and output to chunked tag
       podman run --rm --privileged \
         -v /var/lib/containers/storage:/var/lib/containers/storage \
-        "${IMAGE_BASE}:chunked" \
+        "${RECHUNK_IMAGE}" \
         sh -c "rpm-ostree compose build-chunked-oci --bootc --from=${IMAGE_BASE}:latest --output=containers-storage:${IMAGE_BASE}:chunked --format-version=2"
+
+      # Push both tags
       podman push "${IMAGE_BASE}:chunked"
-      # push a second time to preserve layer annotations
-      podman push "${IMAGE_BASE}:chunked"
+      podman push "${IMAGE_BASE}:latest"
