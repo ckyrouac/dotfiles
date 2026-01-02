@@ -4,15 +4,6 @@
 stages:
   - rechunk
 
-variables:
-  IMAGE_REGISTRY: $CI_REGISTRY
-
-.free_disk_space: &free_disk_space
-  # Free disk space on the runner
-  - df -h
-  - sudo dnf clean all || true
-  - df -h
-
 .install_podman: &install_podman
   # Install podman on Fedora
   - |
@@ -25,7 +16,6 @@ rechunk-desktop:
     - if: $CI_COMMIT_BRANCH == "master"
     - if: $CI_PIPELINE_SOURCE == "schedule"
   before_script:
-    - *free_disk_space
     - *install_podman
     - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
@@ -34,7 +24,7 @@ rechunk-desktop:
       IMAGE_BASE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-desktop"
 
       # Build the image with :latest tag
-      podman build -t "${IMAGE_BASE}:latest" -f Containerfile .
+      podman build -t "${IMAGE_BASE}:latest" -f Desktop.containerfile .
 
       # Try to pull the chunked tag if it exists (for layer caching)
       # If it doesn't exist, use :latest as the base for rechunking
@@ -45,10 +35,7 @@ rechunk-desktop:
       fi
 
       # Rechunk from the base image and output to chunked tag
-      podman run --rm --privileged \
-        -v /var/lib/containers/storage:/var/lib/containers/storage \
-        "${RECHUNK_IMAGE}" \
-        sh -c "rpm-ostree compose build-chunked-oci --bootc --from=${IMAGE_BASE}:latest --output=containers-storage:${IMAGE_BASE}:chunked --format-version=2"
+      rpm-ostree compose build-chunked-oci --bootc --from=${IMAGE_BASE}:latest --output=containers-storage:${IMAGE_BASE}:chunked --format-version=2
 
       # Push both tags
       podman push "${IMAGE_BASE}:chunked"
