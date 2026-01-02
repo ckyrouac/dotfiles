@@ -8,25 +8,16 @@ variables:
   IMAGE_REGISTRY: $CI_REGISTRY
 
 .free_disk_space: &free_disk_space
-  # Free disk space on the runner (equivalent to jlumbroso/free-disk-space action)
+  # Free disk space on the runner
   - df -h
-  - apt-get clean || true
-  - rm -rf /var/lib/apt/lists/* || true
-  - rm -rf /usr/share/dotnet || true
-  - rm -rf /usr/local/lib/android || true
-  - rm -rf /opt/ghc || true
-  - rm -rf /opt/hostedtoolcache || true
+  - sudo dnf clean all || true
   - df -h
 
 .install_podman: &install_podman
-  # Install updated podman from Ubuntu Plucky repos
+  # Install podman on Fedora
   - |
     set -euxo pipefail
-    IDV=$(. /usr/lib/os-release && echo ${ID}-${VERSION_ID})
-    test "${IDV}" = "ubuntu-24.04"
-    echo 'deb http://azure.archive.ubuntu.com/ubuntu plucky universe main' | tee /etc/apt/sources.list.d/plucky.list
-    apt-get update
-    apt-get install -y --allow-downgrades crun/plucky podman/plucky skopeo/plucky
+    sudo dnf install -y podman skopeo
 
 rechunk-desktop:
   stage: rechunk
