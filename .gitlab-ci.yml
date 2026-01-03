@@ -25,9 +25,8 @@ build-base:
       IMAGE_BASE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-base"
 
       # Build the base image
-      podman build
+      podman build -t "${IMAGE_BASE}:latest" \
         --no-cache \
-        -t "${IMAGE_BASE}:latest" \
         --platform amd64 \
         -f Containerfile .
 
