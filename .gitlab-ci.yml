@@ -2,6 +2,7 @@
 # Equivalent to .github/workflows/bootc.yaml
 
 stages:
+  - build
   - rechunk
 
 .install_podman: &install_podman
@@ -10,8 +11,29 @@ stages:
     set -euxo pipefail
     sudo dnf install -y podman skopeo
 
+build-base:
+  stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+  before_script:
+    - *install_podman
+    - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - |
+      set -euxo pipefail
+      IMAGE_BASE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-base"
+
+      # Build the base image
+      podman build -t "${IMAGE_BASE}:latest" -f Containerfile .
+
+      # Push the image
+      podman push "${IMAGE_BASE}:latest"
+
 rechunk-desktop:
   stage: rechunk
+  needs:
+    - build-base
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
     - if: $CI_PIPELINE_SOURCE == "schedule"
@@ -22,9 +44,12 @@ rechunk-desktop:
     - |
       set -euxo pipefail
       IMAGE_BASE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-desktop"
+      BASE_IMAGE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-base:latest"
 
-      # Build the image with :latest tag
-      podman build -t "${IMAGE_BASE}:latest" -f Desktop.containerfile .
+      # Build the desktop image using the base image from this registry
+      podman build -t "${IMAGE_BASE}:latest" \
+        --build-arg BASE_IMAGE="${BASE_IMAGE}" \
+        -f Desktop.containerfile .
 
       # Try to pull the chunked tag if it exists (for layer caching)
       # If it doesn't exist, use :latest as the base for rechunking

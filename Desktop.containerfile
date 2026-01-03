@@ -1,4 +1,5 @@
-FROM ghcr.io/ckyrouac/dotfiles/bootc-base:latest
+ARG BASE_IMAGE=ghcr.io/ckyrouac/dotfiles/bootc-base:latest
+FROM ${BASE_IMAGE}
 
 RUN <<EOF
     set -euxo pipefail
