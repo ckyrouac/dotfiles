@@ -25,7 +25,11 @@ build-base:
       IMAGE_BASE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-base"
 
       # Build the base image
-      podman build --no-cache -t "${IMAGE_BASE}:latest" -f Containerfile .
+      podman build
+        --no-cache \
+        -t "${IMAGE_BASE}:latest" \
+        --platform amd64 \
+        -f Containerfile .
 
       # Push the image
       podman push "${IMAGE_BASE}:latest"
@@ -48,6 +52,7 @@ rechunk-desktop:
 
       # Build the desktop image using the base image from this registry
       podman build -t "${IMAGE_BASE}:latest" \
+        --platform amd64 \
         --no-cache \
         --build-arg BASE_IMAGE="${BASE_IMAGE}" \
         -f Desktop.containerfile .
