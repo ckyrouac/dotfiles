@@ -1,0 +1,22 @@
+[Unit]
+Description=OrcaSlicer 3D printing slicer with web interface
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=quay.io/ckyrouac/orcaslicer:latest
+PublishPort=3000:3000
+PublishPort=3001:3001
+Environment=PUID=1000
+Environment=PGID=1000
+Environment=TZ=America/New_York
+Volume=/var/home/chris/.config/orcaslicer:/config:Z
+PodmanArgs=--shm-size=1gb
+AutoUpdate=registry
+
+[Service]
+Restart=always
+TimeoutStartSec=900
+
+[Install]
+WantedBy=multi-user.target default.target

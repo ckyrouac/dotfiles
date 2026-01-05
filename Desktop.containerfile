@@ -1,6 +1,11 @@
 ARG BASE_IMAGE=ghcr.io/ckyrouac/dotfiles/bootc-base:latest
 FROM ${BASE_IMAGE}
 
+# Add OrcaSlicer as a logically bound container image
+COPY ./bootc/usr/share/containers/systemd/orcaslicer.container /usr/share/containers/systemd/orcaslicer.container
+RUN mkdir -p /usr/lib/bootc/bound-images.d && \
+    ln -s /usr/share/containers/systemd/orcaslicer.container /usr/lib/bootc/bound-images.d/orcaslicer.container
+
 RUN <<EOF
     set -euxo pipefail
     dnf -y install kmod-nvidia kernel-devel xorg-x11-drv-nvidia-cuda
