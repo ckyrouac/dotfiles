@@ -86,8 +86,10 @@ jobs:
           sudo podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
 
           # cleanup
-          sudo podman rmi ghcr.io/${{ github.repository }}/bootc-desktop:latest
-          sudo podman rmi ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+          sudo podman rmi ghcr.io/${{ github.repository }}/bootc-desktop:latest || true
+          sudo podman rmi ghcr.io/${{ github.repository }}/bootc-desktop:chunked || true
+          sudo podman image prune -f
+          sudo rm -rf /var/lib/containers/storage/overlay-layers/tmp/*
           sudo rm -rf /mnt/vartmp/*
 
       - name: Build thinkpad
