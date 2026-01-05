@@ -46,6 +46,10 @@ build-desktop:
 
       # Rechunk the desktop image
       echo "=== Stage 2: Rechunking desktop image ==="
+
+      # Try to pull the existing chunked tag for rpm-ostree to use as baseline
+      podman pull "${IMAGE_DESKTOP}:chunked" || true
+
       rpm-ostree compose build-chunked-oci --bootc --from=${IMAGE_DESKTOP}:latest --output=containers-storage:${IMAGE_DESKTOP}:chunked --format-version=2
 
       # Push both tags
