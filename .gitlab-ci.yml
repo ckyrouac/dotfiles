@@ -2,29 +2,26 @@
 # Equivalent to .github/workflows/bootc.yaml
 
 stages:
-  - build
+  - build-base
+  - build-desktop
 
-.install_podman: &install_podman
-  # Install podman on Fedora
-  - |
-    set -euxo pipefail
-    sudo dnf install -y podman skopeo
-
-build-desktop:
-  stage: build
-  timeout: 16 hours
+.common:
+  timeout: 8 hours
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
     - if: $CI_PIPELINE_SOURCE == "schedule"
   before_script:
-    - *install_podman
+    - |
+      set -euxo pipefail
+      sudo dnf install -y podman skopeo
     - podman login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+
+build-base:
+  extends: .common
+  stage: build-base
   script:
     - |
       set -euxo pipefail
-
-      # Stage 1: Build base image
-      echo "=== Stage 1: Building base image ==="
       IMAGE_BASE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-base"
 
       podman build -t "${IMAGE_BASE}:latest" \
@@ -34,8 +31,15 @@ build-desktop:
 
       podman push "${IMAGE_BASE}:latest"
 
-      # Stage 2: Build desktop image and rechunk
-      echo "=== Stage 2: Building desktop image ==="
+build-desktop:
+  extends: .common
+  stage: build-desktop
+  needs:
+    - build-base
+  script:
+    - |
+      set -euxo pipefail
+      IMAGE_BASE="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-base"
       IMAGE_DESKTOP="${CI_REGISTRY}/${CI_PROJECT_PATH}/bootc-desktop"
 
       podman build -t "${IMAGE_DESKTOP}:latest" \
@@ -43,9 +47,6 @@ build-desktop:
         --no-cache \
         --build-arg BASE_IMAGE="${IMAGE_BASE}:latest" \
         -f Desktop.containerfile .
-
-      # Rechunk the desktop image
-      echo "=== Stage 2: Rechunking desktop image ==="
 
       # Try to pull the existing chunked tag for rpm-ostree to use as baseline
       podman pull "${IMAGE_DESKTOP}:chunked" || true
