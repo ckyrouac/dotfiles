@@ -119,9 +119,10 @@ jobs:
       - name: Rechunk desktop
         run: |
           set -euxo pipefail
+          sudo mkdir -p /mnt/vartmp
           sudo podman pull ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           sudo podman run --rm --privileged \
-            --tmpfs /var/tmp:size=20g \
+            -v /mnt/vartmp:/var/tmp \
             -v /var/lib/containers/storage:/var/lib/containers/storage \
             ghcr.io/${{ github.repository }}/bootc-desktop:chunked \
             sh -c "rpm-ostree compose build-chunked-oci --bootc --from=ghcr.io/${{ github.repository }}/bootc-desktop:latest --output=containers-storage:ghcr.io/${{ github.repository }}/bootc-desktop:chunked --format-version=2"
