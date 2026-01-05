@@ -1,6 +1,7 @@
 return {
   {
     "azorng/goose.nvim",
+    cond = false,
     config = function()
       require('goose').setup({
         prefered_picker = 'telescope',
