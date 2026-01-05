@@ -59,16 +59,16 @@ jobs:
         run: |
           set -euxo pipefail
           IMAGE=ghcr.io/${{ github.repository }}/bootc-base:latest
-          podman build -t "${IMAGE}" .
-          podman push "${IMAGE}"
+          sudo podman build -t "${IMAGE}" .
+          sudo podman push "${IMAGE}"
           sudo rm -rf /mnt/vartmp/*
 
       - name: Build desktop
         run: |
           set -euxo pipefail
           IMAGE=ghcr.io/${{ github.repository }}/bootc-desktop:latest
-          podman build -t "${IMAGE}" -f Desktop.containerfile .
-          podman push "${IMAGE}"
+          sudo podman build -t "${IMAGE}" -f Desktop.containerfile .
+          sudo podman push "${IMAGE}"
           sudo rm -rf /mnt/vartmp/*
 
       - name: Rechunk desktop
@@ -84,14 +84,18 @@ jobs:
           sudo podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           # push a second time to preserve layer annotations
           sudo podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+
+          # cleanup
+          sudo podman rmi ghcr.io/${{ github.repository }}/bootc-desktop:latest
+          sudo podman rmi ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           sudo rm -rf /mnt/vartmp/*
 
       - name: Build thinkpad
         run: |
           set -euxo pipefail
           IMAGE=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest
-          podman build -t "${IMAGE}" -f Thinkpad.containerfile .
-          podman push "${IMAGE}"
+          sudo podman build -t "${IMAGE}" -f Thinkpad.containerfile .
+          sudo podman push "${IMAGE}"
           sudo rm -rf /mnt/vartmp/*
 
       - name: Rechunk thinkpad
@@ -107,4 +111,3 @@ jobs:
           sudo podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
           # push a second time to preserve layer annotations
           sudo podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
-          sudo rm -rf /mnt/vartmp/*
