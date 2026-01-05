@@ -61,6 +61,7 @@ jobs:
           IMAGE=ghcr.io/${{ github.repository }}/bootc-base:latest
           podman build -t "${IMAGE}" .
           podman push "${IMAGE}"
+          sudo rm -rf /mnt/vartmp/*
 
       - name: Build desktop
         run: |
@@ -68,6 +69,7 @@ jobs:
           IMAGE=ghcr.io/${{ github.repository }}/bootc-desktop:latest
           podman build -t "${IMAGE}" -f Desktop.containerfile .
           podman push "${IMAGE}"
+          sudo rm -rf /mnt/vartmp/*
 
       - name: Rechunk desktop
         run: |
@@ -82,6 +84,7 @@ jobs:
           sudo podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
           # push a second time to preserve layer annotations
           sudo podman push ghcr.io/${{ github.repository }}/bootc-desktop:chunked
+          sudo rm -rf /mnt/vartmp/*
 
       - name: Build thinkpad
         run: |
@@ -89,6 +92,7 @@ jobs:
           IMAGE=ghcr.io/${{ github.repository }}/bootc-thinkpad:latest
           podman build -t "${IMAGE}" -f Thinkpad.containerfile .
           podman push "${IMAGE}"
+          sudo rm -rf /mnt/vartmp/*
 
       - name: Rechunk thinkpad
         run: |
@@ -103,3 +107,4 @@ jobs:
           sudo podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
           # push a second time to preserve layer annotations
           sudo podman push ghcr.io/${{ github.repository }}/bootc-thinkpad:chunked
+          sudo rm -rf /mnt/vartmp/*
