@@ -130,8 +130,9 @@ function detect_state_from_terminal() {
         return
     fi
 
-    # Check for idle state (just the prompt)
-    if echo "$content" | tail -3 | grep -qE "^>\s*$"; then
+    # Check for idle state (prompt visible, possibly with user typing)
+    # The > prompt appears when Claude is waiting for input
+    if echo "$content" | grep -qE "^>"; then
         echo "idle"
         return
     fi
@@ -180,10 +181,13 @@ function get_claude_status() {
     local terminal_state
     terminal_state=$(detect_state_from_terminal "$claude_pane")
 
-    # Combine states: terminal state takes priority for action prompts
+    # Combine states: terminal state takes priority for action and idle
+    # (terminal shows real-time state, log may be stale)
     local final_state="$log_state"
     if [[ "$terminal_state" == "action" ]]; then
         final_state="action"
+    elif [[ "$terminal_state" == "idle" ]]; then
+        final_state="idle"
     elif [[ "$log_state" == "unknown" ]]; then
         final_state="$terminal_state"
     fi

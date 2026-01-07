@@ -1,4 +1,15 @@
+# Build stage for bootc from main branch
+FROM quay.io/ckyrouac/toolbox-dev AS bootc-builder
+RUN dnf install -y rust cargo && dnf clean all
+RUN git clone --depth 1 https://github.com/containers/bootc.git /bootc-src
+WORKDIR /bootc-src
+RUN cargo build --release
+
+# Main stage
 FROM quay.io/fedora/fedora-bootc:43
+
+# Copy bootc binary built from main branch
+COPY --from=bootc-builder /bootc-src/target/release/bootc /usr/bin/bootc
 
 COPY ./fonts/UbuntuMono /usr/share/fonts
 COPY ./fonts/JetBrainsMonoNerdFont /usr/share/fonts
