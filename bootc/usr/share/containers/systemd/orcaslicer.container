@@ -5,6 +5,7 @@ Wants=network-online.target
 
 [Container]
 Image=quay.io/ckyrouac/orcaslicer:latest
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
 PublishPort=3000:3000
 PublishPort=3001:3001
 Environment=PUID=1000
