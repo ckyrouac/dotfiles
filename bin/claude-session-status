@@ -1,0 +1,217 @@
+#!/usr/bin/env bash
+#
+# claude-session-status - Get Claude Code session status for a tmux session
+#
+# Usage: claude-session-status <tmux-session-name>
+#
+# Returns status codes:
+#   [A] - Needs Action (Claude is prompting for input/permission)
+#   [I] - Idle (Claude completed task, waiting for new prompt)
+#   [T] - Thinking (Claude is processing)
+#   [E] - Executing (Claude is running a tool)
+#   [X] - Exited (No Claude running in session)
+#   (empty) - No session or error
+#
+
+set -euo pipefail
+
+CLAUDE_DIR="$HOME/.claude"
+
+function usage() {
+    echo "Usage: claude-session-status <tmux-session-name>"
+    echo ""
+    echo "Returns Claude Code status for a tmux session's window 1"
+}
+
+function get_session_dir_from_cwd() {
+    local cwd="$1"
+    # Convert path to Claude's directory naming: /var/home/chris/projects/dotfiles -> -var-home-chris-projects-dotfiles
+    echo "$cwd" | sed 's|^/||; s|/|-|g; s|^|-|'
+}
+
+function find_latest_session_file() {
+    local project_dir="$1"
+    local claude_project_dir="$CLAUDE_DIR/projects/$project_dir"
+
+    if [[ ! -d "$claude_project_dir" ]]; then
+        return 1
+    fi
+
+    # Find most recently modified session file
+    find "$claude_project_dir" -name "*.jsonl" -type f -printf '%T@ %p\n' 2>/dev/null | \
+        sort -rn | head -1 | cut -d' ' -f2-
+}
+
+function get_last_log_entry() {
+    local session_file="$1"
+    tail -1 "$session_file" 2>/dev/null
+}
+
+function detect_state_from_log() {
+    local last_entry="$1"
+
+    if [[ -z "$last_entry" ]]; then
+        echo "unknown"
+        return
+    fi
+
+    local entry_type
+    entry_type=$(echo "$last_entry" | jq -r '.type // empty' 2>/dev/null)
+
+    case "$entry_type" in
+        "user")
+            # User sent a message, Claude should be thinking or executing
+            local content_type
+            content_type=$(echo "$last_entry" | jq -r '.message.content[0].type // empty' 2>/dev/null)
+            if [[ "$content_type" == "tool_result" ]]; then
+                echo "executing"
+            else
+                echo "thinking"
+            fi
+            ;;
+        "assistant")
+            # Check if there's a pending tool call or question
+            local has_tool_use
+            has_tool_use=$(echo "$last_entry" | jq -r '.message.content[]? | select(.type == "tool_use") | .name' 2>/dev/null | head -1)
+
+            if [[ -n "$has_tool_use" ]]; then
+                if [[ "$has_tool_use" == "AskUserQuestion" ]]; then
+                    echo "action"
+                else
+                    echo "executing"
+                fi
+            else
+                local stop_reason
+                stop_reason=$(echo "$last_entry" | jq -r '.message.stop_reason // empty' 2>/dev/null)
+                if [[ "$stop_reason" == "end_turn" ]]; then
+                    echo "idle"
+                else
+                    echo "thinking"
+                fi
+            fi
+            ;;
+        *)
+            echo "unknown"
+            ;;
+    esac
+}
+
+function detect_state_from_terminal() {
+    local pane_id="$1"
+    local content
+    content=$(tmux capture-pane -t "$pane_id" -p 2>/dev/null | tail -20)
+
+    if [[ -z "$content" ]]; then
+        echo "unknown"
+        return
+    fi
+
+    # Check for permission/action prompts (highest priority)
+    if echo "$content" | grep -qE "Allow\?|Esc to (cancel|interrupt)|\(Y/n\)|\[Y/n\]|Press Enter"; then
+        echo "action"
+        return
+    fi
+
+    # Check for question prompts from AskUserQuestion
+    if echo "$content" | grep -qE "^\s*[0-9]+\)|\[ \]|Select.*:$"; then
+        echo "action"
+        return
+    fi
+
+    # Check for thinking/processing indicators
+    if echo "$content" | grep -qE "Thinking|Inferring|⠋|⠙|⠹|⠸|⠼|⠴|⠦|⠧|⠇|⠏"; then
+        echo "thinking"
+        return
+    fi
+
+    # Check for tool execution
+    if echo "$content" | grep -qE "Running|Executing|█"; then
+        echo "executing"
+        return
+    fi
+
+    # Check for idle state (just the prompt)
+    if echo "$content" | tail -3 | grep -qE "^>\s*$"; then
+        echo "idle"
+        return
+    fi
+
+    echo "unknown"
+}
+
+function get_claude_status() {
+    local session_name="$1"
+
+    # Check if session exists
+    if ! tmux has-session -t "$session_name" 2>/dev/null; then
+        echo ""
+        return
+    fi
+
+    # Find claude pane in window 1
+    local claude_pane
+    claude_pane=$(tmux list-panes -t "$session_name:1" -F "#{pane_id} #{pane_current_command}" 2>/dev/null | \
+        grep -m1 "claude" | awk '{print $1}')
+
+    if [[ -z "$claude_pane" ]]; then
+        echo "[X]"
+        return
+    fi
+
+    # Get the working directory of the pane
+    local pane_cwd
+    pane_cwd=$(tmux display-message -t "$claude_pane" -p "#{pane_current_path}" 2>/dev/null)
+
+    # Try session file first for more reliable state detection
+    local project_dir
+    project_dir=$(get_session_dir_from_cwd "$pane_cwd")
+
+    local session_file
+    session_file=$(find_latest_session_file "$project_dir")
+
+    local log_state="unknown"
+    if [[ -n "$session_file" ]]; then
+        local last_entry
+        last_entry=$(get_last_log_entry "$session_file")
+        log_state=$(detect_state_from_log "$last_entry")
+    fi
+
+    # Also check terminal for real-time state
+    local terminal_state
+    terminal_state=$(detect_state_from_terminal "$claude_pane")
+
+    # Combine states: terminal state takes priority for action prompts
+    local final_state="$log_state"
+    if [[ "$terminal_state" == "action" ]]; then
+        final_state="action"
+    elif [[ "$log_state" == "unknown" ]]; then
+        final_state="$terminal_state"
+    fi
+
+    # Map to status codes
+    case "$final_state" in
+        "action")
+            echo "[A]"
+            ;;
+        "idle")
+            echo "[I]"
+            ;;
+        "thinking")
+            echo "[T]"
+            ;;
+        "executing")
+            echo "[E]"
+            ;;
+        *)
+            echo "[?]"
+            ;;
+    esac
+}
+
+# Main
+if [[ $# -lt 1 ]]; then
+    usage
+    exit 1
+fi
+
+get_claude_status "$1"

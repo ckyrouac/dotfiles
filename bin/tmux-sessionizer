@@ -87,6 +87,30 @@ if [ "$num_switches" -gt 1 ]; then
     exit 1
 fi
 
+# Get sessions with Claude status appended
+# Status codes: [A]=Action needed, [I]=Idle, [T]=Thinking, [E]=Executing, [X]=Exited
+function get_sessions_with_status()
+{
+    local sessions
+    sessions=$(tmux list-sessions -F "#S" 2>/dev/null)
+
+    while IFS= read -r session; do
+        local claude_status
+        claude_status=$(claude-session-status "$session" 2>/dev/null)
+        if [[ -n "$claude_status" ]]; then
+            printf "%-30s %s\n" "$session" "$claude_status"
+        else
+            echo "$session"
+        fi
+    done <<< "$sessions"
+}
+
+# Extract session name from selection (strip status suffix)
+function strip_status_suffix()
+{
+    echo "$1" | sed 's/\s*\[[AITEX?]\]\s*$//' | xargs
+}
+
 function init_session()
 {
     dir=$1
@@ -155,14 +179,21 @@ if [ "$ALL" = true ]; then
     switch-session "$switch"
     exit 0
 elif [ "$EXISTING" = true ]; then
-    selected=$(tmux list-sessions -F "#S" | fzf-tmux -p --reverse)
+    sessions_with_status=$(get_sessions_with_status)
+    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p --reverse)
+    if [[ -z "$selected_with_status" ]]; then
+        exit 0
+    fi
+    selected=$(strip_status_suffix "$selected_with_status")
     switch-session "$selected"
     exit 0
 elif [ "$KILL" = true ]; then
-    selected=$(tmux list-sessions -F "#S" | fzf-tmux -p --reverse)
-    if [[ -z $selected ]]; then
+    sessions_with_status=$(get_sessions_with_status)
+    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p --reverse)
+    if [[ -z "$selected_with_status" ]]; then
         exit 0
     fi
+    selected=$(strip_status_suffix "$selected_with_status")
     tmux kill-session -t "$selected"
     exit 0
 elif [ "$SESSION" = true ]; then
