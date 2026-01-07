@@ -1,8 +1,10 @@
 # Build stage for bootc from main branch
-FROM quay.io/ckyrouac/toolbox-dev AS bootc-builder
-RUN dnf install -y rust cargo && dnf clean all
+FROM quay.io/fedora/fedora-bootc:43 AS bootc-builder
+RUN dnf install -y git rust cargo dnf5-command\(builddep\) && dnf clean all
 RUN git clone --depth 1 https://github.com/containers/bootc.git /bootc-src
+RUN cd bootc-src && /bootc-src/ci/installdeps.sh
 WORKDIR /bootc-src
+ENV CARGO_HOME=/tmp/cargo
 RUN cargo build --release
 
 # Main stage
