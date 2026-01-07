@@ -88,7 +88,7 @@ if [ "$num_switches" -gt 1 ]; then
 fi
 
 # Get sessions with Claude status appended
-# Status codes: [A]=Action needed, [I]=Idle, [T]=Thinking, [E]=Executing, [X]=Exited
+# Status codes: [!]=Action needed, [I]=Idle, [W]=Working
 function get_sessions_with_status()
 {
     local sessions
@@ -108,7 +108,7 @@ function get_sessions_with_status()
 # Extract session name from selection (strip status suffix)
 function strip_status_suffix()
 {
-    echo "$1" | sed 's/\s*\[[AITEX?]\]\s*$//' | xargs
+    echo "$1" | sed 's/\s*\[[!IW]\]\s*$//' | xargs
 }
 
 function init_session()

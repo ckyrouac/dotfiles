@@ -5,15 +5,14 @@
 # Usage: claude-session-status <tmux-session-name>
 #
 # Returns status codes:
-#   [A] - Needs Action (Claude is prompting for input/permission)
+#   [!] - Needs Action (Claude is prompting for input/permission)
 #   [I] - Idle (Claude completed task, waiting for new prompt)
-#   [T] - Thinking (Claude is processing)
-#   [E] - Executing (Claude is running a tool)
-#   [X] - Exited (No Claude running in session)
-#   (empty) - No session or error
+#   [W] - Working (Claude is thinking or executing)
+#   (empty) - No Claude running or no session
 #
 
-set -euo pipefail
+set -uo pipefail
+# Note: not using -e because grep returns 1 on no match, which is expected
 
 CLAUDE_DIR="$HOME/.claude"
 
@@ -48,11 +47,24 @@ function get_last_log_entry() {
 }
 
 function detect_state_from_log() {
-    local last_entry="$1"
+    local session_file="$1"
+    local last_entry="$2"
 
     if [[ -z "$last_entry" ]]; then
         echo "unknown"
         return
+    fi
+
+    # Check if file was modified in last 5 seconds (actively working)
+    local now file_mtime age
+    now=$(date +%s)
+    file_mtime=$(stat -c %Y "$session_file" 2>/dev/null)
+    if [[ -n "$file_mtime" ]]; then
+        age=$((now - file_mtime))
+        if [[ $age -lt 5 ]]; then
+            echo "thinking"
+            return
+        fi
     fi
 
     local entry_type
@@ -86,7 +98,9 @@ function detect_state_from_log() {
                 if [[ "$stop_reason" == "end_turn" ]]; then
                     echo "idle"
                 else
-                    echo "thinking"
+                    # No end_turn but file is old - Claude finished, just missing end_turn
+                    # (can happen with streaming entries)
+                    echo "idle"
                 fi
             fi
             ;;
@@ -119,7 +133,11 @@ function detect_state_from_terminal() {
     fi
 
     # Check for thinking/processing indicators
-    if echo "$content" | grep -qE "Thinking|Inferring|⠋|⠙|⠹|⠸|⠼|⠴|⠦|⠧|⠇|⠏"; then
+    # Only check last 5 lines for status indicators (not conversation history)
+    local status_lines
+    status_lines=$(echo "$content" | tail -5)
+    # Claude shows "* Word…" or "✢ Word…" with "(esc to interrupt)" when thinking
+    if echo "$status_lines" | grep -qE "\(esc to interrupt\)|^[*✢] .*…|⠋|⠙|⠹|⠸|⠼|⠴|⠦|⠧|⠇|⠏"; then
         echo "thinking"
         return
     fi
@@ -155,7 +173,7 @@ function get_claude_status() {
         grep -m1 "claude" | awk '{print $1}')
 
     if [[ -z "$claude_pane" ]]; then
-        echo "[X]"
+        echo ""
         return
     fi
 
@@ -174,40 +192,43 @@ function get_claude_status() {
     if [[ -n "$session_file" ]]; then
         local last_entry
         last_entry=$(get_last_log_entry "$session_file")
-        log_state=$(detect_state_from_log "$last_entry")
+        log_state=$(detect_state_from_log "$session_file" "$last_entry")
     fi
 
     # Also check terminal for real-time state
     local terminal_state
     terminal_state=$(detect_state_from_terminal "$claude_pane")
 
-    # Combine states: terminal state takes priority for action and idle
-    # (terminal shows real-time state, log may be stale)
-    local final_state="$log_state"
+    # Combine states:
+    # - Terminal "action" highest priority (real-time prompt detection)
+    # - Log "thinking" beats terminal "idle" (file activity means still working)
+    # - Terminal "idle" if log agrees (no recent activity)
+    # - Otherwise use terminal state, fall back to log
+    local final_state="$terminal_state"
     if [[ "$terminal_state" == "action" ]]; then
         final_state="action"
+    elif [[ "$log_state" == "thinking" ]]; then
+        # File was recently modified, Claude is still working
+        final_state="thinking"
     elif [[ "$terminal_state" == "idle" ]]; then
         final_state="idle"
-    elif [[ "$log_state" == "unknown" ]]; then
-        final_state="$terminal_state"
+    elif [[ "$terminal_state" == "unknown" ]]; then
+        final_state="$log_state"
     fi
 
     # Map to status codes
     case "$final_state" in
         "action")
-            echo "[A]"
+            echo "[!]"
             ;;
         "idle")
             echo "[I]"
             ;;
-        "thinking")
-            echo "[T]"
-            ;;
-        "executing")
-            echo "[E]"
+        "thinking"|"executing")
+            echo "[W]"
             ;;
         *)
-            echo "[?]"
+            echo ""
             ;;
     esac
 }
