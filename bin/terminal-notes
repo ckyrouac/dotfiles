@@ -1,0 +1,2 @@
+#!/bin/bash
+kitty --name "terminal-notes" --class="kitty" -T "terminal-notes" nvim -c "Notes"
