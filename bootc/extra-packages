@@ -33,8 +33,8 @@ gtk4
 htop
 just
 keepassxc
-kitty
 kernel-devel
+kitty
 lazygit
 libX11-devel
 libXScrnSaver
@@ -53,6 +53,7 @@ man-pages
 mosh
 neovim
 nu
+nvidia-container-toolkit.x86_64
 nvtop
 obs
 pavucontrol
