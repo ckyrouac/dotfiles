@@ -1,2 +1,2 @@
 #!/bin/bash
-kitty --name "terminal-notes" --class="kitty" -T "terminal-notes" --directory ~/Insync/chriskyrouac@gmail.com/Google\ Drive/Sync/notes.nvim/ nvim -c "Notes"
+kitty --name "terminal-notes" --class="kitty" -T "terminal-notes" --start-as fullscreen --directory ~/Insync/chriskyrouac@gmail.com/Google\ Drive/Sync/notes.nvim/ nvim -c "Notes"
