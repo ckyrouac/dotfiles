@@ -167,6 +167,9 @@ return {
                 -- Sort files for consistent ordering
                 table.sort(file_list)
 
+                -- Close all open buffers first
+                vim.cmd("%bdelete!")
+
                 -- Open all files
                 for i, file in ipairs(file_list) do
                   local full_path = vim.fn.getcwd() .. "/" .. file
