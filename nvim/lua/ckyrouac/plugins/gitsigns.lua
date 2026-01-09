@@ -61,14 +61,19 @@ return {
 
           gs.change_base(default_branch, true)
 
-          -- Get commit message for the default branch
+          -- Get commit message and refs for the default branch
           local msg_handle = io.popen("git log -1 --format='%s' " .. default_branch .. " 2>/dev/null")
           local commit_msg = msg_handle:read("*a"):gsub("%s+$", "")
           msg_handle:close()
 
+          local refs_handle = io.popen("git log -1 --format='%D' " .. default_branch .. " 2>/dev/null")
+          local refs = refs_handle:read("*a"):gsub("%s+$", "")
+          refs_handle:close()
+
           _G.gitsigns_base = {
             ref = default_branch,
-            message = commit_msg
+            message = commit_msg,
+            refs = refs
           }
         end
 
@@ -80,14 +85,19 @@ return {
               local base_ref = "HEAD~" .. num
               gs.change_base(base_ref, true)
 
-              -- Get commit message for HEAD~n
+              -- Get commit message and refs for HEAD~n
               local msg_handle = io.popen("git log -1 --format='%s' " .. base_ref .. " 2>/dev/null")
               local commit_msg = msg_handle:read("*a"):gsub("%s+$", "")
               msg_handle:close()
 
+              local refs_handle = io.popen("git log -1 --format='%D' " .. base_ref .. " 2>/dev/null")
+              local refs = refs_handle:read("*a"):gsub("%s+$", "")
+              refs_handle:close()
+
               _G.gitsigns_base = {
                 ref = base_ref,
-                message = commit_msg
+                message = commit_msg,
+                refs = refs
               }
             else
               vim.notify("Invalid number of commits", vim.log.levels.ERROR)

@@ -50,6 +50,10 @@ return {
           if #message > max_length then
             message = message:sub(1, max_length) .. "..."
           end
+          local refs = _G.gitsigns_base.refs or ""
+          if refs ~= "" then
+            return string.format("base: (%s) %s", refs, message)
+          end
           return string.format("base: %s", message)
         end
         return ""

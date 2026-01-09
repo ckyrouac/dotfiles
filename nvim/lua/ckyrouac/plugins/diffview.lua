@@ -193,14 +193,19 @@ return {
                     -- Set gitsigns base to selected commit
                     gs.change_base(selection.value, true)
 
-                    -- Get commit message for display
+                    -- Get commit message and refs for display
                     local msg_handle = io.popen("git log -1 --format='%s' " .. selection.value .. " 2>/dev/null")
                     local commit_msg = msg_handle:read("*a"):gsub("%s+$", "")
                     msg_handle:close()
 
+                    local refs_handle = io.popen("git log -1 --format='%D' " .. selection.value .. " 2>/dev/null")
+                    local refs = refs_handle:read("*a"):gsub("%s+$", "")
+                    refs_handle:close()
+
                     _G.gitsigns_base = {
                       ref = selection.value,
-                      message = commit_msg
+                      message = commit_msg,
+                      refs = refs
                     }
                   end
                 end
