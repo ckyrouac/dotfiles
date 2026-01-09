@@ -182,6 +182,29 @@ return {
                   end
                 end
 
+                -- Set gitsigns base to match the selected commit
+                local gs = package.loaded.gitsigns
+                if gs then
+                  if selection.value == nil then
+                    -- Local changes: reset gitsigns base
+                    gs.reset_base(true)
+                    _G.gitsigns_base = nil
+                  else
+                    -- Set gitsigns base to selected commit
+                    gs.change_base(selection.value, true)
+
+                    -- Get commit message for display
+                    local msg_handle = io.popen("git log -1 --format='%s' " .. selection.value .. " 2>/dev/null")
+                    local commit_msg = msg_handle:read("*a"):gsub("%s+$", "")
+                    msg_handle:close()
+
+                    _G.gitsigns_base = {
+                      ref = selection.value,
+                      message = commit_msg
+                    }
+                  end
+                end
+
                 vim.notify("Opened " .. #file_list .. " files", vim.log.levels.INFO)
               end)
               return true
