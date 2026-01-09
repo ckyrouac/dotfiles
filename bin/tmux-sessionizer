@@ -146,37 +146,21 @@ function get_sessions_with_status()
         fi
     done <<< "$sessions"
 
-    # Now format output with current session at the end
-    local other_sessions=""
-    local current_session_line=""
-
+    # Output sessions, excluding current session
     while IFS= read -r session; do
-        local claude_status line
+        # Skip current session
+        if [[ "$session" == "$current_session" ]]; then
+            continue
+        fi
+
+        local claude_status
         claude_status=$(claude-session-status "$session" 2>/dev/null)
         if [[ -n "$claude_status" ]]; then
-            line=$(printf "%-30s %s\n" "$session" "$claude_status")
+            printf "%-30s %s\n" "$session" "$claude_status"
         else
-            line="$session"
-        fi
-
-        if [[ "$session" == "$current_session" ]]; then
-            current_session_line="$line"
-        else
-            if [[ -n "$other_sessions" ]]; then
-                other_sessions="$other_sessions"$'\n'"$line"
-            else
-                other_sessions="$line"
-            fi
+            echo "$session"
         fi
     done <<< "$sorted_sessions"
-
-    # Output other sessions first, then current session at the end
-    if [[ -n "$other_sessions" ]]; then
-        echo "$other_sessions"
-    fi
-    if [[ -n "$current_session_line" ]]; then
-        echo "$current_session_line"
-    fi
 }
 
 # Extract session name from selection (strip status suffix)
