@@ -4,6 +4,18 @@
 #
 
 SESSION_HISTORY_FILE="$HOME/.tmux_session_history"
+
+# Calculate popup width: 20% of terminal, minimum 80 columns
+function popup_width() {
+    local term_width width
+    term_width=$(tput cols 2>/dev/null || echo 200)
+    width=$((term_width * 20 / 100))
+    if [ "$width" -lt 50 ]; then
+        width=50
+    fi
+    echo "$width"
+}
+
 function usage() {
   echo -e "Usage:\n"
   echo -e "tmux-sessionizer <switch>\n"
@@ -239,12 +251,12 @@ fi
 if [ "$ALL" = true ]; then
     worktrees=$(find ~/worktrees -mindepth 2 -maxdepth 2 -type d)
     selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
-    switch=$(echo -e "$selected\n$worktrees" | fzf-tmux -p --reverse)
+    switch=$(echo -e "$selected\n$worktrees" | fzf-tmux -p "$(popup_width),50%" --reverse)
     switch-session "$switch"
     exit 0
 elif [ "$EXISTING" = true ]; then
     sessions_with_status=$(get_sessions_with_status)
-    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p --reverse)
+    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p "$(popup_width),50%" --reverse)
     if [[ -z "$selected_with_status" ]]; then
         exit 0
     fi
@@ -253,7 +265,7 @@ elif [ "$EXISTING" = true ]; then
     exit 0
 elif [ "$KILL" = true ]; then
     sessions_with_status=$(get_sessions_with_status)
-    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p --reverse)
+    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p "$(popup_width),50%" --reverse)
     if [[ -z "$selected_with_status" ]]; then
         exit 0
     fi
