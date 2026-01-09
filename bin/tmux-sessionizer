@@ -2,6 +2,8 @@
 #
 # Based off https://github.com/ThePrimeagen/.dotfiles/blob/602019e902634188ab06ea31251c01c1a43d1621/bin/.local/scripts/tmux-sessionizer
 #
+
+SESSION_HISTORY_FILE="$HOME/.tmux_session_history"
 function usage() {
   echo -e "Usage:\n"
   echo -e "tmux-sessionizer <switch>\n"
@@ -87,22 +89,94 @@ if [ "$num_switches" -gt 1 ]; then
     exit 1
 fi
 
-# Get sessions with Claude status appended
+# Record session to history file (most recent at top)
+function record_session_history()
+{
+    local session="$1"
+    if [[ -z "$session" ]]; then
+        return
+    fi
+
+    # Create file if it doesn't exist
+    touch "$SESSION_HISTORY_FILE"
+
+    # Remove session from history if it exists, then add to top
+    local temp_file
+    temp_file=$(mktemp)
+    echo "$session" > "$temp_file"
+    grep -v "^${session}$" "$SESSION_HISTORY_FILE" >> "$temp_file" 2>/dev/null
+    mv "$temp_file" "$SESSION_HISTORY_FILE"
+}
+
+# Get sessions with Claude status appended, sorted by most recently used
 # Status codes: [!]=Action needed, [I]=Idle, [W]=Working
+# Current session is placed at the end since user is switching away from it
 function get_sessions_with_status()
 {
-    local sessions
+    local sessions current_session
+    current_session=$(tmux display-message -p '#S' 2>/dev/null)
     sessions=$(tmux list-sessions -F "#S" 2>/dev/null)
 
+    # Build sorted list based on history file
+    local sorted_sessions=""
+    local seen_sessions=""
+
+    # First, add sessions in history order (if they still exist)
+    if [[ -f "$SESSION_HISTORY_FILE" ]]; then
+        while IFS= read -r hist_session; do
+            if echo "$sessions" | grep -q "^${hist_session}$"; then
+                if [[ -n "$sorted_sessions" ]]; then
+                    sorted_sessions="$sorted_sessions"$'\n'"$hist_session"
+                else
+                    sorted_sessions="$hist_session"
+                fi
+                seen_sessions="$seen_sessions|^${hist_session}$"
+            fi
+        done < "$SESSION_HISTORY_FILE"
+    fi
+
+    # Add any sessions not in history (new sessions)
     while IFS= read -r session; do
-        local claude_status
-        claude_status=$(claude-session-status "$session" 2>/dev/null)
-        if [[ -n "$claude_status" ]]; then
-            printf "%-30s %s\n" "$session" "$claude_status"
-        else
-            echo "$session"
+        if [[ -z "$seen_sessions" ]] || ! echo "$session" | grep -qE "${seen_sessions:1}"; then
+            if [[ -n "$sorted_sessions" ]]; then
+                sorted_sessions="$sorted_sessions"$'\n'"$session"
+            else
+                sorted_sessions="$session"
+            fi
         fi
     done <<< "$sessions"
+
+    # Now format output with current session at the end
+    local other_sessions=""
+    local current_session_line=""
+
+    while IFS= read -r session; do
+        local claude_status line
+        claude_status=$(claude-session-status "$session" 2>/dev/null)
+        if [[ -n "$claude_status" ]]; then
+            line=$(printf "%-30s %s\n" "$session" "$claude_status")
+        else
+            line="$session"
+        fi
+
+        if [[ "$session" == "$current_session" ]]; then
+            current_session_line="$line"
+        else
+            if [[ -n "$other_sessions" ]]; then
+                other_sessions="$other_sessions"$'\n'"$line"
+            else
+                other_sessions="$line"
+            fi
+        fi
+    done <<< "$sorted_sessions"
+
+    # Output other sessions first, then current session at the end
+    if [[ -n "$other_sessions" ]]; then
+        echo "$other_sessions"
+    fi
+    if [[ -n "$current_session_line" ]]; then
+        echo "$current_session_line"
+    fi
 }
 
 # Extract session name from selection (strip status suffix)
@@ -130,6 +204,12 @@ function switch-session()
 
     if [[ -z $selected ]]; then
         exit 0
+    fi
+
+    # Record current session before switching
+    if [[ -n $TMUX ]]; then
+        current_session=$(tmux display-message -p '#S' 2>/dev/null)
+        record_session_history "$current_session"
     fi
 
     type="existing"
