@@ -251,12 +251,12 @@ fi
 if [ "$ALL" = true ]; then
     worktrees=$(find ~/worktrees -mindepth 2 -maxdepth 2 -type d)
     selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
-    switch=$(echo -e "$selected\n$worktrees" | fzf-tmux -p "$(popup_width),50%" --reverse)
+    switch=$(echo -e "$selected\n$worktrees" | fzf-tmux -p "$(popup_width),50%" --reverse --border-label=" Projects ")
     switch-session "$switch"
     exit 0
 elif [ "$EXISTING" = true ]; then
     sessions_with_status=$(get_sessions_with_status)
-    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p "$(popup_width),50%" --reverse)
+    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p "$(popup_width),50%" --reverse --border-label=" Sessions ")
     if [[ -z "$selected_with_status" ]]; then
         exit 0
     fi
@@ -265,7 +265,7 @@ elif [ "$EXISTING" = true ]; then
     exit 0
 elif [ "$KILL" = true ]; then
     sessions_with_status=$(get_sessions_with_status)
-    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p "$(popup_width),50%" --reverse)
+    selected_with_status=$(echo "$sessions_with_status" | fzf-tmux -p "$(popup_width),50%" --reverse --border-label=" Kill Session ")
     if [[ -z "$selected_with_status" ]]; then
         exit 0
     fi
