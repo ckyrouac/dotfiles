@@ -1,7 +1,7 @@
-# Build stage for bootc from main branch
+# Build stage for bootc from lbi-upgrade branch
 FROM quay.io/fedora/fedora-bootc:43 AS bootc-builder
 RUN dnf install -y git rust cargo dnf5-command\(builddep\) && dnf clean all
-RUN git clone --depth 1 https://github.com/containers/bootc.git /bootc-src
+RUN git clone --depth 1 --branch lbi-upgrade https://github.com/ckyrouac/bootc.git /bootc-src
 RUN cd bootc-src && /bootc-src/ci/installdeps.sh
 WORKDIR /bootc-src
 ENV CARGO_HOME=/tmp/cargo
