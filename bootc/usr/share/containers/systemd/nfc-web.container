@@ -1,0 +1,20 @@
+[Unit]
+Description=NFC Web - Mobile-friendly notes interface
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=quay.io/ckyrouac/nfc-web:latest
+GlobalArgs=--storage-opt=additionalimagestore=/usr/lib/bootc/storage
+PublishPort=3000:3000
+Environment=NFC_NOTES_DIR=/notes
+Environment=NFC_PORT=3000
+Volume=/var/home/chris/notes.nvim:/notes:Z
+AutoUpdate=registry
+
+[Service]
+Restart=always
+TimeoutStartSec=900
+
+[Install]
+WantedBy=multi-user.target default.target

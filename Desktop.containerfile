@@ -6,6 +6,10 @@ COPY ./bootc/usr/share/containers/systemd/orcaslicer.container /usr/share/contai
 RUN mkdir -p /usr/lib/bootc/bound-images.d && \
     ln -s /usr/share/containers/systemd/orcaslicer.container /usr/lib/bootc/bound-images.d/orcaslicer.container
 
+# Add NFC Web as a logically bound container image
+COPY ./bootc/usr/share/containers/systemd/nfc-web.container /usr/share/containers/systemd/nfc-web.container
+RUN ln -s /usr/share/containers/systemd/nfc-web.container /usr/lib/bootc/bound-images.d/nfc-web.container
+
 RUN <<EOF
     set -euxo pipefail
     dnf -y install kmod-nvidia kernel-devel xorg-x11-drv-nvidia-cuda
