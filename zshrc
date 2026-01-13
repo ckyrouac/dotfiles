@@ -33,11 +33,17 @@ zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;32'
 zstyle ':completion:*:processes-names' command 'ps -e -o comm='
 
 function set-prompt () {
-        if [ $KEYMAP = vicmd ]; then
-            echo -ne "\033]12;Yellow\007"
-        else
-            echo -ne "\033]12;Gray\007"
-        fi
+        case $KEYMAP in
+            vicmd)
+                echo -ne "\033]12;Yellow\007"
+                ;;
+            visual)
+                echo -ne "\033]12;Blue\007"
+                ;;
+            *)
+                echo -ne "\033]12;White\007"
+                ;;
+        esac
 }
 
 function zle-line-init zle-keymap-select {
