@@ -12,7 +12,7 @@ RUN ln -s /usr/share/containers/systemd/nfc-web.container /usr/lib/bootc/bound-i
 
 RUN <<EOF
     set -euxo pipefail
-    dnf -y install kmod-nvidia kernel-devel xorg-x11-drv-nvidia-cuda
+    dnf -y install kmod-nvidia kernel-devel xorg-x11-drv-nvidia-cuda nvidia-container-toolkit
     KERNEL_VERSION=$(rpm -q "kernel" --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')
     akmods --force --kernels "$KERNEL_VERSION" --kmod "nvidia"
     systemctl disable akmods.service
