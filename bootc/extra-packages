@@ -53,6 +53,7 @@ man-pages
 mosh
 neovim
 nu
+nvidia-container-toolkit
 nvtop
 obs
 pavucontrol
