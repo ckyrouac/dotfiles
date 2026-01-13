@@ -19,7 +19,7 @@ COPY ./fonts/JetBrainsMonoNerdFont /usr/share/fonts
 COPY ./bootc/etc /etc
 COPY ./bootc/usr /usr
 
-COPY . /dotfiles
+COPY . /usr/share/dotfiles
 
 RUN <<EOF
     set -euxo pipefail
@@ -41,7 +41,7 @@ RUN <<EOF
                 packages=()
             fi
         fi
-    done < /dotfiles/bootc/extra-packages
+    done < /usr/share/dotfiles/bootc/extra-packages
     if [ ${#packages[@]} -gt 0 ]; then
         dnf install -y "${packages[@]}"
         dnf clean all
@@ -64,6 +64,5 @@ RUN <<EOF
     rm /usr/lib/systemd/system/bootc-fetch-apply-updates.service
     rm /usr/lib/systemd/system/bootc-fetch-apply-updates.timer
     rm /usr/lib/systemd/system/default.target.wants/bootc-fetch-apply-updates.timer
-    systemctl enable ostree-state-overlay@dotfiles.service
     dnf clean all
 EOF
