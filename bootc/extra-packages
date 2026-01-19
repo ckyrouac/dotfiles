@@ -19,6 +19,7 @@ gcc
 gcc-c++
 gcolor3
 git-core-doc
+git-lfs
 gitui
 gnome-extensions-app
 gnome-shell-extension-auto-move-windows
@@ -35,6 +36,7 @@ just
 keepassxc
 kernel-devel
 kitty
+langpacks-en_GB
 lazygit
 libX11-devel
 libXScrnSaver
