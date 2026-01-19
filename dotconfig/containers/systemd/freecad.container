@@ -5,7 +5,7 @@ Wants=network-online.target
 
 [Container]
 Image=localhost/freecad:latest
-PublishPort=4001:3000
+PublishPort=4001:3001
 Environment=GDK_SCALE=2
 Environment=GDK_DPI_SCALE=0.50
 Environment=PUID=1000
