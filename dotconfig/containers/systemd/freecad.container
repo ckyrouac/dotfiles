@@ -8,6 +8,7 @@ Image=localhost/freecad:latest
 PublishPort=4001:3001
 Environment=GDK_SCALE=2
 Environment=GDK_DPI_SCALE=0.50
+Environment=QT_SCALE_FACTOR=2
 Environment=PUID=1000
 Environment=PGID=1000
 Volume=%h/.local/share/containers/freecad:/config
