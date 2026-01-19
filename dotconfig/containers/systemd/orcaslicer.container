@@ -1,0 +1,26 @@
+[Unit]
+Description=OrcaSlicer 3D printing slicer with web interface
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=quay.io/ckyrouac/orcaslicer:latest
+PublishPort=3001:3001
+Environment=GDK_SCALE=2
+Environment=GDK_DPI_SCALE=0.50
+Environment=PUID=1000
+Environment=PGID=1000
+Volume=%h/.config/orcaslicer:/config
+Volume=%h/projects/3dprinter:/3dprinter:Z
+PodmanArgs=--shm-size=1gb --gpus all --env-file %t/orcaslicer.env
+AutoUpdate=registry
+
+[Service]
+Restart=always
+TimeoutStartSec=900
+LoadCredential=cf_token:%h/.secrets/orcaslicer-cf-token
+ExecStartPre=/bin/sh -c 'umask 077 && printf "CF_TOKEN=" > %t/orcaslicer.env && cat %d/cf_token >> %t/orcaslicer.env'
+ExecStopPost=/bin/rm -f %t/orcaslicer.env
+
+[Install]
+WantedBy=default.target
