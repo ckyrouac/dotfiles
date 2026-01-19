@@ -1,0 +1,24 @@
+[Unit]
+Description=FreeCAD CAD application with web interface
+After=network-online.target
+Wants=network-online.target
+
+[Container]
+Image=localhost/freecad:latest
+PublishPort=4001:3000
+Environment=GDK_SCALE=2
+Environment=GDK_DPI_SCALE=0.50
+Environment=PUID=1000
+Environment=PGID=1000
+Volume=%h/.local/share/containers/freecad:/config
+PodmanArgs=--shm-size=1gb --gpus all --env-file %t/freecad.env
+
+[Service]
+Restart=always
+TimeoutStartSec=900
+LoadCredential=cf_token:%h/.secrets/freecad-cf-token
+ExecStartPre=/bin/sh -c 'umask 077 && printf "CF_Token=" > %t/freecad.env && cat %d/cf_token >> %t/freecad.env'
+ExecStopPost=/bin/rm -f %t/freecad.env
+
+[Install]
+WantedBy=default.target
