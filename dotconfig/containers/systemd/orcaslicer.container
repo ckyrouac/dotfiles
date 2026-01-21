@@ -10,8 +10,16 @@ Environment=GDK_SCALE=2
 Environment=GDK_DPI_SCALE=0.50
 Environment=PUID=1000
 Environment=PGID=1000
+# NVIDIA environment variables to reduce GPU context contention
+Environment=__GL_YIELD=USLEEP
+Environment=__GL_SYNC_TO_VBLANK=0
+Environment=__GL_THREADED_OPTIMIZATIONS=0
+Environment=__GL_GSYNC_ALLOWED=0
+Environment=__GL_VRR_ALLOWED=0
 Volume=%h/.config/orcaslicer:/config
 Volume=%h/projects/3dprinter:/3dprinter:Z
+# Override Xvfb startup to disable indirect GLX (reduces NVIDIA context contention)
+Volume=%h/.config/container-overrides/svc-xorg-run:/etc/s6-overlay/s6-rc.d/svc-xorg/run:ro
 PodmanArgs=--shm-size=1gb --gpus all --env-file %t/orcaslicer.env
 AutoUpdate=registry
 
