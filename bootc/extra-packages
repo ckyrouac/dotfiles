@@ -28,11 +28,12 @@ gnome-sound-recorder
 gnome-themes-extra
 gnome-tweaks
 gobject-introspection
-google-chrome-stable
 google-chrome-beta
+google-chrome-stable
 google-cloud-cli
 gtk4
 htop
+input-remapper
 just
 keepassxc
 kernel-devel
