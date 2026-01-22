@@ -1,0 +1,8 @@
+[zoom-release]
+name=zoom (release)
+baseurl=https://repo.zoom.us/repo/rpm/release/
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-zoom
+skip_if_unavailable=True
