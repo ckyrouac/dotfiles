@@ -10,6 +10,9 @@ return {
           enhanced_diff_hl = true,
           hooks = {
             diff_buf_read = function(bufnr, ctx)
+              -- Expand all folds in diff buffers
+              vim.opt_local.foldenable = false
+
               -- Get the buffer name to extract the original file path
               local bufname = vim.api.nvim_buf_get_name(bufnr)
 
