@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=OrcaSlicer
-Comment=G-code generator for 3D printers
-Exec=env GDK_SCALE=2 GDK_DPI_SCALE=0.50 /var/home/chris/bin/orca/OrcaSlicer_Linux_AppImage_Ubuntu2404_V2.3.1.AppImage
-Icon=/var/home/chris/.local/share/icons/OrcaSlicer.png
-Terminal=false
-Type=Application
-Categories=Graphics;3DGraphics;Engineering;
-StartupWMClass=OrcaSlicer
