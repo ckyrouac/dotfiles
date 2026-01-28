@@ -8,6 +8,7 @@ Image=quay.io/ckyrouac/orcaslicer:latest
 PublishPort=3001:3001
 Environment=GDK_SCALE=2
 Environment=GDK_DPI_SCALE=0.50
+Environment=QT_SCALE_FACTOR=2
 Environment=PUID=1000
 Environment=PGID=1000
 # NVIDIA environment variables to reduce GPU context contention
