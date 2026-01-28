@@ -31,7 +31,7 @@ export const AppmenuLabel = GObject.registerClass(
       this._label = new St.Label({ y_align: Clutter.ActorAlign.CENTER })
       this._container.add_child(this._label)
 
-      this._spinner = new Animation.Spinner(16, { animate: true, hideOnStop: true })
+      this._spinner = new Animation.Spinner(14, { animate: true, hideOnStop: true })
       this._container.add_child(this._spinner)
 
       const menu = new AppMenu(this)
@@ -71,7 +71,10 @@ export const AppmenuLabel = GObject.registerClass(
     }
 
     setVisible(visible) {
-      this.container.visible = visible
+      if (this.container.visible != visible) {
+        this.container.visible = visible
+        this.set_hover(false)
+      }
     }
 
     toggleIcon(hidden) {
@@ -150,6 +153,7 @@ export const TrayIndicator = GObject.registerClass(
 
       this._indicators.add_child(ibtn)
 
+      ibtn.clear_actions()
       icon.connect('destroy', () => { ibtn.destroy() })
       ibtn.connect('button-release-event', (actor, event) => icon.click(event))
 
