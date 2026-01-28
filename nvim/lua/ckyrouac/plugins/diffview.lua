@@ -8,6 +8,49 @@ return {
     config = function ()
         require("diffview").setup({
           enhanced_diff_hl = true,
+          hooks = {
+            diff_buf_read = function(bufnr, ctx)
+              -- Get the buffer name to extract the original file path
+              local bufname = vim.api.nvim_buf_get_name(bufnr)
+
+              -- Extract the original file path from diffview buffer name
+              -- Format is like: diffview:///path/to/repo/.git/xxx/file.lua
+              local original_path = bufname:match("%.git/.-/(.+)$")
+              if not original_path then
+                -- Try alternate pattern for working tree files
+                original_path = bufname:match("/([^/]+)$")
+              end
+
+              if original_path then
+                -- Detect filetype from the original filename
+                local ft = vim.filetype.match({ filename = original_path, buf = bufnr })
+                if ft then
+                  vim.bo[bufnr].filetype = ft
+
+                  -- Try to attach LSP clients that handle this filetype
+                  vim.schedule(function()
+                    if not vim.api.nvim_buf_is_valid(bufnr) then return end
+
+                    -- Get all active LSP clients
+                    local clients = vim.lsp.get_clients()
+                    for _, client in ipairs(clients) do
+                      -- Check if this client handles the filetype
+                      local dominated_filetypes = client.config.filetypes or {}
+                      for _, supported_ft in ipairs(dominated_filetypes) do
+                        if supported_ft == ft then
+                          -- Attach the client to this buffer
+                          if not vim.lsp.buf_is_attached(bufnr, client.id) then
+                            vim.lsp.buf_attach_client(bufnr, client.id)
+                          end
+                          break
+                        end
+                      end
+                    end
+                  end)
+                end
+              end
+            end,
+          },
         })
 
         local function map(mode, l, r, opts)
