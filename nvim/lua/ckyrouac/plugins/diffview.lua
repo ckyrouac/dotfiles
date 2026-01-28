@@ -6,6 +6,10 @@ return {
     "sindrets/diffview.nvim",
     cond = true,
     config = function ()
+        require("diffview").setup({
+          enhanced_diff_hl = true,
+        })
+
         local function map(mode, l, r, opts)
           opts = opts or {}
           opts.silent = true
