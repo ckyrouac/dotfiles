@@ -112,6 +112,10 @@ return {
           vim.cmd("DiffviewClose")
         end, { desc = "Close Diffview" })
 
+        map("n", "<leader>gh", function()
+          vim.cmd("DiffviewFileHistory %")
+        end, { desc = "Git history (buffer)" })
+
         map("n", "<leader>gdo", function()
           local pickers = require("telescope.pickers")
           local finders = require("telescope.finders")
