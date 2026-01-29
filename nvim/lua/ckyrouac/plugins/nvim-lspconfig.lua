@@ -8,6 +8,7 @@ return {
       -- Automatically install LSPs to stdpath for neovim
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
+      "saghen/blink.cmp",
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
@@ -17,6 +18,8 @@ return {
       "folke/neodev.nvim",
     },
     config = function()
+      vim.lsp.inlay_hint.enable(false)
+
       -- :LspInfo border
       require("lspconfig.ui.windows").default_options = {
         border = "rounded",
@@ -28,6 +31,7 @@ return {
       })
 
       local servers = {
+        yamlls = {},
         clangd = {},
         gopls = {
           gopls = {
@@ -51,76 +55,76 @@ return {
         },
       }
 
-      --  This function gets run when an LSP connects to a particular buffer.
-      local on_attach = function(client, bufnr)
-        -- populate workspace diagnostics
-        require("workspace-diagnostics").populate_workspace_diagnostics(client, bufnr)
+      -- -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+      local capabilities = vim.lsp.protocol.make_client_capabilities()
+      -- capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
-        -- A function that lets us more easily define mappings specific
-        -- for LSP related items. It sets the mode, buffer and description for us each time.
-        local nmap = function(keys, func, desc)
-          vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc, silent = true })
-        end
-
-        nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
-        nmap("<leader>ca", require("actions-preview").code_actions, "Action")
-
-        nmap("gr", require("telescope.builtin").lsp_references, "Goto References")
-        nmap(
-          "<C-MiddleMouse>",
-          "<LeftMouse><LeftRelease><cmd>:lua require('telescope.builtin').lsp_references()<CR>",
-          "Goto References"
-        )
-
-        -- nmap("gd", require("telescope.builtin").lsp_definitions, "Goto Definition")
-        -- vim.keymap.set("n", "gd", function () vim.lsp.buf.definition() end, { buffer = bufnr, desc = "goto definition" })
-        nmap("gd", function () vim.lsp.buf.definition() end, "Goto Definition")
-
-        nmap(
-          "<C-LeftMouse>",
-          "<LeftMouse><LeftRelease><cmd>:lua require('telescope.builtin').lsp_definitions()<CR>",
-          "Goto Definition"
-        )
-
-        nmap("gI", require("telescope.builtin").lsp_implementations, "Goto Implementation")
-        nmap(
-          "<C-RightMouse>",
-          "<LeftMouse><LeftRelease><cmd>:lua require('telescope.builtin').lsp_implementations()<CR>",
-          "Goto References"
-        )
-
-        nmap("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
-        -- nmap("<leader>ds", require("telescope.builtin").lsp_document_symbols, "Document Symbols")
-
-        -- require('telescope.builtin').lsp_code_action
-        -- nmap("<M-CR>", vim.lsp.buf.code_action, "Code Action")
-
-        -- See `:help K` for why this keymap
-        nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-        -- nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-
-        -- Lesser used LSP functionality
-        nmap("gD", vim.lsp.buf.declaration, "Goto Declaration")
-        nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "Workspace Add Folder")
-        nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "Workspace Remove Folder")
-
-        -- Create a command `:Format` local to the LSP buffer
-        -- vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-        --   vim.lsp.buf.format()
-        -- end, { desc = 'Format current buffer with LSP' })
-        if client.name == "gopls" and not client.server_capabilities.semanticTokensProvider then
-          local semantic = client.config.capabilities.textDocument.semanticTokens
-          client.server_capabilities.semanticTokensProvider = {
-            full = true,
-            legend = { tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes },
-            range = true,
-          }
-        end
+      local lspconfig = require("lspconfig")
+      for server, config in pairs(servers) do
+        config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+        lspconfig[server].setup(config)
       end
 
-      -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-      local capabilities = vim.lsp.protocol.make_client_capabilities()
-      capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+      -- Set up LSP keymaps via LspAttach autocmd so they apply to any buffer
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+        callback = function(ev)
+          local bufnr = ev.buf
+          local client = vim.lsp.get_client_by_id(ev.data.client_id)
+
+          local nmap = function(keys, func, desc)
+            vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc, silent = true, noremap = true })
+          end
+
+          nmap("<leader>cr", vim.lsp.buf.rename, "Rename")
+          nmap("<leader>ca", require("actions-preview").code_actions, "Action")
+
+          nmap("gr", require("telescope.builtin").lsp_references, "Goto References")
+          nmap(
+            "<C-MiddleMouse>",
+            "<LeftMouse><LeftRelease><cmd>:lua require('telescope.builtin').lsp_references()<CR>",
+            "Goto References"
+          )
+
+          nmap("gd", vim.lsp.buf.definition, "Goto definition")
+          nmap("gD", vim.lsp.buf.declaration, "Goto Declaration")
+          nmap("gt", vim.lsp.buf.type_definition, "Goto Type definition")
+
+          nmap(
+            "<C-LeftMouse>",
+            "<LeftMouse><LeftRelease><cmd>:lua require('telescope.builtin').lsp_definitions()<CR>",
+            "Goto Definition"
+          )
+
+          nmap("gI", require("telescope.builtin").lsp_implementations, "Goto Implementation")
+          nmap(
+            "<C-RightMouse>",
+            "<LeftMouse><LeftRelease><cmd>:lua require('telescope.builtin').lsp_implementations()<CR>",
+            "Goto References"
+          )
+
+          nmap("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type Definition")
+
+          nmap("K", vim.lsp.buf.hover, "Hover Documentation")
+
+          nmap("<leader>wa", vim.lsp.buf.add_workspace_folder, "Workspace Add Folder")
+          nmap("<leader>wr", vim.lsp.buf.remove_workspace_folder, "Workspace Remove Folder")
+
+          -- gopls semantic tokens fix
+          if client and client.name == "gopls" and not client.server_capabilities.semanticTokensProvider then
+            local semantic = client.config.capabilities.textDocument.semanticTokens
+            client.server_capabilities.semanticTokensProvider = {
+              full = true,
+              legend = { tokenModifiers = semantic.tokenModifiers, tokenTypes = semantic.tokenTypes },
+              range = true,
+            }
+          end
+        end,
+      })
+
+      -- Keep on_attach for rustaceanvim (keymaps handled by LspAttach autocmd above)
+      local on_attach = function(client, bufnr)
+      end
 
       -- Ensure the servers above are installed
       local mason_lspconfig = require("mason-lspconfig")
@@ -129,13 +133,8 @@ return {
         ensure_installed = vim.tbl_keys(servers),
       })
 
-
-
-      mason_lspconfig.setup_handlers {
-        ['rust_analyzer'] = function() end,
-      }
-
       mason_lspconfig.setup_handlers({
+        -- Default handler for all servers
         function(server_name)
           require("lspconfig")[server_name].setup({
             capabilities = capabilities,
@@ -145,6 +144,8 @@ return {
             semanticTokens = true,
           })
         end,
+        -- Disable rust_analyzer since rustaceanvim handles it
+        ["rust_analyzer"] = function() end,
       })
 
       vim.g.rustaceanvim = {
@@ -176,7 +177,7 @@ return {
       })
 
       -- c config
-      require("cmp_nvim_lsp")
+      -- require("cmp_nvim_lsp")
 
       require("lspconfig").clangd.setup({
         on_attach = on_attach,
@@ -192,6 +193,18 @@ return {
         capabilities = capabilities,
       })
 
+      require("lspconfig").yamlls.setup({
+        on_attach = on_attach,
+        capabilities = capabilities,
+        settings = {
+          yaml = {
+            schemas = {
+              ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+            },
+          },
+        },
+      })
+
       vim.api.nvim_create_autocmd({ "CursorHold" }, {
         pattern = { "*" },
         callback = function()
@@ -199,7 +212,13 @@ return {
             return
           end
 
-          vim.lsp.buf.document_highlight()
+          -- Only highlight if an LSP client with documentHighlight support is attached
+          for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
+            if client.server_capabilities.documentHighlightProvider then
+              vim.lsp.buf.document_highlight()
+              return
+            end
+          end
         end,
       })
 
@@ -210,7 +229,13 @@ return {
             return
           end
 
-          vim.lsp.buf.document_highlight()
+          -- Only highlight if an LSP client with documentHighlight support is attached
+          for _, client in pairs(vim.lsp.get_clients({ bufnr = 0 })) do
+            if client.server_capabilities.documentHighlightProvider then
+              vim.lsp.buf.document_highlight()
+              return
+            end
+          end
         end,
       })
 
