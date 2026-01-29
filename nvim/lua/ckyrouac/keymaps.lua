@@ -94,4 +94,6 @@ vim.keymap.set("n", "<leader>l", toggle_line_numbers, { silent = true, desc = "T
 -- vim.keymap.set('n', '<X2Mouse>', '<C-o>', { silent = true, desc = 'Toggle relative line numbers' })
 
 -- folds
-vim.keymap.set("n", "<leader>z", "za", { desc = "Toggle fold", noremap = true })
+vim.keymap.set("n", "<leader>zc", "zM", { desc = "Close all folds", noremap = true })
+vim.keymap.set("n", "<leader>zo", "zR", { desc = "Open all folds", noremap = true })
+vim.keymap.set("n", "<leader>zz", "za", { desc = "Toggle fold at cursor", noremap = true })

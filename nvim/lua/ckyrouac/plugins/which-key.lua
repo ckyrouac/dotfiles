@@ -54,6 +54,8 @@ return {
       { "<leader>w_", hidden = true },
       { "<leader>x", group = "Trouble" },
       { "<leader>x_", hidden = true },
+      { "<leader>z", group = "Fold" },
+      { "<leader>z_", hidden = true },
     })
 
     require("which-key").add({

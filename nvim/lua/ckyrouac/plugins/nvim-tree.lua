@@ -63,7 +63,7 @@ return {
         utils.dapui_refresh()
       end
 
-      vim.keymap.set("n", "<leader>ff", nvimtree_find_file, { silent = true, desc = "Find File in Nvif Tree" })
+      vim.keymap.set("n", "<leader>ff", nvimtree_find_file, { silent = true, desc = "Find File in Nvim Tree" })
       vim.keymap.set("n", "<A-1>", nvimtree_toggle, { silent = true })
 
       -- restore nvimtree on startup if vim exited with nvimtree open
