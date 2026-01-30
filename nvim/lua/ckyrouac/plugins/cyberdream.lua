@@ -62,7 +62,7 @@ return {
 
       local function save_and_dim()
         -- Save and dim core highlights
-        local core_groups = { "Normal", "NormalNC", "SignColumn", "LineNr", "FoldColumn", "FidgetTitle", "FidgetTask", "DiagnosticError", "DiagnosticWarn", "DiagnosticInfo", "DiagnosticHint" }
+        local core_groups = { "Normal", "NormalNC", "SignColumn", "LineNr", "FoldColumn", "FidgetTitle", "FidgetTask", "DiagnosticError", "DiagnosticWarn", "DiagnosticInfo", "DiagnosticHint", "DiagnosticErrorAlt", "DiagnosticWarnAlt", "DiagnosticInfoAlt", "DiagnosticHintAlt" }
         for _, hl_name in ipairs(core_groups) do
           if not original_highlights[hl_name] then
             original_highlights[hl_name] = vim.api.nvim_get_hl(0, { name = hl_name })
