@@ -67,11 +67,15 @@ return {
         vim.api.nvim_set_hl(0, "FoldColumn", { bg = bg })
 
         -- Update lualine section backgrounds
-        local lualine_sections = { "lualine_c_normal", "lualine_c_insert", "lualine_c_visual", "lualine_c_command", "lualine_c_replace", "lualine_c_inactive" }
-        for _, hl_name in ipairs(lualine_sections) do
-          local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = hl_name })
-          if ok and hl then
-            vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = bg }))
+        local sections = { "a", "b", "c", "x", "y", "z" }
+        local modes = { "normal", "insert", "visual", "command", "replace", "inactive" }
+        for _, section in ipairs(sections) do
+          for _, mode in ipairs(modes) do
+            local hl_name = "lualine_" .. section .. "_" .. mode
+            local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = hl_name })
+            if ok and hl then
+              vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = bg }))
+            end
           end
         end
       end
