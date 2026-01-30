@@ -151,6 +151,8 @@ return {
       vim.g.rustaceanvim = {
         server = {
           on_attach = on_attach,
+          -- Show warning notifications when rust-analyzer has issues
+          status_notify_level = "warn",
         },
         tools = {
           float_win_config = {
