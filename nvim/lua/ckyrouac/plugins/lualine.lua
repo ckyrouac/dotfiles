@@ -163,7 +163,7 @@ return {
             {
               color = 'DiagnosticHintAlt',
               get_workspace_hint_count,
-              icon = '💡',
+              icon = '󰌶',
               cond = function ()
                 return get_workspace_hint_count() > 0
               end,
