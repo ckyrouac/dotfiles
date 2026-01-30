@@ -59,17 +59,25 @@ return {
       local colors = require("cyberdream.colors").default
       local dim_bg = "#1a1c1e"
 
+      local function set_bg(bg)
+        vim.api.nvim_set_hl(0, "Normal", { bg = bg, fg = colors.fg })
+        vim.api.nvim_set_hl(0, "NormalNC", { bg = bg, fg = colors.fg })
+        vim.api.nvim_set_hl(0, "SignColumn", { bg = bg })
+        vim.api.nvim_set_hl(0, "LineNr", { bg = bg, fg = colors.bgHighlight })
+        vim.api.nvim_set_hl(0, "FoldColumn", { bg = bg })
+        vim.api.nvim_set_hl(0, "StatusLine", { bg = bg })
+        vim.api.nvim_set_hl(0, "StatusLineNC", { bg = bg })
+      end
+
       vim.api.nvim_create_autocmd("FocusLost", {
         callback = function()
-          vim.api.nvim_set_hl(0, "Normal", { bg = dim_bg, fg = colors.fg })
-          vim.api.nvim_set_hl(0, "NormalNC", { bg = dim_bg, fg = colors.fg })
+          set_bg(dim_bg)
         end,
       })
 
       vim.api.nvim_create_autocmd("FocusGained", {
         callback = function()
-          vim.api.nvim_set_hl(0, "Normal", { bg = colors.bg, fg = colors.fg })
-          vim.api.nvim_set_hl(0, "NormalNC", { bg = colors.bg, fg = colors.fg })
+          set_bg(colors.bg)
         end,
       })
     end,
