@@ -122,7 +122,7 @@ return {
         end,
       })
 
-      -- on_attach is empty since keymaps are handled by LspAttach autocmd above
+      -- Keep on_attach for rustaceanvim (keymaps handled by LspAttach autocmd above)
       local on_attach = function(client, bufnr)
       end
 
@@ -147,6 +147,17 @@ return {
         -- Disable rust_analyzer since rustaceanvim handles it
         ["rust_analyzer"] = function() end,
       })
+
+      vim.g.rustaceanvim = {
+        server = {
+          on_attach = on_attach,
+        },
+        tools = {
+          float_win_config = {
+            border = "rounded",
+          },
+        },
+      }
 
       -- configure the built in diagnostics
       vim.diagnostic.config({
