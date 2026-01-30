@@ -32,6 +32,11 @@ return {
                 procMacro = {
                   enable = true,
                 },
+                -- Disable cfg(test) to work around cyclic dev-dependency issues
+                -- See: https://github.com/rust-lang/rust-analyzer/issues/14167
+                cfg = {
+                  setTest = false,
+                },
               },
             },
           },
