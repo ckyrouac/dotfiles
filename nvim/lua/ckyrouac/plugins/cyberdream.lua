@@ -66,18 +66,17 @@ return {
         vim.api.nvim_set_hl(0, "LineNr", { bg = bg, fg = colors.bgHighlight })
         vim.api.nvim_set_hl(0, "FoldColumn", { bg = bg })
 
-        -- Update lualine section backgrounds
-        local sections = { "a", "b", "c", "x", "y", "z" }
-        local modes = { "normal", "insert", "visual", "command", "replace", "inactive" }
-        for _, section in ipairs(sections) do
-          for _, mode in ipairs(modes) do
-            local hl_name = "lualine_" .. section .. "_" .. mode
-            local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = hl_name })
-            if ok and hl then
-              vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = bg }))
-            end
+        -- Update all lualine highlight groups
+        local all_hls = vim.api.nvim_get_hl(0, {})
+        for hl_name, hl in pairs(all_hls) do
+          if hl_name:match("^lualine_") then
+            vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = bg }))
           end
         end
+
+        -- Update fidget (LSP progress) highlights
+        vim.api.nvim_set_hl(0, "FidgetTitle", { bg = bg })
+        vim.api.nvim_set_hl(0, "FidgetTask", { bg = bg })
       end
 
       vim.api.nvim_create_autocmd("FocusLost", {
