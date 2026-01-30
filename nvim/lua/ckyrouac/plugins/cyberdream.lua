@@ -58,46 +58,42 @@ return {
       -- Dim background when pane loses focus (for tmux integration)
       local colors = require("cyberdream.colors").default
       local dim_bg = "#1a1c1e"
+      local original_highlights = {}
 
-      local function set_bg(bg)
-        vim.api.nvim_set_hl(0, "Normal", { bg = bg, fg = colors.fg })
-        vim.api.nvim_set_hl(0, "NormalNC", { bg = bg, fg = colors.fg })
-        vim.api.nvim_set_hl(0, "SignColumn", { bg = bg })
-        vim.api.nvim_set_hl(0, "LineNr", { bg = bg, fg = colors.bgHighlight })
-        vim.api.nvim_set_hl(0, "FoldColumn", { bg = bg })
+      local function save_and_dim()
+        -- Save and dim core highlights
+        local core_groups = { "Normal", "NormalNC", "SignColumn", "LineNr", "FoldColumn", "FidgetTitle", "FidgetTask", "DiagnosticError", "DiagnosticWarn", "DiagnosticInfo", "DiagnosticHint" }
+        for _, hl_name in ipairs(core_groups) do
+          if not original_highlights[hl_name] then
+            original_highlights[hl_name] = vim.api.nvim_get_hl(0, { name = hl_name })
+          end
+          vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", original_highlights[hl_name], { bg = dim_bg }))
+        end
 
-        -- Update all lualine and bufferline highlight groups
+        -- Save and dim lualine and bufferline highlights
         local all_hls = vim.api.nvim_get_hl(0, {})
         for hl_name, hl in pairs(all_hls) do
           if hl_name:match("^lualine_") or hl_name:match("^BufferLine") then
-            vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = bg }))
-          end
-        end
-
-        -- Update fidget (LSP progress) highlights
-        vim.api.nvim_set_hl(0, "FidgetTitle", { bg = bg })
-        vim.api.nvim_set_hl(0, "FidgetTask", { bg = bg })
-
-        -- Update diagnostic highlights (used by lualine diagnostics)
-        local diag_groups = { "DiagnosticError", "DiagnosticWarn", "DiagnosticInfo", "DiagnosticHint" }
-        for _, hl_name in ipairs(diag_groups) do
-          local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = hl_name })
-          if ok and hl then
-            vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = bg }))
+            if not original_highlights[hl_name] then
+              original_highlights[hl_name] = vim.deepcopy(hl)
+            end
+            vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = dim_bg }))
           end
         end
       end
 
+      local function restore()
+        for hl_name, hl in pairs(original_highlights) do
+          vim.api.nvim_set_hl(0, hl_name, hl)
+        end
+      end
+
       vim.api.nvim_create_autocmd("FocusLost", {
-        callback = function()
-          set_bg(dim_bg)
-        end,
+        callback = save_and_dim,
       })
 
       vim.api.nvim_create_autocmd("FocusGained", {
-        callback = function()
-          set_bg(colors.bg)
-        end,
+        callback = restore,
       })
     end,
   },
