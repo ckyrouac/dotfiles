@@ -6,27 +6,42 @@ return {
     version = "^6",
     ft = { "rust" },
     init = function()
-      -- Must be set before plugin loads
-      vim.g.rustaceanvim = {
-        server = {
-          default_settings = {
-            ["rust-analyzer"] = {
-              checkOnSave = true,
-              check = {
-                command = "clippy",
-              },
-              diagnostics = {
-                enable = true,
+      -- vim.g.rustaceanvim as a function is called lazily when needed
+      vim.g.rustaceanvim = function()
+        -- blink.cmp should be loaded by now since this is called lazily
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        local ok, blink = pcall(require, "blink.cmp")
+        if ok then
+          capabilities = blink.get_lsp_capabilities(capabilities)
+        end
+
+        return {
+          server = {
+            capabilities = capabilities,
+            settings = {
+              ["rust-analyzer"] = {
+                checkOnSave = {
+                  command = "clippy",
+                },
+                diagnostics = {
+                  enable = true,
+                },
+                cargo = {
+                  allFeatures = true,
+                },
+                procMacro = {
+                  enable = true,
+                },
               },
             },
           },
-        },
-        tools = {
-          float_win_config = {
-            border = "rounded",
+          tools = {
+            float_win_config = {
+              border = "rounded",
+            },
           },
-        },
-      }
+        }
+      end
     end,
   },
 }
