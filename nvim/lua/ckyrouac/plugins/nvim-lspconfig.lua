@@ -151,6 +151,9 @@ return {
       vim.g.rustaceanvim = {
         server = {
           on_attach = on_attach,
+          -- Use older rust-analyzer to work around regression in 1.93.0
+          -- See: https://github.com/rust-lang/rust-analyzer/issues
+          cmd = { vim.fn.expand("~/.rustup/toolchains/nightly-2025-09-01-x86_64-unknown-linux-gnu/bin/rust-analyzer") },
         },
         tools = {
           float_win_config = {
