@@ -65,8 +65,15 @@ return {
         vim.api.nvim_set_hl(0, "SignColumn", { bg = bg })
         vim.api.nvim_set_hl(0, "LineNr", { bg = bg, fg = colors.bgHighlight })
         vim.api.nvim_set_hl(0, "FoldColumn", { bg = bg })
-        vim.api.nvim_set_hl(0, "StatusLine", { bg = bg })
-        vim.api.nvim_set_hl(0, "StatusLineNC", { bg = bg })
+
+        -- Update lualine section backgrounds
+        local lualine_sections = { "lualine_c_normal", "lualine_c_insert", "lualine_c_visual", "lualine_c_command", "lualine_c_replace", "lualine_c_inactive" }
+        for _, hl_name in ipairs(lualine_sections) do
+          local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = hl_name })
+          if ok and hl then
+            vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = bg }))
+          end
+        end
       end
 
       vim.api.nvim_create_autocmd("FocusLost", {
