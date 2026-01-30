@@ -54,6 +54,24 @@ return {
         end,
       })
       vim.cmd.colorscheme("cyberdream")
+
+      -- Dim background when pane loses focus (for tmux integration)
+      local colors = require("cyberdream.colors").default
+      local dim_bg = "#101214"
+
+      vim.api.nvim_create_autocmd("FocusLost", {
+        callback = function()
+          vim.api.nvim_set_hl(0, "Normal", { bg = dim_bg, fg = colors.fg })
+          vim.api.nvim_set_hl(0, "NormalNC", { bg = dim_bg, fg = colors.fg })
+        end,
+      })
+
+      vim.api.nvim_create_autocmd("FocusGained", {
+        callback = function()
+          vim.api.nvim_set_hl(0, "Normal", { bg = colors.bg, fg = colors.fg })
+          vim.api.nvim_set_hl(0, "NormalNC", { bg = colors.bg, fg = colors.fg })
+        end,
+      })
     end,
   },
 }
