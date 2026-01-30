@@ -5,7 +5,15 @@ return {
     lazy = false,
     version = "^6",
     ft = { "rust" },
-    config = function()
+    init = function()
+      -- Must be set before plugin loads
+      vim.g.rustaceanvim = {
+        tools = {
+          float_win_config = {
+            border = "rounded",
+          },
+        },
+      }
     end,
   },
 }
