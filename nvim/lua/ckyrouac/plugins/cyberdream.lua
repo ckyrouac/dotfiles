@@ -57,7 +57,7 @@ return {
 
       -- Dim background when pane loses focus (for tmux integration)
       local colors = require("cyberdream.colors").default
-      local dim_bg = "#181a1c"
+      local dim_bg = "#1a1c1e"
 
       vim.api.nvim_create_autocmd("FocusLost", {
         callback = function()
