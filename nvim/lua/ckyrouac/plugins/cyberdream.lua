@@ -66,10 +66,10 @@ return {
         vim.api.nvim_set_hl(0, "LineNr", { bg = bg, fg = colors.bgHighlight })
         vim.api.nvim_set_hl(0, "FoldColumn", { bg = bg })
 
-        -- Update all lualine highlight groups
+        -- Update all lualine and bufferline highlight groups
         local all_hls = vim.api.nvim_get_hl(0, {})
         for hl_name, hl in pairs(all_hls) do
-          if hl_name:match("^lualine_") then
+          if hl_name:match("^lualine_") or hl_name:match("^BufferLine") then
             vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = bg }))
           end
         end
@@ -77,6 +77,15 @@ return {
         -- Update fidget (LSP progress) highlights
         vim.api.nvim_set_hl(0, "FidgetTitle", { bg = bg })
         vim.api.nvim_set_hl(0, "FidgetTask", { bg = bg })
+
+        -- Update diagnostic highlights (used by lualine diagnostics)
+        local diag_groups = { "DiagnosticError", "DiagnosticWarn", "DiagnosticInfo", "DiagnosticHint" }
+        for _, hl_name in ipairs(diag_groups) do
+          local ok, hl = pcall(vim.api.nvim_get_hl, 0, { name = hl_name })
+          if ok and hl then
+            vim.api.nvim_set_hl(0, hl_name, vim.tbl_extend("force", hl, { bg = bg }))
+          end
+        end
       end
 
       vim.api.nvim_create_autocmd("FocusLost", {
