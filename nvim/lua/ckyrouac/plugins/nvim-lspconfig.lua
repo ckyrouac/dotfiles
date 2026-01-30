@@ -151,6 +151,19 @@ return {
       vim.g.rustaceanvim = {
         server = {
           on_attach = on_attach,
+          default_settings = {
+            ["rust-analyzer"] = {
+              -- Disable native diagnostics to work around MIR borrowck crash
+              -- See: https://github.com/rust-lang/rust-analyzer/issues/19500
+              diagnostics = {
+                enable = false,
+              },
+              -- Rely on cargo check for diagnostics instead
+              checkOnSave = {
+                command = "check",
+              },
+            },
+          },
         },
         tools = {
           float_win_config = {
