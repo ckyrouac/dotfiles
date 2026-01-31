@@ -249,9 +249,23 @@ if [ -z "$ALL" ] && [ -z "$EXISTING" ] && [ -z "$KILL" ] && [ -z "$SESSION" ]; t
 fi
 
 if [ "$ALL" = true ]; then
-    worktrees=$(find ~/worktrees -mindepth 2 -maxdepth 2 -type d)
-    selected=$(find ~/projects -mindepth 1 -maxdepth 1 -type d)
-    switch=$(echo -e "$selected\n$worktrees" | fzf --tmux "$(popup_width),50%" --reverse --border-label=" Projects " --color=border:#bd5eff)
+    # Build list with display names and full paths (tab-separated)
+    entries=""
+    while IFS= read -r path; do
+        name=$(basename "$path")
+        entries+="${name}\t${path}\n"
+    done < <(find ~/projects -mindepth 1 -maxdepth 1 -type d)
+
+    while IFS= read -r path; do
+        project=$(basename "$(dirname "$path")")
+        worktree=$(basename "$path")
+        entries+="${project}/${worktree}\t${path}\n"
+    done < <(find ~/worktrees -mindepth 2 -maxdepth 2 -type d)
+
+    # Show only display name (field 1), return full line
+    selection=$(echo -e "$entries" | fzf --tmux "$(popup_width),50%" --reverse --border-label=" Projects " --color=border:#bd5eff --delimiter='\t' --with-nth=1)
+    # Extract full path (field 2)
+    switch=$(echo "$selection" | cut -f2)
     switch-session "$switch"
     exit 0
 elif [ "$EXISTING" = true ]; then
